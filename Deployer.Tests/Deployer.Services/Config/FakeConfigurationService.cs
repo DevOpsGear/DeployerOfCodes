@@ -11,6 +11,25 @@ namespace Deployer.Services.Config
 
 		public FakeConfigurationService()
 		{
+			var antiShaunJson = AntiShaunJson();
+			var teamCitynJson = TeamCityJson();
+
+			_projects = new[]
+				{
+					new Project("Failer", "-Fails after 2s", BuildServiceProvider.Failing, string.Empty),
+					new Project("Succeeder", "-Works after 2s", BuildServiceProvider.Succeeding, string.Empty),
+					new Project("AntiShaun", "-AppVeyor", BuildServiceProvider.AppVeyor, antiShaunJson),
+					new Project("BogusTeamCity", "-TeamCity", BuildServiceProvider.TeamCity, teamCitynJson)
+				};
+		}
+
+		public Project[] GetProjects()
+		{
+			return _projects;
+		}
+
+		private static string AntiShaunJson()
+		{
 			var antiShaunConfig = new Hashtable
 				{
 					{"apiToken", "5cysxk229kyjpq16lcsd"},
@@ -18,20 +37,17 @@ namespace Deployer.Services.Config
 					{"projectSlug", "AntiShaun"},
 					{"branch", "master"}
 				};
-			var antiShaunJson = JsonSerializer.SerializeObject(antiShaunConfig);
-
-			_projects = new[]
-				{
-					new Project("Failer", "-Fails after 2s", BuildServiceProvider.Failing, string.Empty),
-					new Project("Succeeder", "-Works after 2s", BuildServiceProvider.Succeeding, string.Empty),
-					new Project("AntiShaun", "-AppVeyor", BuildServiceProvider.AppVeyor, antiShaunJson),
-					new Project("BogusTeamCity", "-TeamCity", BuildServiceProvider.TeamCity, string.Empty)
-				};
+			return JsonSerializer.SerializeObject(antiShaunConfig);
 		}
 
-		public Project[] GetProjects()
+		private string TeamCityJson()
 		{
-			return _projects;
+			var antiShaunConfig = new Hashtable
+				{
+					{"url", "http://10.100.0.23:8080"},
+					{"buildId", "BigBrother"},
+				};
+			return JsonSerializer.SerializeObject(antiShaunConfig);
 		}
 	}
 }
