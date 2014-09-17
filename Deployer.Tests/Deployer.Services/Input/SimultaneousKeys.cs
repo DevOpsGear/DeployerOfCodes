@@ -41,7 +41,7 @@ namespace Deployer.Services.Input
 				if (!AreBothOn)
 					return false;
 				var timeDiff = _keyWhen[0] - _keyWhen[1];
-				var ms = timeDiff.TotalMilliseconds;
+				var ms = timeDiff.Milliseconds; //  TODO: TotalMilliseconds missing from NETMF. Differences in API
 				if (ms < 0)
 					ms = -ms;
 				return ms < ThresholdMilliseconds;

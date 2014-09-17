@@ -59,7 +59,7 @@ namespace Deployer.App
 
 			var config = new FakeConfigurationService();
 			var charDisp = new CharDisplay(characterDisplay);
-			var keys = new SimultaneousKeys(ReversedSwitchA, ReversedSwitchB);
+			var keys = new SimultaneousKeys(ReversedSwitchA, ReversedSwitchB, new TimeService());
 			var webFactory = new WebRequestFactory();
 			var garbage = new GarbageCollector();
 
