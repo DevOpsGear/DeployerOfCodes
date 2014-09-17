@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AssemblyName>Deployer.Services</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Deployer.Services</RootNamespace>
+    <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4D52A305-28D5-48DE-B1ED-9413174E1904}</ProjectGuid>
+    <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
+    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\AppVeyorBuildService.cs" xmlns="msbuild">
+      <Link>Build\AppVeyorBuildService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\BuildServiceFactory.cs" xmlns="msbuild">
+      <Link>Build\BuildServiceFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\BuildServiceProvider.cs" xmlns="msbuild">
+      <Link>Build\BuildServiceProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\FailingBuildService.cs" xmlns="msbuild">
+      <Link>Build\FailingBuildService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\IBuildService.cs" xmlns="msbuild">
+      <Link>Build\IBuildService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\SuceedingBuildService.cs" xmlns="msbuild">
+      <Link>Build\SuceedingBuildService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\TeamCityBuildService.cs" xmlns="msbuild">
+      <Link>Build\TeamCityBuildService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Class1.cs" xmlns="msbuild">
+      <Link>Class1.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Config\FakeConfigurationService.cs" xmlns="msbuild">
+      <Link>Config\FakeConfigurationService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Config\IConfigurationService.cs" xmlns="msbuild">
+      <Link>Config\IConfigurationService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Hardware\ICharDisplay.cs" xmlns="msbuild">
+      <Link>Hardware\ICharDisplay.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Hardware\ILed.cs" xmlns="msbuild">
+      <Link>Hardware\ILed.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Hardware\INetwork.cs" xmlns="msbuild">
+      <Link>Hardware\INetwork.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Hardware\IPersistence.cs" xmlns="msbuild">
+      <Link>Hardware\IPersistence.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Hardware\ISound.cs" xmlns="msbuild">
+      <Link>Hardware\ISound.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Input\KeySwitch.cs" xmlns="msbuild">
+      <Link>Input\KeySwitch.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Input\ProjectSelector.cs" xmlns="msbuild">
+      <Link>Input\ProjectSelector.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Input\SimultaneousKeys.cs" xmlns="msbuild">
+      <Link>Input\SimultaneousKeys.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\DateTimeExtensions.cs" xmlns="msbuild">
+      <Link>Json.NETMF\DateTimeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\JsonParser.cs" xmlns="msbuild">
+      <Link>Json.NETMF\JsonParser.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\JsonSerializer.cs" xmlns="msbuild">
+      <Link>Json.NETMF\JsonSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\NumberExtensions.cs" xmlns="msbuild">
+      <Link>Json.NETMF\NumberExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\StringExtensions.cs" xmlns="msbuild">
+      <Link>Json.NETMF\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\IGarbage.cs" xmlns="msbuild">
+      <Link>Micro\IGarbage.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Models\BuildState.cs" xmlns="msbuild">
+      <Link>Models\BuildState.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Models\Project.cs" xmlns="msbuild">
+      <Link>Models\Project.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Output\IndicatorRefresh.cs" xmlns="msbuild">
+      <Link>Output\IndicatorRefresh.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerController.cs" xmlns="msbuild">
+      <Link>StateMachine\DeployerController.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerLoop.cs" xmlns="msbuild">
+      <Link>StateMachine\DeployerLoop.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerState.cs" xmlns="msbuild">
+      <Link>StateMachine\DeployerState.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Json.NetMF">
+      <HintPath>..\packages\Json.NetMF.1.3.0.0\lib\netmf43\Json.NetMF.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Native"></Reference>
+    <Reference Include="System.Http" />
+    <Reference Include="System.IO" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+</Project>

@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AssemblyName>Deployer.Services</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Deployer.Services</RootNamespace>
+    <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4D52A305-28D5-48DE-B1ED-9413174E1904}</ProjectGuid>
+    <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
+    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\AppVeyorBuildService.cs">
+      <Link>Build\AppVeyorBuildService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\BuildServiceFactory.cs">
+      <Link>Build\BuildServiceFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\BuildServiceProvider.cs">
+      <Link>Build\BuildServiceProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\FailingBuildService.cs">
+      <Link>Build\FailingBuildService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\IBuildService.cs">
+      <Link>Build\IBuildService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\SuceedingBuildService.cs">
+      <Link>Build\SuceedingBuildService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\TeamCityBuildService.cs">
+      <Link>Build\TeamCityBuildService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Config\FakeConfigurationService.cs">
+      <Link>Config\FakeConfigurationService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Config\IConfigurationService.cs">
+      <Link>Config\IConfigurationService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Hardware\ICharDisplay.cs">
+      <Link>Hardware\ICharDisplay.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Hardware\ILed.cs">
+      <Link>Hardware\ILed.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Hardware\INetwork.cs">
+      <Link>Hardware\INetwork.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Hardware\IPersistence.cs">
+      <Link>Hardware\IPersistence.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Hardware\ISound.cs">
+      <Link>Hardware\ISound.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Input\IProjectSelector.cs">
+      <Link>Input\IProjectSelector.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Input\ISimultaneousKeys.cs">
+      <Link>Input\ISimultaneousKeys.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Input\KeySwitch.cs">
+      <Link>Input\KeySwitch.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Input\ProjectSelector.cs">
+      <Link>Input\ProjectSelector.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Input\SimultaneousKeys.cs">
+      <Link>Input\SimultaneousKeys.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\CharExtensions.cs">
+      <Link>Json.NETMF\CharExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\DateTimeExtensions.cs">
+      <Link>Json.NETMF\DateTimeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\DateTimeFormat.cs">
+      <Link>Json.NETMF\DateTimeFormat.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\Helper.cs">
+      <Link>Json.NETMF\Helper.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\Int64Extensions.cs">
+      <Link>Json.NETMF\Int64Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\JsonParser.cs">
+      <Link>Json.NETMF\JsonParser.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\JsonSerializer.cs">
+      <Link>Json.NETMF\JsonSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\UInt32Extensions.cs">
+      <Link>Json.NETMF\UInt32Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\NumberStyle.cs">
+      <Link>Json.NETMF\NumberStyle.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\StringExtensions.cs">
+      <Link>Json.NETMF\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\IGarbage.cs">
+      <Link>Micro\IGarbage.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\IHttpWebResponse.cs">
+      <Link>Micro\IHttpWebResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\IWebRequest.cs">
+      <Link>Micro\IWebRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\IWebRequestFactory.cs">
+      <Link>Micro\IWebRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Models\BuildState.cs">
+      <Link>Models\BuildState.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Models\BuildStatus.cs">
+      <Link>Models\BuildStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Models\Project.cs">
+      <Link>Models\Project.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Output\IIndicatorRefresh.cs">
+      <Link>Output\IIndicatorRefresh.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Output\IndicatorRefresh.cs">
+      <Link>Output\IndicatorRefresh.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerController.cs">
+      <Link>StateMachine\DeployerController.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerLoop.cs">
+      <Link>StateMachine\DeployerLoop.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerState.cs">
+      <Link>StateMachine\DeployerState.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\IDeployerLoop.cs">
+      <Link>StateMachine\IDeployerLoop.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Json.NetMF">
+      <HintPath>..\packages\Json.NetMF.1.3.0.0\lib\netmf43\Json.NetMF.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Native"></Reference>
+    <Reference Include="System.Http" />
+    <Reference Include="System.IO" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\NinaB.tinyfnt" />
+    <None Include="Resources\small.tinyfnt" />
+  </ItemGroup>
+  <ItemGroup />
+</Project>
