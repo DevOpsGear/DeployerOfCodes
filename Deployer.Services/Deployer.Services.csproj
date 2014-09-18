@@ -31,26 +31,26 @@
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\AppVeyorBuildService.cs">
-      <Link>Build\AppVeyorBuildService.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Builders\AppVeyorBuildService.cs">
+      <Link>Builders\AppVeyorBuildService.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\BuildServiceFactory.cs">
-      <Link>Build\BuildServiceFactory.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Builders\BuildServiceFactory.cs">
+      <Link>Builders\BuildServiceFactory.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\BuildServiceProvider.cs">
-      <Link>Build\BuildServiceProvider.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Builders\BuildServiceProvider.cs">
+      <Link>Builders\BuildServiceProvider.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\FailingBuildService.cs">
-      <Link>Build\FailingBuildService.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Builders\FailingBuildService.cs">
+      <Link>Builders\FailingBuildService.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\IBuildService.cs">
-      <Link>Build\IBuildService.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Builders\IBuildService.cs">
+      <Link>Builders\IBuildService.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\SuceedingBuildService.cs">
-      <Link>Build\SuceedingBuildService.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Builders\SuceedingBuildService.cs">
+      <Link>Builders\SuceedingBuildService.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Build\TeamCityBuildService.cs">
-      <Link>Build\TeamCityBuildService.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Builders\TeamCityBuildService.cs">
+      <Link>Builders\TeamCityBuildService.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Config\FakeConfigurationService.cs">
       <Link>Config\FakeConfigurationService.cs</Link>

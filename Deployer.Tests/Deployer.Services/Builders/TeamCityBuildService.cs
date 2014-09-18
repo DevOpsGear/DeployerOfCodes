@@ -14,6 +14,8 @@ namespace Deployer.Services.Builders
 		private readonly IGarbage _garbage;
 		private string _apiRoot;
 		private string _buildId;
+		private string _username;
+		private string _password;
 
 		public TeamCityBuildService(IWebRequestFactory webFactory, IGarbage garbage)
 		{
@@ -58,14 +60,24 @@ namespace Deployer.Services.Builders
 				url += "/";
 			_apiRoot = url + "httpAuth/app/rest/";
 			_buildId = hash["buildId"] as string;
+			_username = hash["username"] as string;
+			_password = hash["password"] as string;
 		}
 
 		private IWebRequest CreateRequest(string apiRoot, string apiEndpoint, string method = "GET")
 		{
 			var req = _webFactory.CreateRequest(apiRoot, apiEndpoint, method);
 			req.ContentType = "application/json";
-			req.AddHeader("Authorization", "Bearer TOKEN");
+			req.AddHeader("Accept", "application/json");
+			req.AddHeader("Authorization", "Basic " + GetHttpBasicAuthToken());
 			return req;
+		}
+
+		private string GetHttpBasicAuthToken()
+		{
+			var unpw = _username + ":" + _password;
+			var bytes = Encoding.UTF8.GetBytes(unpw);
+			return Convert.ToBase64String(bytes);
 		}
 
 		private void WriteBody(IWebRequest req, string body)
