@@ -46,9 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeployerControllerTests.cs" />
+    <Compile Include="IndicatorRefreshTests.cs" />
+    <Compile Include="ProjectSelectorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SemiIntegrationTests.cs" />
+    <Compile Include="SimultaneousKeysTests.cs" />
     <Compile Include="SpiesFakes\CharDisplaySpy.cs" />
+    <Compile Include="SpiesFakes\IndictatorSpy.cs" />
     <Compile Include="SpiesFakes\TimeServiceFake.cs" />
   </ItemGroup>
   <ItemGroup>

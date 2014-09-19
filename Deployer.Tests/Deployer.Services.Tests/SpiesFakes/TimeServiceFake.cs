@@ -7,6 +7,11 @@ namespace Deployer.Tests.SpiesFakes
 	{
 		private DateTime _value;
 
+		public TimeServiceFake()
+			: this(new DateTime(2010, 1, 1))
+		{
+		}
+
 		public TimeServiceFake(DateTime initialValue)
 		{
 			_value = initialValue;

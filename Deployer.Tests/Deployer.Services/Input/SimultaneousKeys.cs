@@ -40,11 +40,8 @@ namespace Deployer.Services.Input
 			{
 				if (!AreBothOn)
 					return false;
-				var timeDiff = _keyWhen[0] - _keyWhen[1];
-				var ms = timeDiff.Milliseconds; //  TODO: TotalMilliseconds missing from NETMF. Differences in API
-				if (ms < 0)
-					ms = -ms;
-				return ms < ThresholdMilliseconds;
+				var durationMs = GetDurationMilliseconds();
+				return durationMs < ThresholdMilliseconds;
 			}
 		}
 
@@ -56,6 +53,15 @@ namespace Deployer.Services.Input
 		public bool AreBothOff
 		{
 			get { return !_keyState[0] && !_keyState[1]; }
+		}
+
+		public long GetDurationMilliseconds()
+		{
+				var timeDiff = _keyWhen[0] - _keyWhen[1];
+				var ms = (long)( timeDiff.Ticks / 10000.0); //  TODO: TotalMilliseconds missing from NETMF. Differences in API
+				if (ms < 0)
+					ms = -ms;
+			return ms;
 		}
 	}
 }

@@ -45,7 +45,7 @@ namespace Deployer.Tests
 		}
 
 		[Test]
-		public void Turn_Keys_On_Too_Slowly()
+		public void Turn_keys_on_too_slowly()
 		{
 			_sut.PreflightCheck();
 			_sut.Tick();
@@ -69,7 +69,7 @@ namespace Deployer.Tests
 		}
 
 		[Test]
-		public void Turn_Keys_On_Just_Right()
+		public void Turn_keys_on_within_threshold()
 		{
 			_sut.PreflightCheck();
 			_sut.Tick();

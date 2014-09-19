@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using Deployer.Services.Builders;
 using Deployer.Services.Models;
 using Json.NETMF;
 
 namespace Deployer.Services.Config
 {
+	[ExcludeFromCodeCoverage]
 	public class FakeConfigurationService : IConfigurationService
 	{
 		private readonly Project[] _projects;
@@ -32,9 +34,9 @@ namespace Deployer.Services.Config
 		{
 			var antiShaunConfig = new Hashtable
 				{
-					{"apiToken", "5cysxk229kyjpq16lcsd"},
-					{"accountName", "ebopensource"},
-					{"projectSlug", "AntiShaun"},
+					{"apiToken", "ertwertwertwertwert"},
+					{"accountName", "wertwertwert"},
+					{"projectSlug", "ewrtwertwerter"},
 					{"branch", "master"}
 				};
 			return JsonSerializer.SerializeObject(antiShaunConfig);
@@ -44,8 +46,10 @@ namespace Deployer.Services.Config
 		{
 			var antiShaunConfig = new Hashtable
 				{
-					{"url", "http://10.100.0.23:8080"},
-					{"buildId", "BigBrother"},
+					{"url", "http://wertwertwert:8080"},
+					{"buildId", "ertwertwertw"},
+					{"username", "ertwertwert"},
+					{"password", "wertwertwertwert"},
 				};
 			return JsonSerializer.SerializeObject(antiShaunConfig);
 		}
