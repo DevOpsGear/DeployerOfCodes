@@ -1,6 +1,6 @@
 ﻿using Deployer.Services.Hardware;
 
-namespace Deployer.Tests.Spies
+namespace Deployer.Tests.SpiesFakes
 {
 	public class CharDisplaySpy : ICharDisplay
 	{

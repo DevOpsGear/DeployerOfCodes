@@ -59,16 +59,6 @@
     <Compile Include="Input\KeySwitch.cs" />
     <Compile Include="Input\ProjectSelector.cs" />
     <Compile Include="Input\SimultaneousKeys.cs" />
-    <Compile Include="Json.NETMF\CharExtensions.cs" />
-    <Compile Include="Json.NETMF\DateTimeExtensions.cs" />
-    <Compile Include="Json.NETMF\DateTimeFormat.cs" />
-    <Compile Include="Json.NETMF\Helper.cs" />
-    <Compile Include="Json.NETMF\Int64Extensions.cs" />
-    <Compile Include="Json.NETMF\JsonParser.cs" />
-    <Compile Include="Json.NETMF\JsonSerializer.cs" />
-    <Compile Include="Json.NETMF\UInt32Extensions.cs" />
-    <Compile Include="Json.NETMF\NumberStyle.cs" />
-    <Compile Include="Json.NETMF\StringExtensions.cs" />
     <Compile Include="Micro\IGarbage.cs" />
     <Compile Include="Micro\IHttpWebResponse.cs" />
     <Compile Include="Micro\IWebRequest.cs" />
@@ -87,6 +77,12 @@
   <ItemGroup>
     <None Include="Resources\NinaB.tinyfnt" />
     <None Include="Resources\small.tinyfnt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Json.NETMF\Json.NETMF.csproj">
+      <Project>{3fd3d714-a431-42ec-99d0-2f7d9f0e1bd3}</Project>
+      <Name>Json.NETMF</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

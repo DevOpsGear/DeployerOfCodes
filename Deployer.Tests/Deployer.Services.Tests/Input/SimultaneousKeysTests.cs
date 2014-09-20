@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Deployer.Services.Input;
+﻿using Deployer.Services.Input;
 using Deployer.Tests.SpiesFakes;
 using NUnit.Framework;
 
-namespace Deployer.Tests
+namespace Deployer.Tests.Input
 {
 	[TestFixture]
 	public class SimultaneousKeysTests

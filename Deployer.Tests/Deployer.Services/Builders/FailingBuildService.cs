@@ -1,8 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using Deployer.Services.Models;
 
 namespace Deployer.Services.Builders
 {
-	internal class FailingBuildService : IBuildService
+	public class FailingBuildService : IBuildService
 	{
 		private int _index;
 

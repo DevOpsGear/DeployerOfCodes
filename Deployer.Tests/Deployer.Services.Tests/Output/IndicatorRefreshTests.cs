@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Deployer.Services.Output;
+﻿using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
 using Deployer.Tests.SpiesFakes;
 using NUnit.Framework;
 
-namespace Deployer.Tests
+namespace Deployer.Tests.Output
 {
 	[TestFixture]
 	internal class IndicatorRefreshTests

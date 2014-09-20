@@ -1,8 +1,10 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Deployer.Services.Micro;
 
 namespace Deployer.Services.Builders
 {
+	[ExcludeFromCodeCoverage]
 	public class BuildServiceFactory
 	{
 		public static IBuildService Create(BuildServiceProvider which, IWebRequestFactory webFactory, IGarbage garbage)

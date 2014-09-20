@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Deployer.Services.Builders;
 using Deployer.Services.Config;
-using Deployer.Services.Hardware;
 using Deployer.Services.Input;
 using Deployer.Services.Models;
-using Deployer.Tests.Spies;
+using Deployer.Tests.SpiesFakes;
 using Moq;
 using NUnit.Framework;
 
-namespace Deployer.Tests
+namespace Deployer.Tests.Input
 {
 	[TestFixture]
 	public class ProjectSelectorTests

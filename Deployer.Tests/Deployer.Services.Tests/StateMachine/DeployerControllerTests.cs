@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Deployer.Services.Input;
+﻿using Deployer.Services.Input;
 using Deployer.Services.Micro;
 using Deployer.Services.StateMachine;
 using Moq;
 using NUnit.Framework;
 
-namespace Deployer.Tests
+namespace Deployer.Tests.StateMachine
 {
 	[TestFixture]
 	public class DeployerControllerTests
