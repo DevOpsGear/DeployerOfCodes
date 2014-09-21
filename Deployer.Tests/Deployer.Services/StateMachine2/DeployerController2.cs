@@ -25,6 +25,7 @@ namespace Deployer.Services.StateMachine2
 
 		public void PreflightCheck()
 		{
+			State.Check();
 		}
 
 		public void KeyOnEvent(KeySwitch whichKey)

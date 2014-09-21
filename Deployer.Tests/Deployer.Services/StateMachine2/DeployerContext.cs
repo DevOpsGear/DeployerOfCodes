@@ -56,6 +56,7 @@ namespace Deployer.Services.StateMachine2
 		public void ChangeState(DeployerState2 newState)
 		{
 			_controller.State = newState;
+			_controller.State.Check();
 		}
 	}
 }

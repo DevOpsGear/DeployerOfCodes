@@ -9,6 +9,10 @@
 			Context = context;
 		}
 
+		public virtual void Check()
+		{
+		}
+
 		public virtual void KeyTurned()
 		{
 		}
@@ -19,6 +23,8 @@
 
 		public virtual void Down()
 		{
+			var ipAddress = Context.Network.IpAddress;
+			Context.CharDisplay.Write("IP address:", ipAddress);
 		}
 
 		public virtual void Arm()

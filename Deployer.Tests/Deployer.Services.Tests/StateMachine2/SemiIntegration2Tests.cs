@@ -349,6 +349,7 @@ namespace Deployer.Tests.StateMachine2
 			_context = new DeployerContext(_simKeys, _projSel, _display, _indicators.Object, _sound.Object, _net.Object);
 			_sut = new DeployerController2(_context, _webFactory.Object, _garbage.Object, _net.Object);
 			_context.SetController(_sut);
+			_sut.PreflightCheck();
 		}
 
 		private void MockConfigs()
@@ -379,7 +380,6 @@ namespace Deployer.Tests.StateMachine2
 
 		private void VerifyTurnBothKeysState()
 		{
-			_sut.PreflightCheck();
 			_sut.Tick();
 			_time.AddSeconds(5);
 

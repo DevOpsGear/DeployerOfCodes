@@ -72,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateMachine2\DeployerContext.cs" />
     <Compile Include="StateMachine2\DeployerController2.cs" />
+    <Compile Include="StateMachine2\States\AbortState.cs" />
     <Compile Include="StateMachine2\States\DeployerState2.cs" />
     <Compile Include="StateMachine2\States\InitState.cs" />
     <Compile Include="StateMachine2\States\TurnBothKeysState.cs" />
