@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Deployer.Services.Hardware;
-using Deployer.Services.StateMachine;
+﻿using Deployer.Services.Hardware;
 
 namespace Deployer.Services.Output
 {
@@ -21,13 +15,13 @@ namespace Deployer.Services.Output
 		private bool _blink;
 
 		public Indicators(ILed keyA,
-		                         ILed keyB,
-		                         ILed selectProject,
-		                         ILed arm,
-		                         ILed deploy,
-		                         ILed deploying,
-		                         ILed succeeded,
-		                         ILed failed)
+		                  ILed keyB,
+		                  ILed selectProject,
+		                  ILed arm,
+		                  ILed deploy,
+		                  ILed deploying,
+		                  ILed succeeded,
+		                  ILed failed)
 		{
 			_keyA = keyA;
 			_keyB = keyB;

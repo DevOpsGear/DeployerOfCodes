@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Deployer.Services.Hardware;
+﻿using Deployer.Services.Hardware;
 using Deployer.Services.Input;
 using Deployer.Services.Micro;
 using Deployer.Services.Output;
