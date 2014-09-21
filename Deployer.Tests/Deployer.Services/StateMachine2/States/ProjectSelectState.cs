@@ -17,5 +17,15 @@ namespace Deployer.Services.StateMachine2.States
 		{
 			Context.CharDisplay.Write("Select project", "and press ARM");
 		}
+
+		public override void Up()
+		{
+			Context.Project.Up();
+		}
+
+		public override void Down()
+		{
+			Context.Project.Down();
+		}
 	}
 }

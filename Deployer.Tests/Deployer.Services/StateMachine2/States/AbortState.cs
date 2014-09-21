@@ -17,5 +17,13 @@ namespace Deployer.Services.StateMachine2.States
 		{
 			Context.CharDisplay.Write("ABORTED", "Remove keys");
 		}
+
+		public override void KeyTurned()
+		{
+			if (Context.Keys.AreBothOff)
+			{
+				Context.ChangeState(new InitState(Context));
+			}
+		}
 	}
 }

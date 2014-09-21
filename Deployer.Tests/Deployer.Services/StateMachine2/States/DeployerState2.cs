@@ -15,6 +15,7 @@
 
 		public virtual void KeyTurned()
 		{
+			Context.ChangeState(new AbortState(Context));
 		}
 
 		public virtual void Up()

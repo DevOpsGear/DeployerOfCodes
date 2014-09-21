@@ -109,13 +109,10 @@ namespace Deployer.Tests.StateMachine2
 		{
 			VerifyTurnBothKeysState();
 
-			_sut.Tick();
 			_time.AddSeconds(5);
 			_sut.KeyOnEvent(KeySwitch.KeyA);
-			_sut.Tick();
 			_time.AddSeconds(5);
 			_sut.KeyOnEvent(KeySwitch.KeyB);
-			_sut.Tick();
 
 			Assert.AreEqual("ABORTED", _display.Line1, "Line 1");
 			Assert.AreEqual("Remove keys", _display.Line2, "Line 2");
@@ -138,17 +135,14 @@ namespace Deployer.Tests.StateMachine2
 			TurnKeysTogether();
 			VerifySelectProjectState();
 
-			_sut.Tick();
 			_sut.DownPressedEvent();
 			Assert.AreEqual("Title1", _display.Line1, "Line 1");
 			Assert.AreEqual("Sub1", _display.Line2, "Line 2");
 
-			_sut.Tick();
 			_sut.DownPressedEvent();
 			Assert.AreEqual("Title2", _display.Line1, "Line 1");
 			Assert.AreEqual("Sub2", _display.Line2, "Line 2");
 
-			_sut.Tick();
 			_sut.UpPressedEvent();
 			Assert.AreEqual("Title1", _display.Line1, "Line 1");
 			Assert.AreEqual("Sub1", _display.Line2, "Line 2");
@@ -163,15 +157,12 @@ namespace Deployer.Tests.StateMachine2
 			TurnKeysTogether();
 			VerifySelectProjectState();
 
-			_sut.Tick();
 			_sut.ArmPressedEvent();
 			VerifySelectProjectState();
 
-			_sut.Tick();
 			_sut.DeployPressedEvent();
 			VerifySelectProjectState();
 
-			_sut.Tick();
 			_sut.DownPressedEvent();
 			Assert.AreEqual("Title1", _display.Line1, "Line 1");
 			Assert.AreEqual("Sub1", _display.Line2, "Line 2");
@@ -186,7 +177,6 @@ namespace Deployer.Tests.StateMachine2
 			TurnKeysTogether();
 			VerifySelectProjectState();
 
-			_sut.Tick();
 			_sut.KeyOffEvent(KeySwitch.KeyA);
 
 			Assert.AreEqual("ABORTED", _display.Line1, "Line 1");
@@ -202,7 +192,6 @@ namespace Deployer.Tests.StateMachine2
 			TurnKeysTogether();
 			VerifySelectProjectState();
 
-			_sut.Tick();
 			_sut.KeyOffEvent(KeySwitch.KeyB);
 
 			Assert.AreEqual("ABORTED", _display.Line1, "Line 1");
@@ -218,18 +207,15 @@ namespace Deployer.Tests.StateMachine2
 			TurnKeysTogether();
 			VerifySelectProjectState();
 
-			_sut.Tick();
 			_sut.KeyOffEvent(KeySwitch.KeyA);
 
 			Assert.AreEqual("ABORTED", _display.Line1, "Line 1");
 			Assert.AreEqual("Remove keys", _display.Line2, "Line 2");
 
-			_sut.Tick();
 			_sut.KeyOnEvent(KeySwitch.KeyA);
 			Assert.AreEqual("ABORTED", _display.Line1, "Line 1");
 			Assert.AreEqual("Remove keys", _display.Line2, "Line 2");
 
-			_sut.Tick();
 			_sut.KeyOffEvent(KeySwitch.KeyA);
 			Assert.AreEqual("Turn both keys", _display.Line1, "Line 1");
 			Assert.AreEqual("simultaneously", _display.Line2, "Line 2");
@@ -244,17 +230,14 @@ namespace Deployer.Tests.StateMachine2
 			TurnKeysTogether();
 			VerifySelectProjectState();
 
-			_sut.Tick();
 			_sut.DownPressedEvent();
 			Assert.AreEqual("Title1", _display.Line1, "Line 1");
 			Assert.AreEqual("Sub1", _display.Line2, "Line 2");
 
-			_sut.Tick();
 			_sut.ArmPressedEvent();
 			Assert.AreEqual("Ready to deploy", _display.Line1, "Line 1");
 			Assert.AreEqual("Title1", _display.Line2, "Line 2");
 
-			_sut.Tick();
 			_sut.DeployPressedEvent();
 			Assert.AreEqual("*** Queued", _display.Line1, "Line 1");
 			Assert.AreEqual("Title1", _display.Line2, "Line 2");
@@ -294,22 +277,18 @@ namespace Deployer.Tests.StateMachine2
 			TurnKeysTogether();
 			VerifySelectProjectState();
 
-			_sut.Tick();
 			_sut.DownPressedEvent();
 			Assert.AreEqual("Title1", _display.Line1, "Line 1");
 			Assert.AreEqual("Sub1", _display.Line2, "Line 2");
 
-			_sut.Tick();
 			_sut.DownPressedEvent();
 			Assert.AreEqual("Title2", _display.Line1, "Line 1");
 			Assert.AreEqual("Sub2", _display.Line2, "Line 2");
 
-			_sut.Tick();
 			_sut.ArmPressedEvent();
 			Assert.AreEqual("Ready to deploy", _display.Line1, "Line 1");
 			Assert.AreEqual("Title2", _display.Line2, "Line 2");
 
-			_sut.Tick();
 			_sut.DeployPressedEvent();
 			Assert.AreEqual("*** Queued", _display.Line1, "Line 1");
 			Assert.AreEqual("Title2", _display.Line2, "Line 2");

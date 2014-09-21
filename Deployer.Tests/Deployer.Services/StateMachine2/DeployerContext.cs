@@ -48,6 +48,11 @@ namespace Deployer.Services.StateMachine2
 			get { return _keys; }
 		}
 
+		public IProjectSelector Project
+		{
+			get { return _projectSelect; }
+		}
+
 		public INetwork Network
 		{
 			get { return _network; }
