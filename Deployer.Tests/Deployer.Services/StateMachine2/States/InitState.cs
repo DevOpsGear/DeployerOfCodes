@@ -20,5 +20,10 @@
 			if (Context.Keys.AreBothOff)
 				Context.ChangeState(new TurnBothKeysState(Context));
 		}
+
+		public override void Tick()
+		{
+			Context.Indicator.BlinkKeys();
+		}
 	}
 }

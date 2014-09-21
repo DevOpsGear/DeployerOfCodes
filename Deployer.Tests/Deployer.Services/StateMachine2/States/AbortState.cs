@@ -1,5 +1,4 @@
-﻿
-namespace Deployer.Services.StateMachine2.States
+﻿namespace Deployer.Services.StateMachine2.States
 {
 	public class AbortState : DeployerState2
 	{
@@ -19,6 +18,11 @@ namespace Deployer.Services.StateMachine2.States
 			{
 				Context.ChangeState(new InitState(Context));
 			}
+		}
+
+		public override void Tick()
+		{
+			Context.Indicator.BlinkKeys();
 		}
 	}
 }

@@ -12,6 +12,7 @@ namespace Deployer.Services.StateMachine2.States
 		{
 			var title = Context.Project.SelectedProjectName;
 			Context.CharDisplay.Write("* FAILURE *", title);
+			Context.Indicator.LightFailed();
 		}
 	}
 }

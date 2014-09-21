@@ -59,6 +59,11 @@ namespace Deployer.Services.StateMachine2
 			get { return _projectSelect; }
 		}
 
+		public IIndicatorRefresh2 Indicator
+		{
+			get { return _indicatorRefresh; }
+		}
+
 		public INetwork Network
 		{
 			get { return _network; }

@@ -56,6 +56,8 @@ namespace Deployer.Tests.StateMachine2
 
 			Assert.AreEqual("IP address:", _display.Line1, "Line 1");
 			Assert.AreEqual("999.888.777.666", _display.Line2, "Line 2");
+
+			AssertIndicators("K");
 		}
 
 		[Test]
@@ -66,14 +68,17 @@ namespace Deployer.Tests.StateMachine2
 
 			Assert.AreEqual("Both keys off", _display.Line1, "Line 1");
 			Assert.AreEqual("to begin", _display.Line2, "Line 2");
+			AssertIndicators("K");
 
 			_sut.KeyOffEvent(KeySwitch.KeyA);
 			Assert.AreEqual("Both keys off", _display.Line1, "Line 1");
 			Assert.AreEqual("to begin", _display.Line2, "Line 2");
+			AssertIndicators("K");
 
 			_sut.KeyOffEvent(KeySwitch.KeyB);
 			Assert.AreEqual("Turn both keys", _display.Line1, "Line 1");
 			Assert.AreEqual("simultaneously", _display.Line2, "Line 2");
+			AssertIndicators("K");
 		}
 
 		[Test]
@@ -84,10 +89,12 @@ namespace Deployer.Tests.StateMachine2
 
 			Assert.AreEqual("Both keys off", _display.Line1, "Line 1");
 			Assert.AreEqual("to begin", _display.Line2, "Line 2");
+			AssertIndicators("K");
 
 			_sut.KeyOffEvent(KeySwitch.KeyB);
 			Assert.AreEqual("Turn both keys", _display.Line1, "Line 1");
 			Assert.AreEqual("simultaneously", _display.Line2, "Line 2");
+			AssertIndicators("K");
 		}
 
 		[Test]
@@ -98,16 +105,19 @@ namespace Deployer.Tests.StateMachine2
 
 			Assert.AreEqual("Both keys off", _display.Line1, "Line 1");
 			Assert.AreEqual("to begin", _display.Line2, "Line 2");
+			AssertIndicators("K");
 
 			_sut.KeyOffEvent(KeySwitch.KeyA);
 			Assert.AreEqual("Turn both keys", _display.Line1, "Line 1");
 			Assert.AreEqual("simultaneously", _display.Line2, "Line 2");
+			AssertIndicators("K");
 		}
 
 		[Test]
 		public void Turn_keys_on_too_slowly()
 		{
 			VerifyTurnBothKeysState();
+			AssertIndicators("K");
 
 			_time.AddSeconds(5);
 			_sut.KeyOnEvent(KeySwitch.KeyA);
@@ -116,14 +126,17 @@ namespace Deployer.Tests.StateMachine2
 
 			Assert.AreEqual("ABORTED", _display.Line1, "Line 1");
 			Assert.AreEqual("Remove keys", _display.Line2, "Line 2");
+			AssertIndicators("K");
 		}
 
 		[Test]
 		public void Turn_keys_on_within_threshold()
 		{
 			VerifyTurnBothKeysState();
+			AssertIndicators("K");
 			TurnKeysTogether();
 			VerifySelectProjectState();
+			AssertIndicators("KP");
 		}
 
 		[Test]
@@ -132,8 +145,10 @@ namespace Deployer.Tests.StateMachine2
 			MockConfigs();
 
 			VerifyTurnBothKeysState();
+			AssertIndicators("K");
 			TurnKeysTogether();
 			VerifySelectProjectState();
+			AssertIndicators("KP");
 
 			_sut.DownPressedEvent();
 			Assert.AreEqual("Title1", _display.Line1, "Line 1");
@@ -154,8 +169,10 @@ namespace Deployer.Tests.StateMachine2
 			MockConfigs();
 
 			VerifyTurnBothKeysState();
+			AssertIndicators("K");
 			TurnKeysTogether();
 			VerifySelectProjectState();
+			AssertIndicators("KP");
 
 			_sut.ArmPressedEvent();
 			VerifySelectProjectState();
@@ -176,6 +193,7 @@ namespace Deployer.Tests.StateMachine2
 			VerifyTurnBothKeysState();
 			TurnKeysTogether();
 			VerifySelectProjectState();
+			AssertIndicators("KP");
 
 			_sut.KeyOffEvent(KeySwitch.KeyA);
 
@@ -191,6 +209,7 @@ namespace Deployer.Tests.StateMachine2
 			VerifyTurnBothKeysState();
 			TurnKeysTogether();
 			VerifySelectProjectState();
+			AssertIndicators("KP");
 
 			_sut.KeyOffEvent(KeySwitch.KeyB);
 
@@ -206,6 +225,7 @@ namespace Deployer.Tests.StateMachine2
 			VerifyTurnBothKeysState();
 			TurnKeysTogether();
 			VerifySelectProjectState();
+			AssertIndicators("KP");
 
 			_sut.KeyOffEvent(KeySwitch.KeyA);
 
@@ -233,25 +253,25 @@ namespace Deployer.Tests.StateMachine2
 			VerifyTurnBothKeysState();
 			TurnKeysTogether();
 			VerifySelectProjectState();
+			AssertIndicators("KP");
 
 			_sut.DownPressedEvent();
 			Assert.AreEqual("Title1", _display.Line1, "Line 1");
 			Assert.AreEqual("Sub1", _display.Line2, "Line 2");
+			AssertIndicators("KP");
 
 			_sut.ArmPressedEvent();
 			Assert.AreEqual("Ready to deploy", _display.Line1, "Line 1");
 			Assert.AreEqual("Title1", _display.Line2, "Line 2");
+			AssertIndicators("KPD");
 
 			_sut.DeployPressedEvent();
 			Assert.AreEqual("*** Queued", _display.Line1, "Line 1");
 			Assert.AreEqual("Title1", _display.Line2, "Line 2");
+			AssertIndicators("KPDR", false);
 
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
+			for (int idx = 0; idx < 6; idx++)
+				_sut.Tick();
 			Assert.AreEqual("*** Queued", _display.Line1, "Line 1");
 			Assert.AreEqual("Title1", _display.Line2, "Line 2");
 
@@ -259,17 +279,15 @@ namespace Deployer.Tests.StateMachine2
 			Assert.AreEqual("*** Building", _display.Line1, "Line 1");
 			Assert.AreEqual("Title1", _display.Line2, "Line 2");
 
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
+			for (int idx = 0; idx < 5; idx++)
+				_sut.Tick();
 			Assert.AreEqual("*** Building", _display.Line1, "Line 1");
 			Assert.AreEqual("Title1", _display.Line2, "Line 2");
 
 			_sut.Tick();
 			Assert.AreEqual("* FAILURE *", _display.Line1, "Line 1");
 			Assert.AreEqual("Title1", _display.Line2, "Line 2");
+			AssertIndicators("KPDRF");
 		}
 
 		[Test]
@@ -280,6 +298,7 @@ namespace Deployer.Tests.StateMachine2
 			VerifyTurnBothKeysState();
 			TurnKeysTogether();
 			VerifySelectProjectState();
+			AssertIndicators("KP");
 
 			_sut.DownPressedEvent();
 			Assert.AreEqual("Title1", _display.Line1, "Line 1");
@@ -292,22 +311,15 @@ namespace Deployer.Tests.StateMachine2
 			_sut.ArmPressedEvent();
 			Assert.AreEqual("Ready to deploy", _display.Line1, "Line 1");
 			Assert.AreEqual("Title2", _display.Line2, "Line 2");
+			AssertIndicators("KPD");
 
 			_sut.DeployPressedEvent();
 			Assert.AreEqual("*** Queued", _display.Line1, "Line 1");
 			Assert.AreEqual("Title2", _display.Line2, "Line 2");
+			AssertIndicators("KPDR", false);
 
-			_sut.Tick();
-
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
+			for (int idx = 0; idx < 10; idx++)
+				_sut.Tick();
 			Assert.AreEqual("*** Queued", _display.Line1, "Line 1");
 			Assert.AreEqual("Title2", _display.Line2, "Line 2");
 
@@ -315,16 +327,15 @@ namespace Deployer.Tests.StateMachine2
 			Assert.AreEqual("*** Building", _display.Line1, "Line 1");
 			Assert.AreEqual("Title2", _display.Line2, "Line 2");
 
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
-			_sut.Tick();
+			for (int idx = 0; idx < 4; idx++)
+				_sut.Tick();
 			Assert.AreEqual("*** Building", _display.Line1, "Line 1");
 			Assert.AreEqual("Title2", _display.Line2, "Line 2");
 
 			_sut.Tick();
 			Assert.AreEqual("SUCCESS!", _display.Line1, "Line 1");
 			Assert.AreEqual("Title2", _display.Line2, "Line 2");
+			AssertIndicators("KPDRS");
 		}
 
 		private void ConstructSut()
@@ -371,6 +382,42 @@ namespace Deployer.Tests.StateMachine2
 			//_indicators.Verify(x => x.ChangedState(DeployerState.TurnBothKeys), Times.Once);
 			Assert.AreEqual("Turn both keys", _display.Line1, "Line 1");
 			Assert.AreEqual("simultaneously", _display.Line2, "Line 2");
+		}
+
+		private void AssertIndicators(string s, bool doTick = true)
+		{
+			if (doTick)
+				_sut.Tick();
+
+			if (s.Contains("K"))
+				_indicators.Verify(x => x.BlinkKeys(), Times.AtLeastOnce, "Keys");
+			else
+				_indicators.Verify(x => x.BlinkKeys(), Times.Never, "Keys");
+
+			if (s.Contains("P"))
+				_indicators.Verify(x => x.BlinkProjectAndArm(), Times.AtLeastOnce, "Project select");
+			else
+				_indicators.Verify(x => x.BlinkProjectAndArm(), Times.Never, "Project select");
+
+			if (s.Contains("D"))
+				_indicators.Verify(x => x.BlinkReadyToDeploy(), Times.AtLeastOnce, "Ready to deploy");
+			else
+				_indicators.Verify(x => x.BlinkReadyToDeploy(), Times.Never, "Ready to deploy");
+
+			if (s.Contains("R"))
+				_indicators.Verify(x => x.LightRunning(), Times.AtLeastOnce, "Running");
+			else
+				_indicators.Verify(x => x.LightRunning(), Times.Never, "Running");
+
+			if (s.Contains("S"))
+				_indicators.Verify(x => x.LightSucceeded(), Times.AtLeastOnce, "Succeeded");
+			else
+				_indicators.Verify(x => x.LightSucceeded(), Times.Never, "Succeeded");
+
+			if (s.Contains("F"))
+				_indicators.Verify(x => x.LightFailed(), Times.AtLeastOnce, "Failed");
+			else
+				_indicators.Verify(x => x.LightFailed(), Times.Never, "Failed");
 		}
 	}
 }

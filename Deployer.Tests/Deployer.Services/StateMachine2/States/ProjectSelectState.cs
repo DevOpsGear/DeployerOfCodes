@@ -1,5 +1,4 @@
-﻿
-namespace Deployer.Services.StateMachine2.States
+﻿namespace Deployer.Services.StateMachine2.States
 {
 	public class ProjectSelectState : DeployerState2
 	{
@@ -29,6 +28,11 @@ namespace Deployer.Services.StateMachine2.States
 			{
 				Context.ChangeState(new ReadyToDeployState(Context));
 			}
+		}
+
+		public override void Tick()
+		{
+			Context.Indicator.BlinkProjectAndArm();
 		}
 	}
 }

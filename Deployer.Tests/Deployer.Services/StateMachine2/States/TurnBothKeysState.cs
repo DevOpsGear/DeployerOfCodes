@@ -1,5 +1,4 @@
-﻿
-namespace Deployer.Services.StateMachine2.States
+﻿namespace Deployer.Services.StateMachine2.States
 {
 	public class TurnBothKeysState : DeployerState2
 	{
@@ -26,6 +25,11 @@ namespace Deployer.Services.StateMachine2.States
 					Context.ChangeState(new AbortState(Context));
 				}
 			}
+		}
+
+		public override void Tick()
+		{
+			Context.Indicator.BlinkKeys();
 		}
 	}
 }

@@ -19,11 +19,11 @@ namespace Deployer.Services.StateMachine2.States
 			_currentBuild = BuildServiceFactory.Create(proj.BuildServiceProvider, Context.WebFactory, Context.Garbage);
 			var state = _currentBuild.StartBuild(proj.CiConfig);
 			ProcessBuildState(state, proj.Title);
+			Context.Indicator.LightRunning();
 		}
 
 		public override void Tick()
 		{
-			//_indicatorRefresh.ChangedState(State);
 			var proj = Context.Project.SelectedProjectName;
 			var state = _currentBuild.GetStatus();
 			ProcessBuildState(state, proj);
