@@ -20,13 +20,16 @@ namespace Deployer.Services.StateMachine2.States
 
 		public override void KeyTurned()
 		{
-			if (Context.Keys.AreBothOn && Context.Keys.SwitchedSimultaneously)
+			if (Context.Keys.AreBothOn)
 			{
-				// Transition to state
-			}
-			else
-			{
-				//Context.ChangeState(new AbortState(Context));
+				if (Context.Keys.SwitchedSimultaneously)
+				{
+					// Transition to PROJECTSELECT state
+				}
+				else
+				{
+					Context.ChangeState(new AbortState(Context));
+				}
 			}
 		}
 	}
