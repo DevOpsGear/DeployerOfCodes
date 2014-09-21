@@ -1,12 +1,10 @@
 using System.Collections;
-using System.Diagnostics.CodeAnalysis;
 using Deployer.Services.Builders;
 using Deployer.Services.Models;
 using Json.NETMF;
 
 namespace Deployer.Services.Config
 {
-	[ExcludeFromCodeCoverage]
 	public class FakeConfigurationService : IConfigurationService
 	{
 		private readonly Project[] _projects;

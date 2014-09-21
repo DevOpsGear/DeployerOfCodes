@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\AppVeyorBuildTests.cs" />
+    <Compile Include="Builders\BuildFactoryTests.cs" />
     <Compile Include="Builders\TeamCityBuildTests.cs" />
     <Compile Include="Builders\FailingBuilderTests.cs" />
     <Compile Include="Builders\SucceedingBuilderTests.cs" />

@@ -91,36 +91,6 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Input\SimultaneousKeys.cs">
       <Link>Input\SimultaneousKeys.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\CharExtensions.cs">
-      <Link>Json.NETMF\CharExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\DateTimeExtensions.cs">
-      <Link>Json.NETMF\DateTimeExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\DateTimeFormat.cs">
-      <Link>Json.NETMF\DateTimeFormat.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\Helper.cs">
-      <Link>Json.NETMF\Helper.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\Int64Extensions.cs">
-      <Link>Json.NETMF\Int64Extensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\JsonParser.cs">
-      <Link>Json.NETMF\JsonParser.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\JsonSerializer.cs">
-      <Link>Json.NETMF\JsonSerializer.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\UInt32Extensions.cs">
-      <Link>Json.NETMF\UInt32Extensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\NumberStyle.cs">
-      <Link>Json.NETMF\NumberStyle.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Json.NETMF\StringExtensions.cs">
-      <Link>Json.NETMF\StringExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\IGarbage.cs">
       <Link>Micro\IGarbage.cs</Link>
     </Compile>
@@ -165,7 +135,8 @@
     <Reference Include="Json.NetMF">
       <HintPath>..\packages\Json.NetMF.1.3.0.0\lib\netmf43\Json.NetMF.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SPOT.Native"></Reference>
+    <Reference Include="Microsoft.SPOT.Native">
+    </Reference>
     <Reference Include="System.Http" />
     <Reference Include="System.IO" />
   </ItemGroup>

@@ -56,7 +56,7 @@ namespace Deployer.Services.Builders
 			var hash = JsonSerializer.DeserializeString(config) as Hashtable;
 			if (hash == null) return;
 			var url = hash["url"] as string;
-			if (!url.EndsWith("/"))
+			if (url.Substring(url.Length - 1) != "/")
 				url += "/";
 			_apiRoot = url + "httpAuth/app/rest/";
 			_buildId = hash["buildId"] as string;

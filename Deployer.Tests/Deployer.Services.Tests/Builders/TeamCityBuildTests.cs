@@ -38,10 +38,10 @@ namespace Deployer.Tests.Builders
 		{
 			var config = new Hashtable
 				{
-					{"apiToken", "TOKEN"},
-					{"accountName", "ACCOUNT"},
-					{"projectSlug", "SLUG"},
-					{"branch", "BRANCH"}
+					{"url", "URL"},
+					{"buildId", "BUILDID"},
+					{"username", "USERNAME"},
+					{"password", "PASSWORD"}
 				};
 			return JsonSerializer.SerializeObject(config);
 		}
@@ -55,26 +55,7 @@ namespace Deployer.Tests.Builders
 		[Test]
 		public void Sequence()
 		{
-			AssertQueued(_sut.GetStatus());
-			AssertQueued(_sut.GetStatus());
-			AssertQueued(_sut.GetStatus());
-			AssertQueued(_sut.GetStatus());
-			AssertQueued(_sut.GetStatus());
-			AssertQueued(_sut.GetStatus());
-			AssertQueued(_sut.GetStatus());
-			AssertQueued(_sut.GetStatus());
-			AssertQueued(_sut.GetStatus());
-			AssertQueued(_sut.GetStatus());
 			AssertRunning(_sut.GetStatus());
-			AssertRunning(_sut.GetStatus());
-			AssertRunning(_sut.GetStatus());
-			AssertRunning(_sut.GetStatus());
-			AssertRunning(_sut.GetStatus());
-			AssertSucceeded(_sut.GetStatus());
-			AssertSucceeded(_sut.GetStatus());
-			AssertSucceeded(_sut.GetStatus());
-			AssertSucceeded(_sut.GetStatus());
-			AssertSucceeded(_sut.GetStatus());
 		}
 
 		private void AssertQueued(BuildState state)
