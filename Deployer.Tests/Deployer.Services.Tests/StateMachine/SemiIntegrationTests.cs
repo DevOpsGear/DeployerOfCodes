@@ -52,12 +52,56 @@ namespace Deployer.Tests.StateMachine
 		public void Press_down_to_see_ip_address()
 		{
 			_net.Setup(x => x.IpAddress).Returns("999.888.777.666");
-
-			_sut.Tick();
 			_sut.DownPressedEvent();
 
 			Assert.AreEqual("IP address:", _display.Line1, "Line 1");
 			Assert.AreEqual("999.888.777.666", _display.Line2, "Line 2");
+		}
+
+		[Test]
+		public void Start_with_both_keys_on_and_turn_both_off()
+		{
+			_simKeys = new SimultaneousKeys(true, true, _time);
+			_sut = new DeployerController(_loop, _projSel, _simKeys, _webFactory.Object, _garbage.Object);
+
+			Assert.AreEqual("Both keys off", _display.Line1, "Line 1");
+			Assert.AreEqual("to begin", _display.Line2, "Line 2");
+
+			_sut.KeyOffEvent(KeySwitch.KeyA);
+			Assert.AreEqual("Both keys off", _display.Line1, "Line 1");
+			Assert.AreEqual("to begin", _display.Line2, "Line 2");
+
+			_sut.KeyOffEvent(KeySwitch.KeyB);
+			Assert.AreEqual("Turn both keys", _display.Line1, "Line 1");
+			Assert.AreEqual("simultaneously", _display.Line2, "Line 2");
+		}
+
+		[Test]
+		public void Start_with_keyB_on_and_turn_it_off()
+		{
+			_simKeys = new SimultaneousKeys(false, true, _time);
+			_sut = new DeployerController(_loop, _projSel, _simKeys, _webFactory.Object, _garbage.Object);
+
+			Assert.AreEqual("Both keys off", _display.Line1, "Line 1");
+			Assert.AreEqual("to begin", _display.Line2, "Line 2");
+
+			_sut.KeyOffEvent(KeySwitch.KeyB);
+			Assert.AreEqual("Turn both keys", _display.Line1, "Line 1");
+			Assert.AreEqual("simultaneously", _display.Line2, "Line 2");
+		}
+
+		[Test]
+		public void Start_with_keyA_on_and_turn_it_off()
+		{
+			_simKeys = new SimultaneousKeys(true, false, _time);
+			_sut = new DeployerController(_loop, _projSel, _simKeys, _webFactory.Object, _garbage.Object);
+
+			Assert.AreEqual("Both keys off", _display.Line1, "Line 1");
+			Assert.AreEqual("to begin", _display.Line2, "Line 2");
+
+			_sut.KeyOffEvent(KeySwitch.KeyA);
+			Assert.AreEqual("Turn both keys", _display.Line1, "Line 1");
+			Assert.AreEqual("simultaneously", _display.Line2, "Line 2");
 		}
 
 		[Test]
@@ -111,7 +155,7 @@ namespace Deployer.Tests.StateMachine
 		}
 
 		[Test]
-		public void Reject_arm_and_deploy_while_in_project_select_state()
+		public void While_in_project_select_state_reject_arm_and_deploy()
 		{
 			MockConfigs();
 
@@ -166,7 +210,33 @@ namespace Deployer.Tests.StateMachine
 		}
 
 		[Test]
-		public void Fails_at_deploy_step()
+		public void Abort_then_reset()
+		{
+			MockConfigs();
+
+			VerifyTurnBothKeysState();
+			TurnKeysTogether();
+			VerifySelectProjectState();
+
+			_sut.Tick();
+			_sut.KeyOffEvent(KeySwitch.KeyA);
+
+			Assert.AreEqual("ABORTED", _display.Line1, "Line 1");
+			Assert.AreEqual("Remove keys", _display.Line2, "Line 2");
+
+			_sut.Tick();
+			_sut.KeyOnEvent(KeySwitch.KeyA);
+			Assert.AreEqual("ABORTED", _display.Line1, "Line 1");
+			Assert.AreEqual("Remove keys", _display.Line2, "Line 2");
+
+			_sut.Tick();
+			_sut.KeyOffEvent(KeySwitch.KeyA);
+			Assert.AreEqual("Turn both keys", _display.Line1, "Line 1");
+			Assert.AreEqual("simultaneously", _display.Line2, "Line 2");
+		}
+
+		[Test]
+		public void Complete_process_through_failed_depoyment()
 		{
 			MockConfigs();
 
@@ -186,16 +256,100 @@ namespace Deployer.Tests.StateMachine
 
 			_sut.Tick();
 			_sut.DeployPressedEvent();
+			Assert.AreEqual("*** Queued", _display.Line1, "Line 1");
+			Assert.AreEqual("Title1", _display.Line2, "Line 2");
+
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			Assert.AreEqual("*** Queued", _display.Line1, "Line 1");
+			Assert.AreEqual("Title1", _display.Line2, "Line 2");
+
+			_sut.Tick();
+			Assert.AreEqual("*** Building", _display.Line1, "Line 1");
+			Assert.AreEqual("Title1", _display.Line2, "Line 2");
+
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			Assert.AreEqual("*** Building", _display.Line1, "Line 1");
+			Assert.AreEqual("Title1", _display.Line2, "Line 2");
+
+			_sut.Tick();
 			Assert.AreEqual("* FAILURE *", _display.Line1, "Line 1");
 			Assert.AreEqual("Title1", _display.Line2, "Line 2");
+		}
+
+		[Test]
+		public void Complete_process_through_successful_depoyment()
+		{
+			MockConfigs();
+
+			VerifyTurnBothKeysState();
+			TurnKeysTogether();
+			VerifySelectProjectState();
+
+			_sut.Tick();
+			_sut.DownPressedEvent();
+			Assert.AreEqual("Title1", _display.Line1, "Line 1");
+			Assert.AreEqual("Sub1", _display.Line2, "Line 2");
+
+			_sut.Tick();
+			_sut.DownPressedEvent();
+			Assert.AreEqual("Title2", _display.Line1, "Line 1");
+			Assert.AreEqual("Sub2", _display.Line2, "Line 2");
+
+			_sut.Tick();
+			_sut.ArmPressedEvent();
+			Assert.AreEqual("Ready to deploy", _display.Line1, "Line 1");
+			Assert.AreEqual("Title2", _display.Line2, "Line 2");
+
+			_sut.Tick();
+			_sut.DeployPressedEvent();
+			Assert.AreEqual("*** Queued", _display.Line1, "Line 1");
+			Assert.AreEqual("Title2", _display.Line2, "Line 2");
+
+			_sut.Tick();
+
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			Assert.AreEqual("*** Queued", _display.Line1, "Line 1");
+			Assert.AreEqual("Title2", _display.Line2, "Line 2");
+
+			_sut.Tick();
+			Assert.AreEqual("*** Building", _display.Line1, "Line 1");
+			Assert.AreEqual("Title2", _display.Line2, "Line 2");
+
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			_sut.Tick();
+			Assert.AreEqual("*** Building", _display.Line1, "Line 1");
+			Assert.AreEqual("Title2", _display.Line2, "Line 2");
+
+			_sut.Tick();
+			Assert.AreEqual("SUCCESS!", _display.Line1, "Line 1");
+			Assert.AreEqual("Title2", _display.Line2, "Line 2");
 		}
 
 		private void MockConfigs()
 		{
 			_config.Setup(x => x.GetProjects()).Returns(new[]
 				{
-					new Project("Title1", "Sub1", BuildServiceProvider.AppVeyor, "Dweezil"),
-					new Project("Title2", "Sub2", BuildServiceProvider.AppVeyor, "Dweezil")
+					new Project("Title1", "Sub1", BuildServiceProvider.Failing, "Dweezil"),
+					new Project("Title2", "Sub2", BuildServiceProvider.Succeeding, "Dweezil")
 				});
 		}
 

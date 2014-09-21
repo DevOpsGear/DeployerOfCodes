@@ -98,9 +98,6 @@ namespace Deployer.Services.StateMachine
 
 		public void Abort()
 		{
-			if (State == DeployerState.Abort)
-				return;
-
 			State = DeployerState.Abort;
 			_indicatorRefresh.ChangedState(State);
 
