@@ -7,6 +7,7 @@ using Deployer.Services.Hardware;
 using Deployer.Services.Input;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
+using Deployer.Services.StateMachine2;
 using Gadgeteer;
 using Gadgeteer.Networking;
 using Microsoft.SPOT;
@@ -19,8 +20,7 @@ namespace Deployer.App
 	public partial class Program
 	{
 		private IDeployerLoop _loop;
-		private IndicatorRefresh _indicator;
-		private IProjectSelector _project;
+		private IIndicatorRefresh _indicator;
 		private IDeployerController _controller;
 
 		private Timer _timerBlink;
@@ -43,26 +43,23 @@ namespace Deployer.App
 
 		private NetworkWrapper _network;
 		private Persistence _storage;
-		private Sound _sound;
 
 		private void ProgramStarted()
 		{
-			characterDisplay.Clear();
-			characterDisplay.SetCursorPosition(0, 0);
-			characterDisplay.Print("Getting IP address...");
-
 			SetupEthernet();
 			SetupInputs();
 			SetupIndicators();
 			SetupPersistence();
-			SetupSound();
 
 			var config = new FakeConfigurationService();
 			var charDisp = new CharDisplay(characterDisplay);
 			var keys = new SimultaneousKeys(ReversedSwitchA, ReversedSwitchB, new TimeService());
 			var webFactory = new WebRequestFactory();
 			var garbage = new GarbageCollector();
+			var project = new ProjectSelector(charDisp, config);
+			var sound = new Sound(tunes);
 
+			/*
 			_indicator = new IndicatorRefresh(_indicatorTurnKeyA,
 			                                  _indicatorTurnKeyB,
 			                                  _indicatorSelectProject,
@@ -71,9 +68,20 @@ namespace Deployer.App
 			                                  _indicatorStateDeploying,
 			                                  _indicatorStateSucceeded,
 			                                  _indicatorStateFailed);
-			_project = new ProjectSelector(charDisp, config);
 			_loop = new DeployerLoop(charDisp, _indicator, _project, _network, _sound);
-			_controller = new DeployerController(_loop, _project, keys, webFactory, garbage);
+			_controller = new DeployerController(_loop, project, keys, webFactory, garbage);
+			*/
+			var indicators = new Indicators(_indicatorTurnKeyA,
+			                                _indicatorTurnKeyB,
+			                                _indicatorSelectProject,
+			                                _indicatorReadyToArm,
+			                                _indicatorReadyToDeploy,
+			                                _indicatorStateDeploying,
+			                                _indicatorStateSucceeded,
+			                                _indicatorStateFailed);
+			var context = new DeployerContext(keys, project, charDisp, indicators, sound, _network, webFactory, garbage);
+			_controller = new DeployerController2(context, webFactory, garbage, _network);
+			context.SetController(_controller);
 
 			_controller.PreflightCheck();
 
@@ -88,6 +96,10 @@ namespace Deployer.App
 		{
 			try
 			{
+				characterDisplay.Clear();
+				characterDisplay.SetCursorPosition(0, 0);
+				characterDisplay.Print("Getting IP address...");
+
 				NetworkChange.NetworkAddressChanged += OnNetworkAddressChanged;
 				NetworkChange.NetworkAvailabilityChanged += OnNetworkAvailabilityChanged;
 
@@ -172,11 +184,6 @@ namespace Deployer.App
 			existDir = _storage.DoesRootDirectoryExist("config");
 
 			var existFile = _storage.DoesFileExist(@"\config\projects.json");
-		}
-
-		private void SetupSound()
-		{
-			_sound = new Sound(tunes);
 		}
 
 		#endregion
@@ -264,18 +271,16 @@ namespace Deployer.App
 
 		private InterruptPort SetupInterruptOffAndOn(Cpu.Pin pin)
 		{
-			var interr = new InterruptPort(pin, true,
-			                               Port.ResistorMode.PullUp,
-			                               Port.InterruptMode.InterruptEdgeBoth);
-			return interr;
+			return new InterruptPort(pin, true,
+			                         Port.ResistorMode.PullUp,
+			                         Port.InterruptMode.InterruptEdgeBoth);
 		}
 
 		private InterruptPort SetupInterruptRelease(Cpu.Pin pin)
 		{
-			var interr = new InterruptPort(pin, true,
-			                               Port.ResistorMode.PullUp,
-			                               Port.InterruptMode.InterruptEdgeLow);
-			return interr;
+			return new InterruptPort(pin, true,
+			                         Port.ResistorMode.PullUp,
+			                         Port.InterruptMode.InterruptEdgeLow);
 		}
 
 		#endregion
@@ -314,7 +319,8 @@ namespace Deployer.App
 
 		private void BlinkTick(Timer timer)
 		{
-			_indicator.Tick();
+			if (_indicator != null)
+				_indicator.Tick();
 			_controller.Tick();
 		}
 
