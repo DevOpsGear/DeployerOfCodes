@@ -53,7 +53,7 @@
     <Compile Include="Hardware\INetwork.cs" />
     <Compile Include="Hardware\IPersistence.cs" />
     <Compile Include="Hardware\ISound.cs" />
-    <Compile Include="Hardware\ITime.cs" />
+    <Compile Include="Hardware\ITimeService.cs" />
     <Compile Include="Input\IProjectSelector.cs" />
     <Compile Include="Input\ISimultaneousKeys.cs" />
     <Compile Include="Input\KeySwitch.cs" />
