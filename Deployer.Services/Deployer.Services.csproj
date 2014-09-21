@@ -73,8 +73,8 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Hardware\ISound.cs">
       <Link>Hardware\ISound.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Hardware\ITime.cs">
-      <Link>Hardware\ITime.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Hardware\ITimeService.cs">
+      <Link>Hardware\ITimeService.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Input\IProjectSelector.cs">
       <Link>Input\IProjectSelector.cs</Link>
@@ -135,8 +135,7 @@
     <Reference Include="Json.NetMF">
       <HintPath>..\packages\Json.NetMF.1.3.0.0\lib\netmf43\Json.NetMF.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SPOT.Native">
-    </Reference>
+    <Reference Include="Microsoft.SPOT.Native"></Reference>
     <Reference Include="System.Http" />
     <Reference Include="System.IO" />
   </ItemGroup>
