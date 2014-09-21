@@ -1,4 +1,5 @@
 using Deployer.Services.Input;
+using Deployer.Services.StateMachine2.States;
 
 namespace Deployer.Services.StateMachine
 {
@@ -12,5 +13,6 @@ namespace Deployer.Services.StateMachine
 		void ArmPressedEvent();
 		void DeployPressedEvent();
 		void Tick();
+		DeployerState2 State { get; set; }
 	}
 }

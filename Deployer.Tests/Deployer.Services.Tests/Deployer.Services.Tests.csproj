@@ -53,6 +53,7 @@
     <Compile Include="SpiesFakes\WebFactorySpy.cs" />
     <Compile Include="SpiesFakes\WebRequestSpy.cs" />
     <Compile Include="SpiesFakes\WebResponseSpy.cs" />
+    <Compile Include="StateMachine2\SemiIntegration2Tests.cs" />
     <Compile Include="StateMachine\DeployerControllerTests.cs" />
     <Compile Include="Output\IndicatorRefreshTests.cs" />
     <Compile Include="Input\ProjectSelectorTests.cs" />

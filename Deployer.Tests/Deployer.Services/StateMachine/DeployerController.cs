@@ -2,6 +2,7 @@ using Deployer.Services.Builders;
 using Deployer.Services.Input;
 using Deployer.Services.Micro;
 using Deployer.Services.Models;
+using Deployer.Services.StateMachine2.States;
 
 namespace Deployer.Services.StateMachine
 {
@@ -109,6 +110,8 @@ namespace Deployer.Services.StateMachine
 			if (_loop.State == DeployerState.Deploying)
 				DuringDeployment();
 		}
+
+		public DeployerState2 State { get; set; }
 
 		private void DuringDeployment()
 		{
