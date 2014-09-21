@@ -13,17 +13,14 @@ using Gadgeteer.Networking;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Microsoft.SPOT.Net.NetworkInformation;
-using Timer = Gadgeteer.Timer;
 
 namespace Deployer.App
 {
 	public partial class Program
 	{
-		private IDeployerLoop _loop;
-		private IIndicatorRefresh _indicator;
 		private IDeployerController _controller;
 
-		private Timer _timerBlink;
+		private Gadgeteer.Timer _timerBlink;
 
 		private InterruptPort _keySwitchA;
 		private InterruptPort _keySwitchB;
@@ -59,18 +56,6 @@ namespace Deployer.App
 			var project = new ProjectSelector(charDisp, config);
 			var sound = new Sound(tunes);
 
-			/*
-			_indicator = new IndicatorRefresh(_indicatorTurnKeyA,
-			                                  _indicatorTurnKeyB,
-			                                  _indicatorSelectProject,
-			                                  _indicatorReadyToArm,
-			                                  _indicatorReadyToDeploy,
-			                                  _indicatorStateDeploying,
-			                                  _indicatorStateSucceeded,
-			                                  _indicatorStateFailed);
-			_loop = new DeployerLoop(charDisp, _indicator, _project, _network, _sound);
-			_controller = new DeployerController(_loop, project, keys, webFactory, garbage);
-			*/
 			var indicators = new Indicators(_indicatorTurnKeyA,
 			                                _indicatorTurnKeyB,
 			                                _indicatorSelectProject,
@@ -164,19 +149,18 @@ namespace Deployer.App
 
 		private void SetupTimers()
 		{
-			_timerBlink = new Timer(500);
+			_timerBlink = new Gadgeteer.Timer(500);
 			_timerBlink.Tick += BlinkTick;
 			_timerBlink.Start();
 		}
 
 		private void SetupPersistence()
 		{
-			// TODO: ERROR CONDITION IF NO CARD IS INSERTED
-			var isStorage = Mainboard.IsSDCardInserted;
 			_storage = new Persistence(Mainboard.SDCardStorageDevice);
-			return;
 
-			// TODO: Experimentation
+			/* TODO: Experimentation
+			Need to throw error condition if no card is present?
+			var isStorage = Mainboard.IsSDCardInserted;
 			var existDir = _storage.DoesRootDirectoryExist("config");
 			if (existDir)
 				_storage.DeleteDirectory("config");
@@ -184,6 +168,7 @@ namespace Deployer.App
 			existDir = _storage.DoesRootDirectoryExist("config");
 
 			var existFile = _storage.DoesFileExist(@"\config\projects.json");
+			*/
 		}
 
 		#endregion
@@ -307,20 +292,12 @@ namespace Deployer.App
 			responder.Respond("Hello");
 		}
 
-		private void OnWebEventReceived(string path, WebServer.HttpMethod method, Responder responder)
-		{
-			Debug.Print("SPECIFIC EVENT!!!");
-			responder.Respond("SPECIFIC");
-		}
-
 		#endregion
 
 		#region Blink
 
-		private void BlinkTick(Timer timer)
+		private void BlinkTick(Gadgeteer.Timer timer)
 		{
-			if (_indicator != null)
-				_indicator.Tick();
 			_controller.Tick();
 		}
 
