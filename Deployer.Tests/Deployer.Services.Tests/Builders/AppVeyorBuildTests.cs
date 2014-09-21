@@ -66,6 +66,31 @@ namespace Deployer.Tests.Builders
 			AssertFailed(_sut.GetStatus());
 		}
 
+		[Test]
+		public void Unexpected_status_causes_failure()
+		{
+			MockStatus("quack");
+			AssertFailed(_sut.GetStatus());
+		}
+
+		[Test]
+		public void Bad_status_causes_failure()
+		{
+			MockBadStatus();
+			AssertFailed(_sut.GetStatus());
+		}
+
+		[Test]
+		public void Bad_response_causes_failure()
+		{
+			var config = GetConfig();
+			MockBadResponse();
+
+			var status = _sut.StartBuild(config);
+
+			AssertFailed(status);
+		}
+
 		private void AssertQueued(BuildState state)
 		{
 			Assert.AreEqual(BuildStatus.Queued, state.Status);
@@ -107,6 +132,19 @@ namespace Deployer.Tests.Builders
 			wr.SpyResponse.SetData(data);
 		}
 
+		private void MockBadResponse()
+		{
+			var fakeResponse = new Hashtable
+				{
+					{"erk", "ERKKK!"},
+					{"flerbb", "BLERBBBB!"},
+				};
+			var json = JsonSerializer.SerializeObject(fakeResponse);
+			var data = Encoding.UTF8.GetBytes(json);
+			var wr = _webFactory.SpyWebRequest;
+			wr.SpyResponse.SetData(data);
+		}
+
 		private void MockStatus(string status)
 		{
 			var fakeBuild = new Hashtable
@@ -116,6 +154,22 @@ namespace Deployer.Tests.Builders
 			var fakeResponse = new Hashtable
 				{
 					{"build", fakeBuild},
+				};
+			var json = JsonSerializer.SerializeObject(fakeResponse);
+			var data = Encoding.UTF8.GetBytes(json);
+			var wr = _webFactory.SpyWebRequest;
+			wr.SpyResponse.SetData(data);
+		}
+
+		private void MockBadStatus()
+		{
+			var fakeBlerg = new Hashtable
+				{
+					{"nerk", "NERK!"},
+				};
+			var fakeResponse = new Hashtable
+				{
+					{"blerg", fakeBlerg},
 				};
 			var json = JsonSerializer.SerializeObject(fakeResponse);
 			var data = Encoding.UTF8.GetBytes(json);
