@@ -8,18 +8,7 @@ using Deployer.Services.StateMachine;
 
 namespace Deployer.Services.Output
 {
-	public interface IIndicatorRefresh2
-	{
-		void ClearAll();
-		void BlinkKeys();
-		void BlinkProjectAndArm();
-		void BlinkReadyToDeploy();
-		void LightRunning();
-		void LightSucceeded();
-		void LightFailed();
-	}
-
-	public class IndicatorRefresh2 : IIndicatorRefresh2
+	public class Indicators : IIndicators
 	{
 		private readonly ILed _keyA;
 		private readonly ILed _keyB;
@@ -31,7 +20,7 @@ namespace Deployer.Services.Output
 		private readonly ILed _failed;
 		private bool _blink;
 
-		public IndicatorRefresh2(ILed keyA,
+		public Indicators(ILed keyA,
 		                         ILed keyB,
 		                         ILed selectProject,
 		                         ILed arm,

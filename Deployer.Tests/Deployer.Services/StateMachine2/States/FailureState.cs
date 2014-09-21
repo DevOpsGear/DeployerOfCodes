@@ -1,7 +1,7 @@
 ﻿
 namespace Deployer.Services.StateMachine2.States
 {
-	public class FailureState : DeployerState2
+	public class FailureState : DeployerStateBase
 	{
 		public FailureState(DeployerContext context)
 			: base(context)

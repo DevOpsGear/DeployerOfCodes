@@ -1,17 +1,15 @@
 ﻿namespace Deployer.Services.StateMachine2.States
 {
-	public abstract class DeployerState2
+	public abstract class DeployerStateBase : IDeployerState
 	{
 		protected readonly DeployerContext Context;
 
-		protected DeployerState2(DeployerContext context)
+		protected DeployerStateBase(DeployerContext context)
 		{
 			Context = context;
 		}
 
-		public virtual void Check()
-		{
-		}
+		public abstract void Check();
 
 		public virtual void KeyTurned()
 		{

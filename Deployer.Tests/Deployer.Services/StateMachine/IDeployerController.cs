@@ -13,6 +13,6 @@ namespace Deployer.Services.StateMachine
 		void ArmPressedEvent();
 		void DeployPressedEvent();
 		void Tick();
-		DeployerState2 State { get; set; }
+		IDeployerState State { get; set; }
 	}
 }

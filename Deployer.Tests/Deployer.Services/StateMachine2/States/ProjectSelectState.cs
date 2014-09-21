@@ -1,6 +1,6 @@
 ﻿namespace Deployer.Services.StateMachine2.States
 {
-	public class ProjectSelectState : DeployerState2
+	public class ProjectSelectState : DeployerStateBase
 	{
 		public ProjectSelectState(DeployerContext context)
 			: base(context)

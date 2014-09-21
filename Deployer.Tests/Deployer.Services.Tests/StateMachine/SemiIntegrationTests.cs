@@ -58,6 +58,7 @@ namespace Deployer.Tests.StateMachine
 			Assert.AreEqual("999.888.777.666", _display.Line2, "Line 2");
 		}
 
+
 		[Test]
 		public void Start_with_both_keys_on_and_turn_both_off()
 		{

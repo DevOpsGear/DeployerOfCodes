@@ -1,6 +1,6 @@
 ﻿namespace Deployer.Services.StateMachine2.States
 {
-	public class AbortState : DeployerState2
+	public class AbortState : DeployerStateBase
 	{
 		public AbortState(DeployerContext context)
 			: base(context)

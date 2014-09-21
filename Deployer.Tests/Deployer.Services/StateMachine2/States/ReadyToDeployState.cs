@@ -1,6 +1,6 @@
 ﻿namespace Deployer.Services.StateMachine2.States
 {
-	public class ReadyToDeployState : DeployerState2
+	public class ReadyToDeployState : DeployerStateBase
 	{
 		public ReadyToDeployState(DeployerContext context)
 			: base(context)

@@ -1,6 +1,6 @@
 ﻿namespace Deployer.Services.StateMachine2.States
 {
-	public class TurnBothKeysState : DeployerState2
+	public class TurnBothKeysState : DeployerStateBase
 	{
 		public TurnBothKeysState(DeployerContext context)
 			: base(context)

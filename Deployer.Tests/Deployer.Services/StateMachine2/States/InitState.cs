@@ -1,6 +1,6 @@
 ﻿namespace Deployer.Services.StateMachine2.States
 {
-	public class InitState : DeployerState2
+	public class InitState : DeployerStateBase
 	{
 		public InitState(DeployerContext context)
 			: base(context)

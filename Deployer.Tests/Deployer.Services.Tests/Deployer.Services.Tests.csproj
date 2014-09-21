@@ -50,6 +50,8 @@
     <Compile Include="Builders\TeamCityBuildTests.cs" />
     <Compile Include="Builders\FailingBuilderTests.cs" />
     <Compile Include="Builders\SucceedingBuilderTests.cs" />
+    <Compile Include="Config\FakeConfigTests.cs" />
+    <Compile Include="Output\IndicatorTests.cs" />
     <Compile Include="SpiesFakes\WebFactorySpy.cs" />
     <Compile Include="SpiesFakes\WebRequestSpy.cs" />
     <Compile Include="SpiesFakes\WebResponseSpy.cs" />

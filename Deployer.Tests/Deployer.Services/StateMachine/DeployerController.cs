@@ -111,7 +111,7 @@ namespace Deployer.Services.StateMachine
 				DuringDeployment();
 		}
 
-		public DeployerState2 State { get; set; }
+		public IDeployerState State { get; set; }
 
 		private void DuringDeployment()
 		{

@@ -1,7 +1,7 @@
 ﻿
 namespace Deployer.Services.StateMachine2.States
 {
-	public class SuccessState : DeployerState2
+	public class SuccessState : DeployerStateBase
 	{
 		public SuccessState(DeployerContext context)
 			: base(context)

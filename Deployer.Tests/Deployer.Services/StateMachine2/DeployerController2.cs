@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Deployer.Services.Hardware;
+﻿using Deployer.Services.Hardware;
 using Deployer.Services.Input;
 using Deployer.Services.Micro;
-using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
 using Deployer.Services.StateMachine2.States;
 
@@ -65,6 +59,6 @@ namespace Deployer.Services.StateMachine2
 			State.Tick();
 		}
 
-		public DeployerState2 State { get; set; }
+		public IDeployerState State { get; set; }
 	}
 }

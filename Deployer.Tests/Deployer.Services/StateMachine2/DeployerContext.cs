@@ -17,7 +17,7 @@ namespace Deployer.Services.StateMachine2
 		private readonly ISimultaneousKeys _keys;
 		private readonly IProjectSelector _projectSelect;
 		private readonly ICharDisplay _lcd;
-		private readonly IIndicatorRefresh2 _indicatorRefresh;
+		private readonly IIndicators _indicatorRefresh;
 		private readonly ISound _sound;
 		private readonly INetwork _network;
 		private readonly IWebRequestFactory _webFactory;
@@ -26,7 +26,7 @@ namespace Deployer.Services.StateMachine2
 
 		public DeployerContext(ISimultaneousKeys keys, IProjectSelector projectSelect,
 		                       ICharDisplay lcd,
-		                       IIndicatorRefresh2 indicatorRefresh, ISound sound, INetwork network,
+		                       IIndicators indicatorRefresh, ISound sound, INetwork network,
 		                       IWebRequestFactory webFactory, IGarbage garbage)
 		{
 			_keys = keys;
@@ -59,7 +59,7 @@ namespace Deployer.Services.StateMachine2
 			get { return _projectSelect; }
 		}
 
-		public IIndicatorRefresh2 Indicator
+		public IIndicators Indicator
 		{
 			get { return _indicatorRefresh; }
 		}
@@ -79,7 +79,7 @@ namespace Deployer.Services.StateMachine2
 			get { return _garbage; }
 		}
 
-		public void ChangeState(DeployerState2 newState)
+		public void ChangeState(IDeployerState newState)
 		{
 			_controller.State = newState;
 			_controller.State.Check();

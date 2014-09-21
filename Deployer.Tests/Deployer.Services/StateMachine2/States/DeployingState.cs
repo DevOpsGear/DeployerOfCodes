@@ -3,7 +3,7 @@ using Deployer.Services.Models;
 
 namespace Deployer.Services.StateMachine2.States
 {
-	public class DeployingState : DeployerState2
+	public class DeployingState : DeployerStateBase
 	{
 		private IBuildService _currentBuild;
 

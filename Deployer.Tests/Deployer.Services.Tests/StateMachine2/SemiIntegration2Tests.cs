@@ -18,7 +18,7 @@ namespace Deployer.Tests.StateMachine2
 	public class SemiIntegration2Tests
 	{
 		private CharDisplaySpy _display;
-		private Mock<IIndicatorRefresh2> _indicators;
+		private Mock<IIndicators> _indicators;
 		private Mock<IConfigurationService> _config;
 		private Mock<INetwork> _net;
 		private Mock<ISound> _sound;
@@ -35,7 +35,7 @@ namespace Deployer.Tests.StateMachine2
 		public void BeforeEachTest()
 		{
 			_display = new CharDisplaySpy();
-			_indicators = new Mock<IIndicatorRefresh2>();
+			_indicators = new Mock<IIndicators>();
 			_config = new Mock<IConfigurationService>();
 			_net = new Mock<INetwork>();
 			_sound = new Mock<ISound>();
@@ -57,6 +57,24 @@ namespace Deployer.Tests.StateMachine2
 			Assert.AreEqual("IP address:", _display.Line1, "Line 1");
 			Assert.AreEqual("999.888.777.666", _display.Line2, "Line 2");
 
+			AssertIndicators("K");
+		}
+
+		[Test]
+		public void Init_reject_all_buttons_except_down()
+		{
+			_sut.UpPressedEvent();
+			VerifyTurnBothKeysState();
+
+			_sut.ArmPressedEvent();
+			VerifyTurnBothKeysState();
+
+			_sut.DeployPressedEvent();
+			VerifyTurnBothKeysState();
+
+			AssertIndicators("K");
+
+			_sut.PreflightCheck();
 			AssertIndicators("K");
 		}
 
