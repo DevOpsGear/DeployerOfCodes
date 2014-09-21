@@ -10,7 +10,7 @@
 
 		public override void KeyTurned()
 		{
-			if (Context.Keys.SwitchedSimultaneously && Context.Keys.AreBothOn)
+			if (Context.Keys.AreBothOff)
 			{
 				Context.ChangeState(new TurnBothKeysState(Context));
 			}

@@ -11,6 +11,7 @@ namespace Deployer.Services.StateMachine2.States
 		public TurnBothKeysState(DeployerContext context)
 			: base(context)
 		{
+			Context.CharDisplay.Write("Turn both keys", "simultaneously");
 		}
 	}
 }

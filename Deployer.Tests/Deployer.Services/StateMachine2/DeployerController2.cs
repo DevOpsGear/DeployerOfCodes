@@ -29,11 +29,13 @@ namespace Deployer.Services.StateMachine2
 
 		public void KeyOnEvent(KeySwitch whichKey)
 		{
+			_context.Keys.KeyOn(whichKey);
 			State.KeyTurned();
 		}
 
 		public void KeyOffEvent(KeySwitch whichKey)
 		{
+			_context.Keys.KeyOff(whichKey);
 			State.KeyTurned();
 		}
 
