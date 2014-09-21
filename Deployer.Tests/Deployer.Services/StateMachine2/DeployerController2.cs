@@ -62,6 +62,7 @@ namespace Deployer.Services.StateMachine2
 
 		public void Tick()
 		{
+			State.Tick();
 		}
 
 		public DeployerState2 State { get; set; }

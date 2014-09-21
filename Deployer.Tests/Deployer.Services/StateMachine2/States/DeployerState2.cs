@@ -35,5 +35,9 @@
 		public virtual void Deploy()
 		{
 		}
+
+		public virtual void Tick()
+		{
+		}
 	}
 }

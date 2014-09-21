@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Deployer.Services.StateMachine2.States
 {
 	public class ProjectSelectState : DeployerState2
@@ -26,6 +21,14 @@ namespace Deployer.Services.StateMachine2.States
 		public override void Down()
 		{
 			Context.Project.Down();
+		}
+
+		public override void Arm()
+		{
+			if (Context.Project.IsProjectSelected)
+			{
+				Context.ChangeState(new ReadyToDeployState(Context));
+			}
 		}
 	}
 }

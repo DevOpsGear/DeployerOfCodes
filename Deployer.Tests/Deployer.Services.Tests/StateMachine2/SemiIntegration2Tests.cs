@@ -329,7 +329,8 @@ namespace Deployer.Tests.StateMachine2
 
 		private void ConstructSut()
 		{
-			_context = new DeployerContext(_simKeys, _projSel, _display, _indicators.Object, _sound.Object, _net.Object);
+			_context = new DeployerContext(_simKeys, _projSel, _display, _indicators.Object, _sound.Object, _net.Object,
+			                               _webFactory.Object, _garbage.Object);
 			_sut = new DeployerController2(_context, _webFactory.Object, _garbage.Object, _net.Object);
 			_context.SetController(_sut);
 			_sut.PreflightCheck();
