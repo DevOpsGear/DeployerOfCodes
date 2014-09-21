@@ -217,6 +217,10 @@ namespace Deployer.Tests.StateMachine2
 			Assert.AreEqual("Remove keys", _display.Line2, "Line 2");
 
 			_sut.KeyOffEvent(KeySwitch.KeyA);
+			Assert.AreEqual("ABORTED", _display.Line1, "Line 1");
+			Assert.AreEqual("Remove keys", _display.Line2, "Line 2");
+
+			_sut.KeyOffEvent(KeySwitch.KeyB);
 			Assert.AreEqual("Turn both keys", _display.Line1, "Line 1");
 			Assert.AreEqual("simultaneously", _display.Line2, "Line 2");
 		}
