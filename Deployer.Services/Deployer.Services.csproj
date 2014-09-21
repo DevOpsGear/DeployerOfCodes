@@ -127,6 +127,9 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerState.cs">
       <Link>StateMachine\DeployerState.cs</Link>
     </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\IDeployerController.cs">
+      <Link>StateMachine\IDeployerController.cs</Link>
+    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\IDeployerLoop.cs">
       <Link>StateMachine\IDeployerLoop.cs</Link>
     </Compile>

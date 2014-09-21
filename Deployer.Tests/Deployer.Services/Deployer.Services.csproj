@@ -72,6 +72,7 @@
     <Compile Include="StateMachine\DeployerController.cs" />
     <Compile Include="StateMachine\DeployerLoop.cs" />
     <Compile Include="StateMachine\DeployerState.cs" />
+    <Compile Include="StateMachine\IDeployerController.cs" />
     <Compile Include="StateMachine\IDeployerLoop.cs" />
   </ItemGroup>
   <ItemGroup>

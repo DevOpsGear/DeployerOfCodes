@@ -21,7 +21,7 @@ namespace Deployer.App
 		private IDeployerLoop _loop;
 		private IndicatorRefresh _indicator;
 		private IProjectSelector _project;
-		private DeployerController _controller;
+		private IDeployerController _controller;
 
 		private Timer _timerBlink;
 

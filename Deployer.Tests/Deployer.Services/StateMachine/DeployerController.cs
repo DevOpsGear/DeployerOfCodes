@@ -5,7 +5,7 @@ using Deployer.Services.Models;
 
 namespace Deployer.Services.StateMachine
 {
-	public class DeployerController
+	public class DeployerController : IDeployerController
 	{
 		private readonly IDeployerLoop _loop;
 		private readonly IProjectSelector _projectSelect;
