@@ -75,6 +75,7 @@
     <Compile Include="StateMachine2\States\AbortState.cs" />
     <Compile Include="StateMachine2\States\DeployerState2.cs" />
     <Compile Include="StateMachine2\States\InitState.cs" />
+    <Compile Include="StateMachine2\States\ProjectSelectState.cs" />
     <Compile Include="StateMachine2\States\TurnBothKeysState.cs" />
     <Compile Include="StateMachine\DeployerController.cs" />
     <Compile Include="StateMachine\DeployerLoop.cs" />

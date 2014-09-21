@@ -24,7 +24,7 @@ namespace Deployer.Services.StateMachine2.States
 			{
 				if (Context.Keys.SwitchedSimultaneously)
 				{
-					// Transition to PROJECTSELECT state
+					Context.ChangeState(new ProjectSelectState(Context));
 				}
 				else
 				{
