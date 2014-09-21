@@ -99,7 +99,8 @@ namespace Deployer.Services.Builders
 		private void DecodeConfig(string config)
 		{
 			var hash = JsonSerializer.DeserializeString(config) as Hashtable;
-			if (hash == null) return;
+			if (hash == null)
+				return;
 			_apiToken = hash["apiToken"] as string;
 			_accountName = hash["accountName"] as string;
 			_projectSlug = hash["projectSlug"] as string;

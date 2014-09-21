@@ -10,37 +10,34 @@ namespace Deployer.Tests.SpiesFakes
 		public string ContentType { get; set; }
 		public long ContentLength { get; set; }
 
-		public readonly string ApiRoot;
-		public readonly string ApiEndpoint;
-		public readonly string Method;
-		public Dictionary<string, string> Headers { get; private set; }
-		public WebResponseSpy Response { get; set; }
-		public MemoryStream RequestStream { get; private set; }
+		public string ApiRoot { get; set; }
+		public string ApiEndpoint { get; set; }
+		public string Method { get; set; }
+		public WebResponseSpy SpyResponse { get; set; }
+		public MemoryStream SpyRequestStream { get; private set; }
+		public Dictionary<string, string> SpyHeaders { get; private set; }
 
-		public WebRequestSpy(string apiRoot, string apiEndpoint, string method)
+		public WebRequestSpy()
 		{
-			ApiRoot = apiRoot;
-			ApiEndpoint = apiEndpoint;
-			Method = method;
-			Headers = new Dictionary<string, string>();
+			SpyHeaders = new Dictionary<string, string>();
 
-			Response = new WebResponseSpy();
-			RequestStream = new MemoryStream();
+			SpyResponse = new WebResponseSpy();
+			SpyRequestStream = new MemoryStream();
 		}
 
 		public void AddHeader(string key, string value)
 		{
-			Headers.Add(key, value);
+			SpyHeaders.Add(key, value);
 		}
 
 		public IHttpWebResponse GetResponse()
 		{
-			return Response;
+			return SpyResponse;
 		}
 
 		public Stream GetRequestStream()
 		{
-			return RequestStream;
+			return SpyRequestStream;
 		}
 	}
 }

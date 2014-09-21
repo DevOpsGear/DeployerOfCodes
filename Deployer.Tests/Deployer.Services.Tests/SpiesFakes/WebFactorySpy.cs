@@ -4,12 +4,19 @@ namespace Deployer.Tests.SpiesFakes
 {
 	public class WebFactorySpy : IWebRequestFactory
 	{
-		public WebRequestSpy LastWebRequest;
+		public WebRequestSpy SpyWebRequest { get; set; }
+
+		public WebFactorySpy()
+		{
+			SpyWebRequest = new WebRequestSpy();
+		}
 
 		public IWebRequest CreateRequest(string apiRoot, string apiEndpoint, string method)
 		{
-			LastWebRequest = new WebRequestSpy(apiRoot, apiEndpoint, method);
-			return LastWebRequest;
+			SpyWebRequest.ApiRoot = apiRoot;
+			SpyWebRequest.ApiEndpoint = apiEndpoint;
+			SpyWebRequest.Method = method;
+			return SpyWebRequest;
 		}
 	}
 }

@@ -54,7 +54,8 @@ namespace Deployer.Services.Builders
 		private void DecodeConfig(string config)
 		{
 			var hash = JsonSerializer.DeserializeString(config) as Hashtable;
-			if (hash == null) return;
+			if (hash == null)
+				return;
 			var url = hash["url"] as string;
 			if (url.Substring(url.Length - 1) != "/")
 				url += "/";
