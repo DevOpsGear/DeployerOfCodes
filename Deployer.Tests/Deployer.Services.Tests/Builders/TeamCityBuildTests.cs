@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Text;
 using Deployer.Services.Builders;
 using Deployer.Services.Micro;
 using Deployer.Services.Models;
@@ -34,16 +35,21 @@ namespace Deployer.Tests.Builders
 			AssertQueued(status);
 		}
 
-		private static string GetConfig()
+		[Test]
+		public void Empty_config_handling()
 		{
-			var config = new Hashtable
-				{
-					{"url", "URL"},
-					{"buildId", "BUILDID"},
-					{"username", "USERNAME"},
-					{"password", "PASSWORD"}
-				};
-			return JsonSerializer.SerializeObject(config);
+			var status = _sut.StartBuild(string.Empty);
+
+			AssertQueued(status);
+		}
+
+		[Test]
+		public void Bad_response_causes_failure()
+		{
+			MockBadResponse();
+			var status = _sut.StartBuild(string.Empty);
+
+			AssertFailed(status);
 		}
 
 		[Test]
@@ -71,6 +77,29 @@ namespace Deployer.Tests.Builders
 		private void AssertSucceeded(BuildState state)
 		{
 			Assert.AreEqual(BuildStatus.Succeeded, state.Status);
+		}
+
+		private void AssertFailed(BuildState state)
+		{
+			Assert.AreEqual(BuildStatus.Failed, state.Status);
+		}
+
+		private static string GetConfig()
+		{
+			var config = new Hashtable
+				{
+					{"url", "URL"},
+					{"buildId", "BUILDID"},
+					{"username", "USERNAME"},
+					{"password", "PASSWORD"}
+				};
+			return JsonSerializer.SerializeObject(config);
+		}
+
+		private void MockBadResponse()
+		{
+			var wr = _webFactory.SpyWebRequest;
+			wr.SpyResponse.SetData(null);
 		}
 	}
 }
