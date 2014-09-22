@@ -91,6 +91,14 @@ namespace Deployer.Tests.Builders
 			AssertFailed(status);
 		}
 
+		[Test]
+		public void Empty_config__causes_failure()
+		{
+			var status = _sut.StartBuild(string.Empty);
+
+			AssertFailed(status);
+		}
+
 		private void AssertQueued(BuildState state)
 		{
 			Assert.AreEqual(BuildStatus.Queued, state.Status);
