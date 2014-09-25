@@ -3,6 +3,7 @@ using Deployer.Services.Config;
 using Deployer.Services.Hardware;
 using Deployer.Services.Input;
 using Deployer.Services.Micro;
+using Deployer.Services.Micro.Web;
 using Deployer.Services.Models;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
@@ -27,6 +28,7 @@ namespace Deployer.Tests.StateMachine2
 		private SimultaneousKeys _simKeys;
 		private Mock<IWebRequestFactory> _webFactory;
 		private Mock<IGarbage> _garbage;
+		private IWebUtility _netio;
 
 		private DeployerContext _context;
 		private DeployerController2 _sut;
@@ -44,6 +46,7 @@ namespace Deployer.Tests.StateMachine2
 			_simKeys = new SimultaneousKeys(false, false, _time);
 			_webFactory = new Mock<IWebRequestFactory>();
 			_garbage = new Mock<IGarbage>();
+			_netio = new WebUtility(_garbage.Object);
 
 			ConstructSut();
 		}
@@ -358,7 +361,7 @@ namespace Deployer.Tests.StateMachine2
 
 		private void ConstructSut()
 		{
-			_context = new DeployerContext(_simKeys, _projSel, _display, _indicators.Object, _sound.Object, _net.Object,
+			_context = new DeployerContext(_simKeys, _projSel, _display, _indicators.Object, _sound.Object, _netio, _net.Object,
 			                               _webFactory.Object, _garbage.Object);
 			_sut = new DeployerController2(_context, _webFactory.Object, _garbage.Object, _net.Object);
 			_context.SetController(_sut);

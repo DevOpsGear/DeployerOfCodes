@@ -2,6 +2,7 @@
 using Deployer.Services.Micro;
 using System.Collections.Generic;
 using System.IO;
+using Deployer.Services.Micro.Web;
 
 namespace Deployer.Tests.SpiesFakes
 {

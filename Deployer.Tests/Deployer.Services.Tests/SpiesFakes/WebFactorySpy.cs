@@ -1,4 +1,5 @@
 ﻿using Deployer.Services.Micro;
+using Deployer.Services.Micro.Web;
 
 namespace Deployer.Tests.SpiesFakes
 {

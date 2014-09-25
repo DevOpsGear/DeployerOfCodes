@@ -31,6 +31,24 @@
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Api\Routing.cs">
+      <Link>Api\Routing.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\IWebUtility.cs">
+      <Link>Micro\Web\IWebUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\WebUtility.cs">
+      <Link>Micro\Web\WebUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Wrappers\HttpMethod.cs">
+      <Link>Micro\Wrappers\HttpMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Wrappers\IResponderWrapper.cs">
+      <Link>Micro\Wrappers\IResponderWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Wrappers\IBodyWrapper.cs">
+      <Link>Micro\Wrappers\IBodyWrapper.cs</Link>
+    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Builders\AppVeyorBuildService.cs">
       <Link>Builders\AppVeyorBuildService.cs</Link>
     </Compile>
@@ -94,14 +112,14 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\IGarbage.cs">
       <Link>Micro\IGarbage.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\IHttpWebResponse.cs">
-      <Link>Micro\IHttpWebResponse.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\IHttpWebResponse.cs">
+      <Link>Micro\Web\IHttpWebResponse.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\IWebRequest.cs">
-      <Link>Micro\IWebRequest.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\IWebRequest.cs">
+      <Link>Micro\Web\IWebRequest.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\IWebRequestFactory.cs">
-      <Link>Micro\IWebRequestFactory.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\IWebRequestFactory.cs">
+      <Link>Micro\Web\IWebRequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Models\BuildState.cs">
       <Link>Models\BuildState.cs</Link>
@@ -175,12 +193,25 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\IDeployerLoop.cs">
       <Link>StateMachine\IDeployerLoop.cs</Link>
     </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\WebResponderFactory.cs">
+      <Link>Micro\Web\WebResponderFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\IWebResponder.cs">
+      <Link>Micro\Web\IWebResponder.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\IWebResponderFactory.cs">
+      <Link>Micro\Web\IWebResponderFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\WebResponder.cs">
+      <Link>Micro\Web\WebResponder.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Json.NetMF">
       <HintPath>..\packages\Json.NetMF.1.3.0.0\lib\netmf43\Json.NetMF.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SPOT.Native"></Reference>
+    <Reference Include="Microsoft.SPOT.Native">
+    </Reference>
     <Reference Include="System.Http" />
     <Reference Include="System.IO" />
   </ItemGroup>

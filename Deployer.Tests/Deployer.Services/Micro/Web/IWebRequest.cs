@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Deployer.Services.Micro
+namespace Deployer.Services.Micro.Web
 {
 	public interface IWebRequest
 	{

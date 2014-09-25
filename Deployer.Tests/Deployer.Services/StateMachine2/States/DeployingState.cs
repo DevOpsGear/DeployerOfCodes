@@ -16,7 +16,10 @@ namespace Deployer.Services.StateMachine2.States
 		{
 			_currentBuild = null;
 			var proj = Context.Project.SelectedProject;
-			_currentBuild = BuildServiceFactory.Create(proj.BuildServiceProvider, Context.WebFactory, Context.Garbage);
+			_currentBuild = BuildServiceFactory.Create(proj.BuildServiceProvider,
+			                                           Context.WebFactory,
+			                                           Context.WebUtility,
+			                                           Context.Garbage);
 			var state = _currentBuild.StartBuild(proj.CiConfig);
 			ProcessBuildState(state, proj.Title);
 			Context.Indicator.LightRunning();

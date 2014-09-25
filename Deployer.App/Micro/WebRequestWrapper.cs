@@ -1,6 +1,6 @@
 using System.IO;
 using System.Net;
-using Deployer.Services.Micro;
+using Deployer.Services.Micro.Web;
 
 namespace Deployer.App.Micro
 {

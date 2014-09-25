@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
-using System.Text;
-using Deployer.Services.Micro;
+using Deployer.Services.Micro.Web;
 using Deployer.Services.Models;
 using Json.NETMF;
 
@@ -10,17 +9,17 @@ namespace Deployer.Services.Builders
 	public class AppVeyorBuildService : IBuildService
 	{
 		private readonly IWebRequestFactory _webFactory;
-		private readonly IGarbage _garbage;
+		private readonly IWebUtility _netio;
 		private string _apiToken;
 		private string _accountName;
 		private string _projectSlug;
 		private string _branch;
 		private string _buildVersion;
 
-		public AppVeyorBuildService(IWebRequestFactory webFactory, IGarbage garbage)
+		public AppVeyorBuildService(IWebRequestFactory webFactory, IWebUtility netio)
 		{
 			_webFactory = webFactory;
-			_garbage = garbage;
+			_netio = netio;
 		}
 
 		// TODO: Figure out HTTPS support?
@@ -117,35 +116,12 @@ namespace Deployer.Services.Builders
 
 		private void WriteBody(IWebRequest req, object body)
 		{
-			var postData = JsonSerializer.SerializeObject(body);
-			var encodedBody = Encoding.UTF8.GetBytes(postData);
-			req.ContentLength = encodedBody.Length;
-			var bodyStream = req.GetRequestStream();
-			bodyStream.Write(encodedBody, 0, encodedBody.Length);
+			_netio.WriteJsonObject(req, body);
 		}
 
 		private Hashtable GetValue(IWebRequest req)
 		{
-			var response = GetTextValue(req);
-			return JsonSerializer.DeserializeString(response) as Hashtable;
-		}
-
-		// Split this out so the buffers can be garbage collected
-		private string GetTextValue(IWebRequest req)
-		{
-			int read;
-			var result = new byte[3072]; // TODO: Too big?
-			using (var res = req.GetResponse())
-			{
-				using (var stream = res.GetResponseStream())
-				{
-					read = stream.Read(result, 0, result.Length);
-				}
-			}
-			_garbage.Collect();
-			var chars = Encoding.UTF8.GetChars(result, 0, read);
-			_garbage.Collect();
-			return new string(chars);
+			return _netio.ReadJsonObject(req, 3072);
 		}
 	}
 }

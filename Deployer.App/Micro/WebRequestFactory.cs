@@ -1,7 +1,6 @@
 using System;
 using System.Net;
-using Deployer.Services.Micro;
-using Microsoft.SPOT;
+using Deployer.Services.Micro.Web;
 
 namespace Deployer.App.Micro
 {

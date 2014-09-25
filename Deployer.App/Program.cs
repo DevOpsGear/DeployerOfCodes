@@ -5,6 +5,7 @@ using Deployer.App.Micro;
 using Deployer.Services.Config;
 using Deployer.Services.Hardware;
 using Deployer.Services.Input;
+using Deployer.Services.Micro.Web;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
 using Deployer.Services.StateMachine2;
@@ -55,6 +56,7 @@ namespace Deployer.App
 			var garbage = new GarbageCollector();
 			var project = new ProjectSelector(charDisp, config);
 			var sound = new Sound(tunes);
+			var webu = new WebUtility(garbage);
 
 			var indicators = new Indicators(_indicatorTurnKeyA,
 			                                _indicatorTurnKeyB,
@@ -64,7 +66,7 @@ namespace Deployer.App
 			                                _indicatorStateDeploying,
 			                                _indicatorStateSucceeded,
 			                                _indicatorStateFailed);
-			var context = new DeployerContext(keys, project, charDisp, indicators, sound, _network, webFactory, garbage);
+			var context = new DeployerContext(keys, project, charDisp, indicators, sound, webu, _network, webFactory, garbage);
 			_controller = new DeployerController2(context, webFactory, garbage, _network);
 			context.SetController(_controller);
 

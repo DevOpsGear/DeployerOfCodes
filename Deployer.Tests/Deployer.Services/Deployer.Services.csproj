@@ -39,6 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Routing.cs" />
+    <Compile Include="Micro\Web\IWebUtility.cs" />
+    <Compile Include="Micro\Web\WebUtility.cs" />
+    <Compile Include="Micro\Wrappers\HttpMethod.cs" />
+    <Compile Include="Micro\Wrappers\IResponderWrapper.cs" />
+    <Compile Include="Micro\Wrappers\IBodyWrapper.cs" />
     <Compile Include="Builders\AppVeyorBuildService.cs" />
     <Compile Include="Builders\BuildServiceFactory.cs" />
     <Compile Include="Builders\BuildServiceProvider.cs" />
@@ -60,9 +66,9 @@
     <Compile Include="Input\ProjectSelector.cs" />
     <Compile Include="Input\SimultaneousKeys.cs" />
     <Compile Include="Micro\IGarbage.cs" />
-    <Compile Include="Micro\IHttpWebResponse.cs" />
-    <Compile Include="Micro\IWebRequest.cs" />
-    <Compile Include="Micro\IWebRequestFactory.cs" />
+    <Compile Include="Micro\Web\IHttpWebResponse.cs" />
+    <Compile Include="Micro\Web\IWebRequest.cs" />
+    <Compile Include="Micro\Web\IWebRequestFactory.cs" />
     <Compile Include="Models\BuildState.cs" />
     <Compile Include="Models\BuildStatus.cs" />
     <Compile Include="Models\Project.cs" />
@@ -88,6 +94,10 @@
     <Compile Include="StateMachine\DeployerState.cs" />
     <Compile Include="StateMachine\IDeployerController.cs" />
     <Compile Include="StateMachine\IDeployerLoop.cs" />
+    <Compile Include="Micro\Web\WebResponderFactory.cs" />
+    <Compile Include="Micro\Web\IWebResponder.cs" />
+    <Compile Include="Micro\Web\IWebResponderFactory.cs" />
+    <Compile Include="Micro\Web\WebResponder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\NinaB.tinyfnt" />

@@ -2,6 +2,7 @@
 using System.Text;
 using Deployer.Services.Builders;
 using Deployer.Services.Micro;
+using Deployer.Services.Micro.Web;
 using Deployer.Services.Models;
 using Deployer.Tests.SpiesFakes;
 using Json.NETMF;
@@ -14,6 +15,7 @@ namespace Deployer.Tests.Builders
 	public class TeamCityBuildTests
 	{
 		private Mock<IGarbage> _garbage;
+		private IWebUtility _webUtility;
 		private WebFactorySpy _webFactory;
 		private TeamCityBuildService _sut;
 
@@ -22,8 +24,9 @@ namespace Deployer.Tests.Builders
 		{
 			_webFactory = new WebFactorySpy();
 			_garbage = new Mock<IGarbage>();
+			_webUtility = new WebUtility(_garbage.Object);
 
-			_sut = new TeamCityBuildService(_webFactory, _garbage.Object);
+			_sut = new TeamCityBuildService(_webFactory, _webUtility);
 		}
 
 		[Test]

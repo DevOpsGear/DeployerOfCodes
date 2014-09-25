@@ -3,6 +3,7 @@ using Deployer.Services.Config;
 using Deployer.Services.Hardware;
 using Deployer.Services.Input;
 using Deployer.Services.Micro;
+using Deployer.Services.Micro.Web;
 using Deployer.Services.Models;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
@@ -26,6 +27,7 @@ namespace Deployer.Tests.StateMachine
 		private SimultaneousKeys _simKeys;
 		private Mock<IWebRequestFactory> _webFactory;
 		private Mock<IGarbage> _garbage;
+		private WebUtility _netio;
 
 		private DeployerLoop _loop;
 		private DeployerController _sut;
@@ -43,9 +45,10 @@ namespace Deployer.Tests.StateMachine
 			_simKeys = new SimultaneousKeys(false, false, _time);
 			_webFactory = new Mock<IWebRequestFactory>();
 			_garbage = new Mock<IGarbage>();
+			_netio = new WebUtility(_garbage.Object);
 
 			_loop = new DeployerLoop(_display, _indicators.Object, _projSel, _net.Object, _sound.Object);
-			_sut = new DeployerController(_loop, _projSel, _simKeys, _webFactory.Object, _garbage.Object);
+			_sut = new DeployerController(_loop, _projSel, _simKeys, _webFactory.Object, _netio, _garbage.Object);
 		}
 
 		[Test]
@@ -63,7 +66,7 @@ namespace Deployer.Tests.StateMachine
 		public void Start_with_both_keys_on_and_turn_both_off()
 		{
 			_simKeys = new SimultaneousKeys(true, true, _time);
-			_sut = new DeployerController(_loop, _projSel, _simKeys, _webFactory.Object, _garbage.Object);
+			_sut = new DeployerController(_loop, _projSel, _simKeys, _webFactory.Object, _netio, _garbage.Object);
 
 			Assert.AreEqual("Both keys off", _display.Line1, "Line 1");
 			Assert.AreEqual("to begin", _display.Line2, "Line 2");
@@ -81,7 +84,7 @@ namespace Deployer.Tests.StateMachine
 		public void Start_with_keyB_on_and_turn_it_off()
 		{
 			_simKeys = new SimultaneousKeys(false, true, _time);
-			_sut = new DeployerController(_loop, _projSel, _simKeys, _webFactory.Object, _garbage.Object);
+			_sut = new DeployerController(_loop, _projSel, _simKeys, _webFactory.Object, _netio, _garbage.Object);
 
 			Assert.AreEqual("Both keys off", _display.Line1, "Line 1");
 			Assert.AreEqual("to begin", _display.Line2, "Line 2");
@@ -95,7 +98,7 @@ namespace Deployer.Tests.StateMachine
 		public void Start_with_keyA_on_and_turn_it_off()
 		{
 			_simKeys = new SimultaneousKeys(true, false, _time);
-			_sut = new DeployerController(_loop, _projSel, _simKeys, _webFactory.Object, _garbage.Object);
+			_sut = new DeployerController(_loop, _projSel, _simKeys, _webFactory.Object, _netio, _garbage.Object);
 
 			Assert.AreEqual("Both keys off", _display.Line1, "Line 1");
 			Assert.AreEqual("to begin", _display.Line2, "Line 2");

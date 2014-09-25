@@ -1,5 +1,6 @@
 ﻿using Deployer.Services.Input;
 using Deployer.Services.Micro;
+using Deployer.Services.Micro.Web;
 using Deployer.Services.StateMachine;
 using Moq;
 using NUnit.Framework;
@@ -14,6 +15,7 @@ namespace Deployer.Tests.StateMachine
 		private Mock<IProjectSelector> _projSel;
 		private Mock<ISimultaneousKeys> _simKeys;
 		private Mock<IWebRequestFactory> _webFactory;
+		private Mock<IWebUtility> _netIo;
 		private Mock<IGarbage> _garbage;
 
 		[SetUp]
@@ -23,9 +25,10 @@ namespace Deployer.Tests.StateMachine
 			_projSel = new Mock<IProjectSelector>();
 			_simKeys = new Mock<ISimultaneousKeys>();
 			_webFactory = new Mock<IWebRequestFactory>();
+			_netIo = new Mock<IWebUtility>();
 			_garbage = new Mock<IGarbage>();
 
-			_sut = new DeployerController(_loop.Object, _projSel.Object, _simKeys.Object, _webFactory.Object, _garbage.Object);
+			_sut = new DeployerController(_loop.Object, _projSel.Object, _simKeys.Object, _webFactory.Object, _netIo.Object, _garbage.Object);
 		}
 
 		[Test]
