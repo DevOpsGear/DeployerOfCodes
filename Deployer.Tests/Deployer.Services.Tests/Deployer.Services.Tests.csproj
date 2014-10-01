@@ -55,7 +55,7 @@
     <Compile Include="SpiesFakes\WebFactorySpy.cs" />
     <Compile Include="SpiesFakes\WebRequestSpy.cs" />
     <Compile Include="SpiesFakes\WebResponseSpy.cs" />
-    <Compile Include="StateMachine\SemiIntegration2Tests.cs" />
+    <Compile Include="StateMachine\SemiIntegrationTests.cs" />
     <Compile Include="Input\ProjectSelectorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Input\SimultaneousKeysTests.cs" />
