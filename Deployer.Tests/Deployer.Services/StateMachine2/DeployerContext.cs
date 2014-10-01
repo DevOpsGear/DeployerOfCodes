@@ -84,6 +84,7 @@ namespace Deployer.Services.StateMachine2
 
 		public void ChangeState(IDeployerState newState)
 		{
+			_indicatorRefresh.ClearAll();
 			_controller.State = newState;
 			_controller.State.Check();
 		}
