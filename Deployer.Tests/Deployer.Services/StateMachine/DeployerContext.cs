@@ -4,9 +4,9 @@ using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
-using Deployer.Services.StateMachine2.States;
+using Deployer.Services.StateMachine.States;
 
-namespace Deployer.Services.StateMachine2
+namespace Deployer.Services.StateMachine
 {
 	public class DeployerContext
 	{

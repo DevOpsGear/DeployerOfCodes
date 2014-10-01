@@ -1,5 +1,5 @@
 using Deployer.Services.Input;
-using Deployer.Services.StateMachine2.States;
+using Deployer.Services.StateMachine.States;
 
 namespace Deployer.Services.StateMachine
 {

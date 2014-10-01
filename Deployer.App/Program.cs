@@ -8,7 +8,6 @@ using Deployer.Services.Input;
 using Deployer.Services.Micro.Web;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
-using Deployer.Services.StateMachine2;
 using Gadgeteer;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
@@ -68,7 +67,7 @@ namespace Deployer.App
 			                                _indicatorStateSucceeded,
 			                                _indicatorStateFailed);
 			var context = new DeployerContext(keys, project, charDisp, indicators, sound, webu, _network, webFactory, garbage);
-			_controller = new DeployerController2(context, webFactory, garbage, _network);
+			_controller = new DeployerController(context, webFactory, garbage, _network);
 			context.SetController(_controller);
 
 			_controller.PreflightCheck();

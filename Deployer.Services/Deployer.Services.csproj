@@ -127,44 +127,44 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Output\Indicators.cs">
       <Link>Output\Indicators.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\DeployerContext.cs">
-      <Link>StateMachine2\DeployerContext.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerContext.cs">
+      <Link>StateMachine\DeployerContext.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\DeployerController2.cs">
-      <Link>StateMachine2\DeployerController2.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerController.cs">
+      <Link>StateMachine\DeployerController.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\States\AbortState.cs">
-      <Link>StateMachine2\States\AbortState.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\States\AbortState.cs">
+      <Link>StateMachine\States\AbortState.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\States\DeployingState.cs">
-      <Link>StateMachine2\States\DeployingState.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\States\DeployingState.cs">
+      <Link>StateMachine\States\DeployingState.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\States\DeployerStateBase.cs">
-      <Link>StateMachine2\States\DeployerStateBase.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\States\DeployerStateBase.cs">
+      <Link>StateMachine\States\DeployerStateBase.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\States\FailureState.cs">
-      <Link>StateMachine2\States\FailureState.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\States\FailureState.cs">
+      <Link>StateMachine\States\FailureState.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\States\IDeployerState.cs">
-      <Link>StateMachine2\States\IDeployerState.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\States\IDeployerState.cs">
+      <Link>StateMachine\States\IDeployerState.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\States\InitState.cs">
-      <Link>StateMachine2\States\InitState.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\States\InitState.cs">
+      <Link>StateMachine\States\InitState.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\States\ProjectSelectState.cs">
-      <Link>StateMachine2\States\ProjectSelectState.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\States\ProjectSelectState.cs">
+      <Link>StateMachine\States\ProjectSelectState.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\States\ReadyToDeployState.cs">
-      <Link>StateMachine2\States\ReadyToDeployState.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\States\ReadyToDeployState.cs">
+      <Link>StateMachine\States\ReadyToDeployState.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\States\SuccessState.cs">
-      <Link>StateMachine2\States\SuccessState.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\States\SuccessState.cs">
+      <Link>StateMachine\States\SuccessState.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\States\TurnBothKeysState.cs">
-      <Link>StateMachine2\States\TurnBothKeysState.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\States\TurnBothKeysState.cs">
+      <Link>StateMachine\States\TurnBothKeysState.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\IDeployerController.cs">
-      <Link>StateMachine2\IDeployerController.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\IDeployerController.cs">
+      <Link>StateMachine\IDeployerController.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\WebResponderFactory.cs">
       <Link>Micro\Web\WebResponderFactory.cs</Link>

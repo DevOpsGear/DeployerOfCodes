@@ -1,4 +1,4 @@
-﻿namespace Deployer.Services.StateMachine2.States
+﻿namespace Deployer.Services.StateMachine.States
 {
 	public abstract class DeployerStateBase : IDeployerState
 	{

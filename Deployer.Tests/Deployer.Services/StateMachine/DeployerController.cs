@@ -2,16 +2,15 @@
 using Deployer.Services.Input;
 using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
-using Deployer.Services.StateMachine;
-using Deployer.Services.StateMachine2.States;
+using Deployer.Services.StateMachine.States;
 
-namespace Deployer.Services.StateMachine2
+namespace Deployer.Services.StateMachine
 {
-	public class DeployerController2 : IDeployerController
+	public class DeployerController : IDeployerController
 	{
 		private readonly DeployerContext _context;
 
-		public DeployerController2(DeployerContext context,
+		public DeployerController(DeployerContext context,
 		                           IWebRequestFactory webFactory, IGarbage garbage, INetwork network)
 		{
 			_context = context;

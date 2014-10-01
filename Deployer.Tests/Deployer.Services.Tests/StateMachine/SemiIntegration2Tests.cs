@@ -7,16 +7,15 @@ using Deployer.Services.Micro.Web;
 using Deployer.Services.Models;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
-using Deployer.Services.StateMachine2;
 using Deployer.Tests.SpiesFakes;
 using Moq;
 using NUnit.Framework;
 using System;
 
-namespace Deployer.Tests.StateMachine2
+namespace Deployer.Tests.StateMachine
 {
 	[TestFixture]
-	public class SemiIntegration2Tests
+	public class SemiIntegrationTests
 	{
 		private CharDisplaySpy _display;
 		private Mock<IIndicators> _indicators;
@@ -31,7 +30,7 @@ namespace Deployer.Tests.StateMachine2
 		private IWebUtility _netio;
 
 		private DeployerContext _context;
-		private DeployerController2 _sut;
+		private DeployerController _sut;
 
 		[SetUp]
 		public void BeforeEachTest()
@@ -363,7 +362,7 @@ namespace Deployer.Tests.StateMachine2
 		{
 			_context = new DeployerContext(_simKeys, _projSel, _display, _indicators.Object, _sound.Object, _netio, _net.Object,
 			                               _webFactory.Object, _garbage.Object);
-			_sut = new DeployerController2(_context, _webFactory.Object, _garbage.Object, _net.Object);
+			_sut = new DeployerController(_context, _webFactory.Object, _garbage.Object, _net.Object);
 			_context.SetController(_sut);
 			_sut.PreflightCheck();
 		}
