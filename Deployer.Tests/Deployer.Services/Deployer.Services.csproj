@@ -69,9 +69,7 @@
     <Compile Include="Models\BuildState.cs" />
     <Compile Include="Models\BuildStatus.cs" />
     <Compile Include="Models\Project.cs" />
-    <Compile Include="Output\IIndicatorRefresh.cs" />
     <Compile Include="Output\IIndicators.cs" />
-    <Compile Include="Output\IndicatorRefresh.cs" />
     <Compile Include="Output\Indicators.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateMachine2\DeployerContext.cs" />
@@ -86,11 +84,7 @@
     <Compile Include="StateMachine2\States\ReadyToDeployState.cs" />
     <Compile Include="StateMachine2\States\SuccessState.cs" />
     <Compile Include="StateMachine2\States\TurnBothKeysState.cs" />
-    <Compile Include="StateMachine\DeployerController.cs" />
-    <Compile Include="StateMachine\DeployerLoop.cs" />
-    <Compile Include="StateMachine\DeployerState.cs" />
-    <Compile Include="StateMachine\IDeployerController.cs" />
-    <Compile Include="StateMachine\IDeployerLoop.cs" />
+    <Compile Include="StateMachine2\IDeployerController.cs" />
     <Compile Include="Micro\Web\WebResponderFactory.cs" />
     <Compile Include="Micro\Web\IWebResponder.cs" />
     <Compile Include="Micro\Web\IWebResponderFactory.cs" />

@@ -40,15 +40,6 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\WebUtility.cs">
       <Link>Micro\Web\WebUtility.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Wrappers\HttpMethod.cs">
-      <Link>Micro\Wrappers\HttpMethod.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Wrappers\IResponderWrapper.cs">
-      <Link>Micro\Wrappers\IResponderWrapper.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Wrappers\IBodyWrapper.cs">
-      <Link>Micro\Wrappers\IBodyWrapper.cs</Link>
-    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Builders\AppVeyorBuildService.cs">
       <Link>Builders\AppVeyorBuildService.cs</Link>
     </Compile>
@@ -130,14 +121,8 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Models\Project.cs">
       <Link>Models\Project.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Output\IIndicatorRefresh.cs">
-      <Link>Output\IIndicatorRefresh.cs</Link>
-    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Output\IIndicators.cs">
       <Link>Output\IIndicators.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Output\IndicatorRefresh.cs">
-      <Link>Output\IndicatorRefresh.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Output\Indicators.cs">
       <Link>Output\Indicators.cs</Link>
@@ -178,20 +163,8 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\States\TurnBothKeysState.cs">
       <Link>StateMachine2\States\TurnBothKeysState.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerController.cs">
-      <Link>StateMachine\DeployerController.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerLoop.cs">
-      <Link>StateMachine\DeployerLoop.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerState.cs">
-      <Link>StateMachine\DeployerState.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\IDeployerController.cs">
-      <Link>StateMachine\IDeployerController.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\IDeployerLoop.cs">
-      <Link>StateMachine\IDeployerLoop.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine2\IDeployerController.cs">
+      <Link>StateMachine2\IDeployerController.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\WebResponderFactory.cs">
       <Link>Micro\Web\WebResponderFactory.cs</Link>
@@ -210,8 +183,7 @@
     <Reference Include="Json.NetMF">
       <HintPath>..\packages\Json.NetMF.1.3.0.0\lib\netmf43\Json.NetMF.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SPOT.Native">
-    </Reference>
+    <Reference Include="Microsoft.SPOT.Native"></Reference>
     <Reference Include="System.Http" />
     <Reference Include="System.IO" />
   </ItemGroup>
