@@ -1,6 +1,4 @@
-﻿using Deployer.Services.Micro;
-using Deployer.Services.Micro.Web;
-using Deployer.Services.Micro.Wrappers;
+﻿using Deployer.Services.Micro.Web;
 
 namespace Deployer.Services.Api
 {
@@ -14,9 +12,9 @@ namespace Deployer.Services.Api
 			_responderFactory = responderFactory;
 		}
 
-		public void HandleRequest(string path, HttpMethod method, IResponderWrapper ghir)
+		public void HandleRequest(string path, string method )
 		{
-			var responder = _responderFactory.CreateResponder(ghir);
+			var responder = _responderFactory.CreateResponder();
 			var parts = path.Split(new[] {'/'});
 			if (parts.Length > 0)
 			{

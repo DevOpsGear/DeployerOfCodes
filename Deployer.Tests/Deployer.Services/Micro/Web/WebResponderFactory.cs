@@ -1,12 +1,11 @@
-﻿using Deployer.Services.Micro.Wrappers;
-
+﻿
 namespace Deployer.Services.Micro.Web
 {
 	public class WebResponderFactory : IWebResponderFactory
 	{
-		public IWebResponder CreateResponder(IResponderWrapper ghir)
+		public IWebResponder CreateResponder()
 		{
-			return new WebResponder(ghir);
+			return new WebResponder();
 		}
 	}
 }

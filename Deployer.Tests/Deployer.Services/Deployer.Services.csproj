@@ -42,9 +42,6 @@
     <Compile Include="Api\Routing.cs" />
     <Compile Include="Micro\Web\IWebUtility.cs" />
     <Compile Include="Micro\Web\WebUtility.cs" />
-    <Compile Include="Micro\Wrappers\HttpMethod.cs" />
-    <Compile Include="Micro\Wrappers\IResponderWrapper.cs" />
-    <Compile Include="Micro\Wrappers\IBodyWrapper.cs" />
     <Compile Include="Builders\AppVeyorBuildService.cs" />
     <Compile Include="Builders\BuildServiceFactory.cs" />
     <Compile Include="Builders\BuildServiceProvider.cs" />
