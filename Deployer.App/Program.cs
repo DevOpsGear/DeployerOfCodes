@@ -67,7 +67,7 @@ namespace Deployer.App
 			                                _indicatorStateSucceeded,
 			                                _indicatorStateFailed);
 			var context = new DeployerContext(keys, project, charDisp, indicators, sound, webu, _network, webFactory, garbage);
-			_controller = new DeployerController(context, webFactory, garbage, _network);
+			_controller = new DeployerController(context);
 			context.SetController(_controller);
 
 			_controller.PreflightCheck();
@@ -292,6 +292,7 @@ namespace Deployer.App
 		private void OnWebServerCommandReceived(object obj, WebServer.WebServerEventArgs args)
 		{
 			Debug.Print("Raw URL = " + args.rawURL);
+			_controller.ReceivedGetWebRequest(args.rawURL, args.response);
 		}
 
 		#endregion

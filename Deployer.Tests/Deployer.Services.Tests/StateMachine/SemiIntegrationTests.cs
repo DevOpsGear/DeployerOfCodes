@@ -362,7 +362,7 @@ namespace Deployer.Tests.StateMachine
 		{
 			_context = new DeployerContext(_simKeys, _projSel, _display, _indicators.Object, _sound.Object, _netio, _net.Object,
 			                               _webFactory.Object, _garbage.Object);
-			_sut = new DeployerController(_context, _webFactory.Object, _garbage.Object, _net.Object);
+			_sut = new DeployerController(_context);
 			_context.SetController(_sut);
 			_sut.PreflightCheck();
 		}

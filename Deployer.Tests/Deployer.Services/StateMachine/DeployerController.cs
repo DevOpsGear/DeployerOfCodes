@@ -1,7 +1,6 @@
-﻿using Deployer.Services.Hardware;
+﻿using System.Net.Sockets;
+using System.Text;
 using Deployer.Services.Input;
-using Deployer.Services.Micro;
-using Deployer.Services.Micro.Web;
 using Deployer.Services.StateMachine.States;
 
 namespace Deployer.Services.StateMachine
@@ -10,8 +9,7 @@ namespace Deployer.Services.StateMachine
 	{
 		private readonly DeployerContext _context;
 
-		public DeployerController(DeployerContext context,
-		                           IWebRequestFactory webFactory, IGarbage garbage, INetwork network)
+		public DeployerController(DeployerContext context)
 		{
 			_context = context;
 			State = new InitState(_context);
@@ -60,5 +58,11 @@ namespace Deployer.Services.StateMachine
 		}
 
 		public IDeployerState State { get; set; }
+
+		public void ReceivedGetWebRequest(string url, Socket response)
+		{
+			var bytes = Encoding.UTF8.GetBytes("Got this URL! " + url);
+			response.Send(bytes);
+		}
 	}
 }
