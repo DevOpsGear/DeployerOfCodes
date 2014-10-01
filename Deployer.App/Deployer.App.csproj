@@ -123,5 +123,9 @@
       <Project>{4D52A305-28D5-48DE-B1ED-9413174E1904}</Project>
       <Name>Deployer.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NetduinoLibrary\NetduinoLibrary.csproj">
+      <Project>{45C080BD-C7D9-4B68-B763-22DB24647838}</Project>
+      <Name>NetduinoLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

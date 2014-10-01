@@ -10,10 +10,10 @@ using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
 using Deployer.Services.StateMachine2;
 using Gadgeteer;
-using Gadgeteer.Networking;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Microsoft.SPOT.Net.NetworkInformation;
+using NetduinoLibrary.Toolbox;
 
 namespace Deployer.App
 {
@@ -40,6 +40,7 @@ namespace Deployer.App
 		private ILed _indicatorStateFailed;
 
 		private NetworkWrapper _network;
+		private WebServer _webServer;
 		private Persistence _storage;
 
 		private void ProgramStarted()
@@ -101,8 +102,9 @@ namespace Deployer.App
 				}
 				_network = new NetworkWrapper(eth);
 
-				WebServer.DefaultEvent.WebEventReceived += OnWebEvent;
-				WebServer.StartLocalServer(eth.IPAddress, 80);
+				_webServer = new WebServer(80, 1000);
+				_webServer.CommandReceived += OnWebServerCommandReceived;
+				_webServer.Start();
 			}
 			catch (Exception ex)
 			{
@@ -288,10 +290,9 @@ namespace Deployer.App
 
 		#region Web server
 
-		private void OnWebEvent(string path, WebServer.HttpMethod method, Responder responder)
+		private void OnWebServerCommandReceived(object obj, WebServer.WebServerEventArgs args)
 		{
-			Debug.Print("Web! " + path);
-			responder.Respond("Hello");
+			Debug.Print("Raw URL = " + args.rawURL);
 		}
 
 		#endregion
