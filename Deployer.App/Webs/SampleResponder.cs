@@ -1,17 +1,12 @@
 using System.Net.Sockets;
 using System.Text;
-using NeonMika.Webserver;
-using NeonMika.Webserver.Responses;
+using NeonMika;
+using NeonMika.Responses;
 
 namespace Deployer.App.Webs
 {
 	public class SampleResponder : Response
 	{
-		public SampleResponder(string Name) : base(Name)
-		{
-		}
-
-
 		public override bool SendResponse(Request e)
 		{
 			byte[] bytes = Encoding.UTF8.GetBytes("Yooo hoooo!");

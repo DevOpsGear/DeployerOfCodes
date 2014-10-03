@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AssemblyName>NeonMika.WebServer</AssemblyName>
+    <AssemblyName>NeonMika</AssemblyName>
     <OutputType>Library</OutputType>
-    <RootNamespace>NeonMika.WebServer</RootNamespace>
+    <RootNamespace>NeonMika</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -35,7 +35,7 @@
     <Compile Include="Responses\FileResponse.cs" />
     <Compile Include="Responses\Response.cs" />
     <Compile Include="Responses\ResponseErrorType.cs" />
-    <Compile Include="Server.cs" />
+    <Compile Include="WebServer.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Util\Converter.cs" />
     <Compile Include="Util\ExtensionMethods.cs" />
@@ -50,7 +50,6 @@
     <Reference Include="System.IO" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EventArgs\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 </Project>

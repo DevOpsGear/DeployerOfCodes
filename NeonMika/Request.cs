@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Text;
 using System.Net.Sockets;
-using System.Net;
-using System.Diagnostics;
-using System.IO;
 using System.Collections;
 
-namespace NeonMika.Webserver
+namespace NeonMika
 {
 	/// <summary>
 	/// Contains information about a request

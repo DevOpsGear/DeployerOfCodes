@@ -3,7 +3,7 @@ using System.Text;
 using System.Net.Sockets;
 using Microsoft.SPOT;
 
-namespace NeonMika.Webserver.Responses
+namespace NeonMika.Responses
 {
     /// <summary>
     /// Abstract class for responses
@@ -11,23 +11,6 @@ namespace NeonMika.Webserver.Responses
     /// </summary>
     abstract public class Response : IDisposable
     {
-        private string _url;
-
-        public string URL
-        {
-            get { return _url; }
-            set { _url = value; }
-        }
-
-        /// <summary>
-        /// Creates response to send back to client
-        /// </summary>
-        /// <param name="beforeFileSearchMethods">Webserver expand methods</param>
-        public Response(string Name)
-        {
-            this._url = Name;
-        }
-
         /// <summary>
         /// Creates header for 200 OK response
         /// </summary>

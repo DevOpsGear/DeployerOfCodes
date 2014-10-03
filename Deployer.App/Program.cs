@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using Deployer.App.Hardware;
+﻿using Deployer.App.Hardware;
 using Deployer.App.Micro;
 using Deployer.App.Webs;
 using Deployer.Services.Config;
@@ -13,7 +11,9 @@ using Gadgeteer;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Microsoft.SPOT.Net.NetworkInformation;
-using NeonMika.Webserver;
+using NeonMika;
+using System;
+using System.Threading;
 
 namespace Deployer.App
 {
@@ -40,7 +40,7 @@ namespace Deployer.App
 		private ILed _indicatorStateFailed;
 
 		private NetworkWrapper _network;
-		private Server _webServer;
+		private WebServer _webServer;
 		private Persistence _storage;
 
 		private void ProgramStarted()
@@ -102,12 +102,8 @@ namespace Deployer.App
 				}
 				_network = new NetworkWrapper(eth);
 
-				//_webServer = new WebServer(80, 1000);
-				//_webServer.CommandReceived += OnWebServerCommandReceived;
-				//_webServer.Start();
-
-				_webServer = new Server();
-				var response = new SampleResponder("default");
+				_webServer = new WebServer();
+				var response = new SampleResponder();
 				_webServer.AddResponse(response);
 			}
 			catch (Exception ex)

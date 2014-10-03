@@ -1,5 +1,5 @@
 ﻿
-namespace NeonMika.Webserver.Responses
+namespace NeonMika.Responses
 {
     public enum ResponseErrorType 
     {

@@ -1,5 +1,5 @@
 ﻿
-namespace NeonMika.Webserver
+namespace NeonMika
 {
     /// <summary>
     /// Static settings for the webserver
