@@ -9,9 +9,6 @@ using NeonMika.Responses;
 
 namespace NeonMika
 {
-	/// <summary>
-	/// Main class of NeonMika.Webserver
-	/// </summary>
 	public class WebServer
 	{
 		public int Port { get; private set; }

@@ -17,11 +17,6 @@ namespace NeonMika
         /// </summary>
         public const int FILE_BUFFERSIZE = 512;
 
-        /// <summary>
-        /// Path to save POST arguments temporarly
-        /// </summary>
-        public const string POST_TEMP_PATH = "\\SD\\lastPOST";
-        
         public const string SERVER_VERSION = "1.2";
     }
 }
