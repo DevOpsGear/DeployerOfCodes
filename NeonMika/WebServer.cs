@@ -18,7 +18,7 @@ namespace NeonMika
 
 		private Socket _listeningSocket;
 		private readonly ArrayList _responses;
-		private Response _defaultResponse;
+		private readonly Response _defaultResponse;
 
 		public WebServer(int port = 80)
 		{
@@ -105,10 +105,10 @@ namespace NeonMika
 		/// <param name="clientSocket"></param>
 		/// <param name="buffer">Will get filled with the incoming data</param>
 		/// <returns>The header</returns>
-		private byte[] ReadOnlyHeader(Socket clientSocket, byte[] buffer)
+		private static byte[] ReadOnlyHeader(Socket clientSocket, byte[] buffer)
 		{
-			byte[] header = new byte[0];
-			int readByteCount = clientSocket.Receive(buffer, buffer.Length, SocketFlags.None);
+			var header = new byte[0];
+			var readByteCount = clientSocket.Receive(buffer, buffer.Length, SocketFlags.None);
 
 			for (int headerend = 0; headerend < buffer.Length - 3; headerend++)
 			{
@@ -130,7 +130,7 @@ namespace NeonMika
 		/// </summary>
 		/// <param name="clientSocket"></param>
 		/// <returns></returns>
-		private int AwaitAvailableBytes(Socket clientSocket)
+		private static int AwaitAvailableBytes(Socket clientSocket)
 		{
 			var availableBytes = 0;
 			do
