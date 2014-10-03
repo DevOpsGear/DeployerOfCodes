@@ -2,6 +2,7 @@
 using System.Threading;
 using Deployer.App.Hardware;
 using Deployer.App.Micro;
+using Deployer.App.Webs;
 using Deployer.Services.Config;
 using Deployer.Services.Hardware;
 using Deployer.Services.Input;
@@ -12,7 +13,7 @@ using Gadgeteer;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Microsoft.SPOT.Net.NetworkInformation;
-using NetduinoLibrary.Toolbox;
+using NeonMika.Webserver;
 
 namespace Deployer.App
 {
@@ -39,7 +40,7 @@ namespace Deployer.App
 		private ILed _indicatorStateFailed;
 
 		private NetworkWrapper _network;
-		private WebServer _webServer;
+		private Server _webServer;
 		private Persistence _storage;
 
 		private void ProgramStarted()
@@ -101,9 +102,13 @@ namespace Deployer.App
 				}
 				_network = new NetworkWrapper(eth);
 
-				_webServer = new WebServer(80, 1000);
-				_webServer.CommandReceived += OnWebServerCommandReceived;
-				_webServer.Start();
+				//_webServer = new WebServer(80, 1000);
+				//_webServer.CommandReceived += OnWebServerCommandReceived;
+				//_webServer.Start();
+
+				_webServer = new Server();
+				var response = new SampleResponder("default");
+				_webServer.AddResponse(response);
 			}
 			catch (Exception ex)
 			{
@@ -289,11 +294,13 @@ namespace Deployer.App
 
 		#region Web server
 
+		/*
 		private void OnWebServerCommandReceived(object obj, WebServer.WebServerEventArgs args)
 		{
 			Debug.Print("Raw URL = " + args.rawURL);
 			_controller.ReceivedGetWebRequest(args.rawURL, args.response);
 		}
+		*/
 
 		#endregion
 

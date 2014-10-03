@@ -64,6 +64,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Webs\SampleResponder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gadgeteer" />
@@ -124,9 +125,9 @@
       <Project>{4D52A305-28D5-48DE-B1ED-9413174E1904}</Project>
       <Name>Deployer.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NetduinoLibrary\NetduinoLibrary.csproj">
-      <Project>{45C080BD-C7D9-4B68-B763-22DB24647838}</Project>
-      <Name>NetduinoLibrary</Name>
+    <ProjectReference Include="..\NeonMika\NeonMika.csproj">
+      <Project>{90F5F9C2-FC49-4BA6-81CD-7C9EC9A6C2D9}</Project>
+      <Name>NeonMika</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
