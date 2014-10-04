@@ -20,9 +20,9 @@ namespace NeonMika.Responses
 		/// </summary>
 		/// <param name="e"></param>
 		/// <returns></returns>
-		public override bool ConditionsCheckAndDataFill(Request e)
+		public override bool CanRespond(Request e)
 		{
-			string filePath = e.URL;
+			string filePath = e.Url;
 			bool isDirectory = false;
 			return CheckFileDirectoryExist(ref filePath, out isDirectory);
 		}
@@ -34,7 +34,7 @@ namespace NeonMika.Responses
 		/// <returns></returns>
 		public override bool SendResponse(Request e)
 		{
-			string filePath = e.URL.Replace('/', '\\');
+			string filePath = e.Url.Replace('/', '\\');
 			bool isDirectory = false;
 
 			//File found check
@@ -47,17 +47,17 @@ namespace NeonMika.Responses
 				string send;
 				var interf = NetworkInterface.GetAllNetworkInterfaces()[0];
 
-				Send200_OK(MimeType(".html"), 0, e.Client);
+				Send200_OK(GetMimeType(".html"), 0, e.Client);
 
 				string uppath = ((filePath.LastIndexOf("\\") >= 0)
 					                 ? interf.IPAddress + ((filePath[0] != '\\') ? "\\" : "") +
 					                   filePath.Substring(0, filePath.LastIndexOf("\\"))
 					                 : interf.IPAddress + ((filePath[0] != '\\') ? "\\" : "") + filePath);
 
-				send = "<html><head><title>" + e.URL + "</title>" +
+				send = "<html><head><title>" + e.Url + "</title>" +
 				       "<style type=\"text/css\">a.a1{background-color:#ADD8E6;margin:0;padding:0;font-weight:bold;}a.a2{background-color:#87CEEB;margin:0;padding:0;font-weight:bold;}</style>" +
 				       "</head><body><a href=\"http:\\\\" + uppath + "\">One level up</a><br/>" +
-				       "<h1>" + e.URL + "</h1><h2>Directories:</h2>";
+				       "<h1>" + e.Url + "</h1><h2>Directories:</h2>";
 				if (SendData(e.Client, Encoding.UTF8.GetBytes(send)) == 0)
 					return false;
 
@@ -83,7 +83,7 @@ namespace NeonMika.Responses
 			}
 			else
 			{
-				string mType = MimeType(filePath);
+				string mType = GetMimeType(filePath);
 
 				//File sending
 				using (FileStream inputStream = new FileStream(filePath, FileMode.Open))
@@ -99,7 +99,7 @@ namespace NeonMika.Responses
 						int bytesRead = inputStream.Read(readBuffer, 0, readBuffer.Length);
 						try
 						{
-							if (SocketConnected(e.Client))
+							if (IsSocketConnected(e.Client))
 							{
 								sentBytes += e.Client.Send(readBuffer, bytesRead, SocketFlags.None);
 							}

@@ -57,25 +57,22 @@ namespace NeonMika
 				{
 					using (var clientSocket = _listeningSocket.Accept())
 					{
-						//Wait to get the bytes in the sockets "available buffer"
 						var availableBytes = AwaitAvailableBytes(clientSocket);
 						if (availableBytes <= 0) continue;
 
 						var buffer = new byte[availableBytes > Settings.MAX_REQUESTSIZE ? Settings.MAX_REQUESTSIZE : availableBytes];
-						var header = ReadOnlyHeader(clientSocket, buffer);
+						var headerBody = ReadAndBreakApart(clientSocket, buffer);
 
-						//reqeust created, checking the response possibilities
-						using (var tempRequest = new Request(Encoding.UTF8.GetChars(header), clientSocket))
+						using (
+							var request = new Request(Encoding.UTF8.GetChars(headerBody.Header), Encoding.UTF8.GetChars(headerBody.Body),
+							                          clientSocket))
 						{
-							Debug.Print("\n\nClient connected\nURL: " + tempRequest.URL + "\nFinal byte count: " + availableBytes + "\n");
-
-							//Let's check if we have to take some action or if it is a file-response 
-							SendResponse(tempRequest);
+							Debug.Print("\n\nClient connected\nURL: " + request.Url + "\nFinal byte count: " + availableBytes + "\n");
+							SendResponse(request);
 						}
 
 						try
 						{
-							//Close client, otherwise the browser / client won't work properly
 							clientSocket.Close();
 						}
 						catch (Exception ex)
@@ -96,37 +93,6 @@ namespace NeonMika
 
 // ReSharper restore FunctionNeverReturns
 
-		/// <summary>
-		/// Reads in the data from the socket and seperates the header from the rest of the request.
-		/// </summary>
-		/// <param name="clientSocket"></param>
-		/// <param name="buffer">Will get filled with the incoming data</param>
-		/// <returns>The header</returns>
-		private static byte[] ReadOnlyHeader(Socket clientSocket, byte[] buffer)
-		{
-			var header = new byte[0];
-			var readByteCount = clientSocket.Receive(buffer, buffer.Length, SocketFlags.None);
-
-			for (int headerend = 0; headerend < buffer.Length - 3; headerend++)
-			{
-				if (buffer[headerend] == '\r' && buffer[headerend + 1] == '\n' && buffer[headerend + 2] == '\r' &&
-				    buffer[headerend + 3] == '\n')
-				{
-					header = new byte[headerend + 4];
-					Array.Copy(buffer, 0, header, 0, headerend + 4);
-					break;
-				}
-			}
-
-			return header;
-		}
-
-		/// <summary>
-		/// Returns the number of available bytes.
-		/// Waits till all bytes from one request are received.
-		/// </summary>
-		/// <param name="clientSocket"></param>
-		/// <returns></returns>
 		private static int AwaitAvailableBytes(Socket clientSocket)
 		{
 			var availableBytes = 0;
@@ -138,16 +104,23 @@ namespace NeonMika
 					break;
 
 				availableBytes += newAvBytes;
-			} while (true); //repeat as long as new bytes were received
+			} while (true); // Repeat until all bytes received
 
 			return availableBytes;
+		}
+
+		private static HeaderBody ReadAndBreakApart(Socket clientSocket, byte[] buffer)
+		{
+			clientSocket.Receive(buffer, buffer.Length, SocketFlags.None);
+			return new HeaderBody(buffer);
 		}
 
 		private void SendResponse(Request e)
 		{
 			foreach (Response resp in _responses)
 			{
-				if (!resp.ConditionsCheckAndDataFill(e)) continue;
+				if (!resp.CanRespond(e))
+					continue;
 				if (!resp.SendResponse(e))
 					Debug.Print("Sending response failed");
 				return;

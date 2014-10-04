@@ -1,39 +1,39 @@
-using System;
-using Microsoft.SPOT;
-
 namespace NeonMika.Util
 {
-    public static class ExtensionMethods
-    {
-        public static string[] EasySplit(this string s, string seperator)
-        {
-            int pos = s.IndexOf(seperator);
-            if (pos != -1)
-                return new string[] { s.Substring(0, pos).Trim(new char[] { ' ', '\n', '\r' }), s.Substring(pos + seperator.Length, s.Length - pos - seperator.Length).Trim(new char[] { ' ', '\n', '\r' }) };
-            else
-                return new string[] { s.Trim(new char[] { ' ', '\n', '\r' }) };
-        }
+	public static class ExtensionMethods
+	{
+		public static string[] EasySplit(this string s, string separator)
+		{
+			int pos = s.IndexOf(separator);
+			if (pos != -1)
+				return new[]
+					{
+						s.Substring(0, pos).Trim(new[] {' ', '\n', '\r'}),
+						s.Substring(pos + separator.Length, s.Length - pos - separator.Length).Trim(new[] {' ', '\n', '\r'})
+					};
+			return new[] {s.Trim(new[] {' ', '\n', '\r'})};
+		}
 
-        public static bool StartsWith(this string s, string start)
-        {
-            for (int i = 0; i < start.Length; i++)
-                if (s[i] != start[i])
-                    return false;
+		public static bool StartsWith(this string s, string start)
+		{
+			for (var i = 0; i < start.Length; i++)
+				if (s[i] != start[i])
+					return false;
 
-            return true;
-        }
+			return true;
+		}
 
-        public static string Replace(this string s, char replaceThis, char replaceWith)
-        {
-            string temp = "";
-            for (int i = 0; i < s.Length; i++)
-            {
-                if (s[i] == replaceThis)
-                    temp += replaceWith;
-                else
-                    temp += s[i];
-            }
-            return temp;
-        }
-    }
+		public static string Replace(this string s, char replaceThis, char replaceWith)
+		{
+			var temp = string.Empty;
+			for (var i = 0; i < s.Length; i++)
+			{
+				if (s[i] == replaceThis)
+					temp += replaceWith;
+				else
+					temp += s[i];
+			}
+			return temp;
+		}
+	}
 }

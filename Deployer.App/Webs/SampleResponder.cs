@@ -17,7 +17,7 @@ namespace Deployer.App.Webs
 			return true;
 		}
 
-		public override bool ConditionsCheckAndDataFill(Request e)
+		public override bool CanRespond(Request e)
 		{
 			return true;
 		}

@@ -5,21 +5,11 @@ using Microsoft.SPOT;
 
 namespace NeonMika.Responses
 {
-    /// <summary>
-    /// Abstract class for responses
-    /// Contains basic operations for sending data to the client
-    /// </summary>
-    abstract public class Response : IDisposable
-    {
-        /// <summary>
-        /// Creates header for 200 OK response
-        /// </summary>
-        /// <param name="MimeType">MIME type of response</param>
-        /// <param name="ContentLength">Byte count of response body
-        /// <param name="Client">The Socket connected with the client</param>
-        protected void Send200_OK(string MimeType, int ContentLength, Socket Client)
-        {
-            /*
+	public abstract class Response : IDisposable
+	{
+		protected void Send200_OK(string mimeType, int contentLength, Socket client)
+		{
+			/*
             StringBuilder headerBuilder = new StringBuilder();
             headerBuilder.Append("HTTP/1.0 200 OK\r\n");
             headerBuilder.Append("Content-Type: ");
@@ -31,154 +21,135 @@ namespace NeonMika.Responses
             headerBuilder.Append("Connection: close\r\n\r\n");
              * */
 
-            String header;
-            if(ContentLength>0)
-                header = "HTTP/1.0 200 OK\r\n" + "Content-Type: " + MimeType + "; charset=utf-8\r\n" + "Content-Length: " + ContentLength.ToString() + "\r\n" + "Connection: close\r\n\r\n";
-            else
-                header = "HTTP/1.0 200 OK\r\n" + "Content-Type: " + MimeType + "; charset=utf-8\r\n" + "Connection: close\r\n\r\n";
+			String header;
+			if (contentLength > 0)
+				header = "HTTP/1.0 200 OK\r\n" + "Content-Type: " + mimeType + "; charset=utf-8\r\n" + "Content-Length: " +
+				         contentLength.ToString() + "\r\n" + "Connection: close\r\n\r\n";
+			else
+				header = "HTTP/1.0 200 OK\r\n" + "Content-Type: " + mimeType + "; charset=utf-8\r\n" + "Connection: close\r\n\r\n";
 
-            try
-            {
-                Client.Send(Encoding.UTF8.GetBytes(header), header.Length, SocketFlags.None);
-            }
-            catch (Exception e)
-            {
-                Debug.Print(e.Message.ToString());
-                return;
-            }
-        }
+			try
+			{
+				client.Send(Encoding.UTF8.GetBytes(header), header.Length, SocketFlags.None);
+			}
+			catch (Exception e)
+			{
+				Debug.Print(e.Message);
+			}
+		}
 
-        /// <summary>
-        /// Sends a 404 Not Found response
-        /// </summary>
-        public void Send404_NotFound(Socket Client)
-        {
-            string header = "HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n<html><body><head><title>NeonMika.Webserver is sorry</title></head><h1>NeonMika.Webserver is sorry!</h1><h2>The file or webmethod you were looking for was not found :/</h2></body></html>";
-            if (Client != null)
-                Client.Send(Encoding.UTF8.GetBytes(header), header.Length, SocketFlags.None);
-            Debug.Print("Sent 404 Not Found");
-        }
+		/// <summary>
+		/// Sends a 404 Not Found response
+		/// </summary>
+		public void Send404_NotFound(Socket client)
+		{
+			const string header = "HTTP/1.1 404 Not Found\r\n"
+			                      + "Content-Length: 0\r\nConnection: close\r\n\r\n"
+			                      + "<html><body><head><title>NeonMika.Webserver is sorry</title></head>"
+			                      + "<h1>NeonMika.Webserver is sorry!</h1>"
+			                      + "<h2>The file or webmethod you were looking for was not found :/</h2></body></html>";
+			if (client != null)
+				client.Send(Encoding.UTF8.GetBytes(header), header.Length, SocketFlags.None);
+			Debug.Print("Sent 404 Not Found");
+		}
 
-        /// <summary>
-        /// Sends data to the client
-        /// </summary>
-        /// <param name="client">Socket connected with the client</param>
-        /// <param name="data">Byte-array to be transmitted</param>
-        /// <returns>Bytes that were sent</returns>
-        protected int SendData(Socket client, byte[] data)
-        {
-            int ret = 0;
-            try
-            {
-                if (SocketConnected(client))
-                    ret = client.Send(data, data.Length, SocketFlags.None);
-                else
-                {
-                    client.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.Print("Error on sending data to client / Closing Client");
-                try
-                {
-                    client.Close();
-                }
-                catch (Exception ex2)
-                {
-                }
-            }
+		/// <summary>
+		/// Sends data to the client
+		/// </summary>
+		/// <param name="client">Socket connected with the client</param>
+		/// <param name="data">Byte-array to be transmitted</param>
+		/// <returns>Bytes that were sent</returns>
+		protected int SendData(Socket client, byte[] data)
+		{
+			int ret = 0;
+			try
+			{
+				if (IsSocketConnected(client))
+					ret = client.Send(data, data.Length, SocketFlags.None);
+				else
+				{
+					client.Close();
+				}
+			}
+			catch (Exception)
+			{
+				Debug.Print("Error on sending data to client / Closing Client");
+				try
+				{
+					client.Close();
+				}
+				catch
+				{
+				}
+			}
 
-            return ret;
-        }
+			return ret;
+		}
 
-        /// <summary>
-        /// Converts fileending into mime-type
-        /// </summary>
-        /// <param name="Filename">File name or complete file path</param>
-        /// <returns>MIME type</returns>
-        protected string MimeType(string Filename)
-        {
-            string result = "text/html";
-            int dot = Filename.LastIndexOf('.');
+		protected string GetMimeType(string filename)
+		{
+			string result;
+			var dot = filename.LastIndexOf('.');
 
-            string ext = (dot >= 0) ? Filename.Substring(dot + 1) : "";
-            switch (ext.ToLower())
-            {
-                case "txt":
-                    result = "text/plain";
-                    break;
-                case "htm":
-                case "html":
-                    result = "text/html";
-                    break;
-                case "js":
-                    result = "text/javascript";
-                    break;
-                case "css":
-                    result = "text/css";
-                    break;
-                case "xml":
-                case "xsl":
-                    result = "text/xml";
-                    break;
-                case "jpg":
-                case "jpeg":
-                    result = "image/jpeg";
-                    break;
-                case "gif":
-                    result = "image/gif";
-                    break;
-                case "png":
-                    result = "image/png";
-                    break;
-                case "ico":
-                    result = "x-icon";
-                    break;
-                case "mid":
-                    result = "audio/mid";
-                    break;
-                default:
-                    result = "application/octet-stream";
-                    break;
-            }
-            return result;
-        }
+			string ext = (dot >= 0) ? filename.Substring(dot + 1) : string.Empty;
+			switch (ext.ToLower())
+			{
+				case "txt":
+					result = "text/plain";
+					break;
+				case "htm":
+				case "html":
+					result = "text/html";
+					break;
+				case "js":
+					result = "text/javascript";
+					break;
+				case "css":
+					result = "text/css";
+					break;
+				case "xml":
+				case "xsl":
+					result = "text/xml";
+					break;
+				case "jpg":
+				case "jpeg":
+					result = "image/jpeg";
+					break;
+				case "gif":
+					result = "image/gif";
+					break;
+				case "png":
+					result = "image/png";
+					break;
+				case "ico":
+					result = "x-icon";
+					break;
+				case "mid":
+					result = "audio/mid";
+					break;
+				default:
+					result = "application/octet-stream";
+					break;
+			}
+			return result;
+		}
 
-        /// <summary>
-        /// Checks if socket is still connected
-        /// </summary>
-        /// <param name="s">Socket that should be checked</param>
-        /// <returns>True on still connect</returns>
-        protected bool SocketConnected(Socket s)
-        {
-            bool part1 = s.Poll(1000, SelectMode.SelectRead);
-            bool part2 = (s.Available == 0);
-            if (part1 & part2)
-                return false;
-            else
-                return true;
-        }
+		protected bool IsSocketConnected(Socket s)
+		{
+			var part1 = s.Poll(1000, SelectMode.SelectRead);
+			var part2 = (s.Available == 0);
+			return !(part1 & part2);
+		}
 
-        /// <summary>
-        /// Override this method to implement a response logic.
-        /// </summary>
-        /// <returns>True if Response was sent, false if not</returns>
-        abstract public bool SendResponse(Request e);
+		public abstract bool CanRespond(Request e);
+		public abstract bool SendResponse(Request e);
 
-        /// <summary>
-        /// Override this, check the URL and process data if needed
-        /// </summary>
-        /// <returns>True if SendResponse should be sent, false if not</returns>
-        abstract public bool ConditionsCheckAndDataFill(Request e);
+		#region IDisposable Members
 
-        #region IDisposable Members
+		public void Dispose()
+		{
+		}
 
-        public void Dispose()
-        {
-            
-        }
-
-        #endregion
-    }
+		#endregion
+	}
 }
