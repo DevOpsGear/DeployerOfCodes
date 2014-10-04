@@ -3,8 +3,8 @@ using System.Text;
 using System.IO;
 using System.Net.Sockets;
 using Microsoft.SPOT;
-using System.Collections;
 using Microsoft.SPOT.Net.NetworkInformation;
+using NeonMika.Requests;
 using NeonMika.Util;
 
 namespace NeonMika.Responses
@@ -23,7 +23,7 @@ namespace NeonMika.Responses
 		public override bool CanRespond(Request e)
 		{
 			string filePath = e.Url;
-			bool isDirectory = false;
+			bool isDirectory;
 			return CheckFileDirectoryExist(ref filePath, out isDirectory);
 		}
 
@@ -34,61 +34,58 @@ namespace NeonMika.Responses
 		/// <returns></returns>
 		public override bool SendResponse(Request e)
 		{
-			string filePath = e.Url.Replace('/', '\\');
-			bool isDirectory = false;
+			var filePath = e.Url.Replace('/', '\\');
+			bool isDirectory;
 
 			//File found check
 			if (!CheckFileDirectoryExist(ref filePath, out isDirectory))
-				Send404_NotFound(e.Client);
+				RequestHelper.Send404_NotFound(e.Client);
 
 			if (isDirectory)
 			{
-				ArrayList toReturn = new ArrayList();
-				string send;
 				var interf = NetworkInterface.GetAllNetworkInterfaces()[0];
 
-				Send200_OK(GetMimeType(".html"), 0, e.Client);
+				RequestHelper.Send200_OK(RequestHelper.GetMimeType(".html"), 0, e.Client);
 
-				string uppath = ((filePath.LastIndexOf("\\") >= 0)
+				var uppath = ((filePath.LastIndexOf("\\") >= 0)
 					                 ? interf.IPAddress + ((filePath[0] != '\\') ? "\\" : "") +
 					                   filePath.Substring(0, filePath.LastIndexOf("\\"))
 					                 : interf.IPAddress + ((filePath[0] != '\\') ? "\\" : "") + filePath);
 
-				send = "<html><head><title>" + e.Url + "</title>" +
-				       "<style type=\"text/css\">a.a1{background-color:#ADD8E6;margin:0;padding:0;font-weight:bold;}a.a2{background-color:#87CEEB;margin:0;padding:0;font-weight:bold;}</style>" +
-				       "</head><body><a href=\"http:\\\\" + uppath + "\">One level up</a><br/>" +
-				       "<h1>" + e.Url + "</h1><h2>Directories:</h2>";
-				if (SendData(e.Client, Encoding.UTF8.GetBytes(send)) == 0)
+				var send = "<html><head><title>" + e.Url + "</title>" +
+				              "<style type=\"text/css\">a.a1{background-color:#ADD8E6;margin:0;padding:0;font-weight:bold;}a.a2{background-color:#87CEEB;margin:0;padding:0;font-weight:bold;}</style>" +
+				              "</head><body><a href=\"http:\\\\" + uppath + "\">One level up</a><br/>" +
+				              "<h1>" + e.Url + "</h1><h2>Directories:</h2>";
+				if (RequestHelper.SendData(e.Client, Encoding.UTF8.GetBytes(send)) == 0)
 					return false;
 
-				foreach (string d in Directory.GetDirectories(filePath))
+				foreach (var d in Directory.GetDirectories(filePath))
 				{
 					send = "<a href=\"http:\\\\" + interf.IPAddress + d + "\" class=\"a1\">" + d + "</a><br/>";
-					if (SendData(e.Client, Encoding.UTF8.GetBytes(send)) == 0)
+					if (RequestHelper.SendData(e.Client, Encoding.UTF8.GetBytes(send)) == 0)
 						return false;
 				}
 
-				SendData(e.Client, Encoding.UTF8.GetBytes("<h2>Files:</h2>"));
+				RequestHelper.SendData(e.Client, Encoding.UTF8.GetBytes("<h2>Files:</h2>"));
 
-				foreach (string f in Directory.GetFiles(filePath))
+				foreach (var f in Directory.GetFiles(filePath))
 				{
 					send = "<a href=\"http:\\\\" + interf.IPAddress + f + "\" class=\"a2\">" + f + "</a><br/>";
-					if (SendData(e.Client, Encoding.UTF8.GetBytes(send)) == 0)
+					if (RequestHelper.SendData(e.Client, Encoding.UTF8.GetBytes(send)) == 0)
 						return false;
 				}
 
 				send = "</body></html>";
-				if (SendData(e.Client, Encoding.UTF8.GetBytes(send)) == 0)
+				if (RequestHelper.SendData(e.Client, Encoding.UTF8.GetBytes(send)) == 0)
 					return false;
 			}
 			else
 			{
-				string mType = GetMimeType(filePath);
+				var mimeType = RequestHelper.GetMimeType(filePath);
 
-				//File sending
-				using (FileStream inputStream = new FileStream(filePath, FileMode.Open))
+				using (var inputStream = new FileStream(filePath, FileMode.Open))
 				{
-					Send200_OK(mType, (int) inputStream.Length, e.Client);
+					RequestHelper.Send200_OK(mimeType, (int) inputStream.Length, e.Client);
 
 					byte[] readBuffer = new byte[Settings.FILE_BUFFERSIZE];
 					int sentBytes = 0;
@@ -99,7 +96,7 @@ namespace NeonMika.Responses
 						int bytesRead = inputStream.Read(readBuffer, 0, readBuffer.Length);
 						try
 						{
-							if (IsSocketConnected(e.Client))
+							if (RequestHelper.IsSocketConnected(e.Client))
 							{
 								sentBytes += e.Client.Send(readBuffer, bytesRead, SocketFlags.None);
 							}
@@ -145,7 +142,6 @@ namespace NeonMika.Responses
 				if (!File.Exists(filePath))
 					if (!Directory.Exists(filePath))
 					{
-						isDirectory = false;
 						return false;
 					}
 					else

@@ -1,6 +1,6 @@
 using System;
 
-namespace NeonMika.Util
+namespace NeonMika.Requests
 {
 	public class HeaderBody
 	{

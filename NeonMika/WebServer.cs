@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using Microsoft.SPOT;
+using NeonMika.Requests;
 using NeonMika.Responses;
 using NeonMika.Util;
 

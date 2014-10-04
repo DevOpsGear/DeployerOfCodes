@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using System.Collections;
 
-namespace NeonMika
+namespace NeonMika.Requests
 {
 	public class Request : IDisposable
 	{
@@ -10,22 +10,20 @@ namespace NeonMika
 		private string _method;
 		private string _url;
 		private Hashtable _getArguments;
-		private string _body;
-		private Hashtable _headers;
+		private readonly string _body;
+		private readonly Hashtable _headers;
 
 		public Request(char[] header, char[] body, Socket client)
 		{
 			_client = client;
 			_getArguments = new Hashtable();
-			_headers = new Hashtable();
-			ProcessHeader(header);
+			_headers = ProcessHeader(header);
 			_body = new string(body);
 		}
 
 		public Hashtable Headers
 		{
 			get { return _headers; }
-			set { _headers = value; }
 		}
 
 		public Hashtable GetArguments
@@ -53,7 +51,7 @@ namespace NeonMika
 			get { return _client; }
 		}
 
-		private void ProcessHeader(char[] data)
+		private Hashtable ProcessHeader(char[] data)
 		{
 			for (var i = 0; i < data.Length - 3; i++)
 			{
@@ -91,19 +89,14 @@ namespace NeonMika
 
 			// Parse the first line of the request: "GET /path/ HTTP/1.1"
 			var firstLineSplit = lines[0].Split(' ');
-			_method = firstLineSplit[0];
+			_method = firstLineSplit[0].ToUpper();
 			var path = firstLineSplit[1].Split('?');
 			_url = path[0].Substring(1); // Ignore the leading '/'
 
-			_getArguments.Clear();
 			if (path.Length > 1)
 				ProcessGetParameters(path[1]);
 
-			if (_method == "POST" || _method == "PUT")
-			{
-				_body = content;
-			}
-			_headers = Util.Converter.ToHashtable(lines, ": ", 1);
+			return Util.Converter.ToHashtable(lines, ": ", 1);
 		}
 
 		private void ProcessGetParameters(string parameters)

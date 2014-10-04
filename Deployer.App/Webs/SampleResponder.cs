@@ -1,24 +1,19 @@
-using System.Net.Sockets;
-using System.Text;
-using NeonMika;
+using NeonMika.Requests;
 using NeonMika.Responses;
 
 namespace Deployer.App.Webs
 {
 	public class SampleResponder : Response
 	{
-		public override bool SendResponse(Request e)
+		public override bool CanRespond(Request e)
 		{
-			byte[] bytes = Encoding.UTF8.GetBytes("Yooo hoooo!");
-
-			var byteCount = bytes.Length;
-			Send200_OK("text/plain", byteCount, e.Client);
-			e.Client.Send(bytes, byteCount, SocketFlags.None);
 			return true;
 		}
 
-		public override bool CanRespond(Request e)
+		public override bool SendResponse(Request e)
 		{
+			var text = "Yoo ho!!!! method=" + e.Method + " / body=" + e.Body;
+			RequestHelper.SendTextUtf8("text/plain", text, e.Client);
 			return true;
 		}
 	}
