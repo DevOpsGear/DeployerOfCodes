@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using Microsoft.SPOT;
 using NeonMika.Responses;
+using NeonMika.Util;
 
 namespace NeonMika
 {
