@@ -86,30 +86,6 @@ namespace Deployer.App
 			SetupTimers();
 		}
 
-		#region Debug
-
-		private bool _debugThingy;
-
-		private void SetupDebugConflictCheckTimer()
-		{
-			_timerBlink = new Gadgeteer.Timer(100);
-			_timerBlink.Tick += OnConflictCheckTimer;
-			_timerBlink.Start();
-		}
-
-		private void OnConflictCheckTimer(Gadgeteer.Timer timer)
-		{
-			_debugThingy = !_debugThingy;
-			_indicatorTurnKeyA.Write(_debugThingy);
-			_indicatorTurnKeyB.Write(_debugThingy);
-			_indicatorSelectProject.Write(_debugThingy);
-			_indicatorReadyToArm.Write(_debugThingy);
-			_indicatorReadyToDeploy.Write(_debugThingy);
-			_indicatorStateDeploying.Write(_debugThingy);
-		}
-
-		#endregion
-
 		#region Setup methods
 
 		// Try mIP? http://mip.codeplex.com/
@@ -343,6 +319,30 @@ namespace Deployer.App
 		private void BlinkTick(Gadgeteer.Timer timer)
 		{
 			_controller.Tick();
+		}
+
+		#endregion
+
+		#region Debug
+
+		private bool _debugThingy;
+
+		private void SetupDebugConflictCheckTimer()
+		{
+			_timerBlink = new Gadgeteer.Timer(100);
+			_timerBlink.Tick += OnConflictCheckTimer;
+			_timerBlink.Start();
+		}
+
+		private void OnConflictCheckTimer(Gadgeteer.Timer timer)
+		{
+			_debugThingy = !_debugThingy;
+			_indicatorTurnKeyA.Write(_debugThingy);
+			_indicatorTurnKeyB.Write(_debugThingy);
+			_indicatorSelectProject.Write(_debugThingy);
+			_indicatorReadyToArm.Write(_debugThingy);
+			_indicatorReadyToDeploy.Write(_debugThingy);
+			_indicatorStateDeploying.Write(_debugThingy);
 		}
 
 		#endregion
