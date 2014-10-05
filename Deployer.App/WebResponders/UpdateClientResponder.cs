@@ -25,8 +25,6 @@ namespace Deployer.App.WebResponders
 		{
 			try
 			{
-				var memory = Debug.GC(true);
-				Debug.Print("Memory = " + memory);
 				var partialPath = e.Url.Replace('/', '\\');
 				var filePath = Path.Combine(_rootDirectory, partialPath);
 

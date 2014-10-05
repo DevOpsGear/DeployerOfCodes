@@ -42,7 +42,7 @@ namespace Deployer.App
 		private NetworkWrapper _network;
 		private WebServer _webServer;
 		private Persistence _storage;
-
+		private string _rootDir;
 
 		private void ProgramStarted()
 		{
@@ -55,9 +55,6 @@ namespace Deployer.App
 
 			SetupInputs();
 			SetupIndicators();
-
-			//SetupDebugConflictCheckTimer();
-			SetupPersistence();
 
 			var config = new FakeConfigurationService();
 			var charDisp = new CharDisplay(characterDisplay);
@@ -112,7 +109,7 @@ namespace Deployer.App
 			}
 			catch (Exception ex)
 			{
-				Debug.Print(ex.ToString());
+				Debug.Print("Could not set up Ethernet - " + ex);
 				throw;
 			}
 		}
@@ -121,11 +118,8 @@ namespace Deployer.App
 		{
 			_webServer = new WebServer();
 
-			var auth = new AuthResponder();
-			_webServer.AddResponse(auth);
-
-			var config = new ConfigResponder();
-			_webServer.AddResponse(config);
+			//var auth = new DeployerServiceResponder();
+			//_webServer.AddResponse(auth);
 
 			var updateClient = new UpdateClientResponder(_rootDir);
 			_webServer.AddResponse(updateClient);
@@ -185,6 +179,8 @@ namespace Deployer.App
 			{
 				_storage = new Persistence(Mainboard.SDCardStorageDevice);
 				var isStorage = Mainboard.IsSDCardInserted;
+				if (!isStorage)
+					throw new Exception("No SD card has been inserted");
 				_rootDir = Mainboard.SDCardStorageDevice.Volume.RootDirectory;
 				if (!_storage.DoesRootDirectoryExist("auth"))
 					_storage.CreateDirectory("auth");
@@ -312,48 +308,11 @@ namespace Deployer.App
 
 		#endregion
 
-		#region Web server
-
-		/*
-		private void OnWebServerCommandReceived(object obj, WebServer.WebServerEventArgs args)
-		{
-			Debug.Print("Raw URL = " + args.rawURL);
-			_controller.ReceivedGetWebRequest(args.rawURL, args.response);
-		}
-		*/
-
-		#endregion
-
 		#region Blink
 
 		private void BlinkTick(Gadgeteer.Timer timer)
 		{
 			_controller.Tick();
-		}
-
-		#endregion
-
-		#region Debug
-
-		private bool _debugThingy;
-		private string _rootDir;
-
-		private void SetupDebugConflictCheckTimer()
-		{
-			_timerBlink = new Gadgeteer.Timer(100);
-			_timerBlink.Tick += OnConflictCheckTimer;
-			_timerBlink.Start();
-		}
-
-		private void OnConflictCheckTimer(Gadgeteer.Timer timer)
-		{
-			_debugThingy = !_debugThingy;
-			_indicatorTurnKeyA.Write(_debugThingy);
-			_indicatorTurnKeyB.Write(_debugThingy);
-			_indicatorSelectProject.Write(_debugThingy);
-			_indicatorReadyToArm.Write(_debugThingy);
-			_indicatorReadyToDeploy.Write(_debugThingy);
-			_indicatorStateDeploying.Write(_debugThingy);
 		}
 
 		#endregion
