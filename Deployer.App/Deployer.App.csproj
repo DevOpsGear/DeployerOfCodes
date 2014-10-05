@@ -64,7 +64,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Webs\SampleResponder.cs" />
+    <Compile Include="Webs\AuthResponder.cs" />
+    <Compile Include="Webs\ConfigResponder.cs" />
+    <Compile Include="Webs\UpdateClientFilesResponder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gadgeteer" />
@@ -91,6 +93,7 @@
     </Reference>
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Hardware" />
+    <Reference Include="Microsoft.SPOT.IO" />
     <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Microsoft.SPOT.Net" />
     <Reference Include="mscorlib" />

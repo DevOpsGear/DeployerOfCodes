@@ -14,6 +14,23 @@ namespace NeonMika.Requests
 			client.Send(bytes, bytes.Length, SocketFlags.None);
 		}
 
+		public static void Send200_OK(string mimeType, Socket client)
+		{
+			var header = "HTTP/1.0 200 OK\r\n"
+			             + "Content-Type: " + mimeType + "; charset=utf-8\r\n"
+			             + "Connection: close\r\n\r\n";
+
+			try
+			{
+				var buffer = Encoding.UTF8.GetBytes(header);
+				client.Send(buffer, buffer.Length, SocketFlags.None);
+			}
+			catch (Exception e)
+			{
+				Debug.Print(e.Message);
+			}
+		}
+
 		public static void Send200_OK(string mimeType, int contentLength, Socket client)
 		{
 			/*
@@ -30,14 +47,23 @@ namespace NeonMika.Requests
 
 			string header;
 			if (contentLength > 0)
-				header = "HTTP/1.0 200 OK\r\n" + "Content-Type: " + mimeType + "; charset=utf-8\r\n" + "Content-Length: " +
-				         contentLength.ToString() + "\r\n" + "Connection: close\r\n\r\n";
+			{
+				header = "HTTP/1.0 200 OK\r\n"
+				         + "Content-Type: " + mimeType + "; charset=utf-8\r\n"
+				         + "Content-Length: " + contentLength + "\r\n"
+				         + "Connection: close\r\n\r\n";
+			}
 			else
-				header = "HTTP/1.0 200 OK\r\n" + "Content-Type: " + mimeType + "; charset=utf-8\r\n" + "Connection: close\r\n\r\n";
+			{
+				header = "HTTP/1.0 204 No Content\r\n"
+				         + "Content-Type: " + mimeType + "; charset=utf-8\r\n"
+				         + "Connection: close\r\n\r\n";
+			}
 
 			try
 			{
-				client.Send(Encoding.UTF8.GetBytes(header), header.Length, SocketFlags.None);
+				var buffer = Encoding.UTF8.GetBytes(header);
+				client.Send(buffer, buffer.Length, SocketFlags.None);
 			}
 			catch (Exception e)
 			{
@@ -48,13 +74,23 @@ namespace NeonMika.Requests
 		public static void Send404_NotFound(Socket client)
 		{
 			const string header = "HTTP/1.1 404 Not Found\r\n"
-			                      + "Content-Length: 0\r\nConnection: close\r\n\r\n"
-			                      + "<html><body><head><title>NeonMika.Webserver is sorry</title></head>"
-			                      + "<h1>NeonMika.Webserver is sorry!</h1>"
-			                      + "<h2>The file or webmethod you were looking for was not found :/</h2></body></html>";
+			                      + "Content-Length: 0\r\nConnection: close\r\n\r\n";
+			var buffer = Encoding.UTF8.GetBytes(header);
 			if (client != null)
-				client.Send(Encoding.UTF8.GetBytes(header), header.Length, SocketFlags.None);
+				client.Send(buffer, buffer.Length, SocketFlags.None);
 			Debug.Print("Sent 404 Not Found");
+		}
+
+		public static void Send500_Failure(Socket client, string message = "")
+		{
+			var header = "HTTP/1.1 500 Internal Server Error\r\n"
+			             + "Content-Length: " + message.Length + "\r\n"
+			             + "Connection: close\r\n\r\n"
+			             + message;
+			var buffer = Encoding.UTF8.GetBytes(header);
+			if (client != null)
+				client.Send(buffer, buffer.Length, SocketFlags.None);
+			Debug.Print("Sent 500 Internal Server Error");
 		}
 
 		public static int SendData(Socket client, byte[] data)
@@ -88,8 +124,7 @@ namespace NeonMika.Requests
 		{
 			string result;
 			var dot = filename.LastIndexOf('.');
-
-			string ext = (dot >= 0) ? filename.Substring(dot + 1) : string.Empty;
+			var ext = (dot >= 0) ? filename.Substring(dot + 1) : string.Empty;
 			switch (ext.ToLower())
 			{
 				case "txt":

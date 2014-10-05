@@ -7,9 +7,9 @@ namespace NeonMika.Requests
 		private readonly byte[] _header;
 		private readonly byte[] _body;
 
-		public HeaderBody(byte[] buffer)
+		public HeaderBody(byte[] buffer, int countBytes)
 		{
-			for (var headerend = 0; headerend < buffer.Length - 3; headerend++)
+			for (var headerend = 0; headerend < countBytes - 3; headerend++)
 			{
 				if (buffer[headerend] != '\r'
 				    || buffer[headerend + 1] != '\n'
@@ -18,7 +18,7 @@ namespace NeonMika.Requests
 					continue;
 
 				var headerLength = headerend + 4;
-				var bodyLength = buffer.Length - headerLength;
+				var bodyLength = countBytes - headerLength;
 
 				_header = new byte[headerLength];
 				_body = new byte[bodyLength];

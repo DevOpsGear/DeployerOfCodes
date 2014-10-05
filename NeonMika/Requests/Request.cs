@@ -6,19 +6,19 @@ namespace NeonMika.Requests
 {
 	public class Request : IDisposable
 	{
+		private readonly LongBody _body;
 		private readonly Socket _client;
-		private string _method;
+		private string _httpMethod;
 		private string _url;
 		private Hashtable _getArguments;
-		private readonly string _body;
 		private readonly Hashtable _headers;
 
-		public Request(char[] header, char[] body, Socket client)
+		public Request(char[] header, LongBody body, Socket client)
 		{
-			_client = client;
 			_getArguments = new Hashtable();
 			_headers = ProcessHeader(header);
-			_body = new string(body);
+			_body = body;
+			_client = client;
 		}
 
 		public Hashtable Headers
@@ -31,14 +31,14 @@ namespace NeonMika.Requests
 			get { return _getArguments; }
 		}
 
-		public string Body
+		public LongBody Body
 		{
 			get { return _body; }
 		}
 
-		public string Method
+		public string HttpMethod
 		{
-			get { return _method; }
+			get { return _httpMethod; }
 		}
 
 		public string Url
@@ -89,7 +89,7 @@ namespace NeonMika.Requests
 
 			// Parse the first line of the request: "GET /path/ HTTP/1.1"
 			var firstLineSplit = lines[0].Split(' ');
-			_method = firstLineSplit[0].ToUpper();
+			_httpMethod = firstLineSplit[0].ToUpper();
 			var path = firstLineSplit[1].Split('?');
 			_url = path[0].Substring(1); // Ignore the leading '/'
 

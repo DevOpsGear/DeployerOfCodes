@@ -59,14 +59,15 @@ namespace NeonMika
 				{
 					using (var clientSocket = _listeningSocket.Accept())
 					{
-						var availableBytes = AwaitAvailableBytes(clientSocket);
+						var availableBytes = AwaitAvailableBytes(clientSocket, Settings.MAX_REQUESTSIZE);
 						if (availableBytes <= 0) continue;
 
 						var buffer = new byte[availableBytes > Settings.MAX_REQUESTSIZE ? Settings.MAX_REQUESTSIZE : availableBytes];
 						var headerBody = ReadAndBreakApart(clientSocket, buffer);
+						var longBody = new LongBody(headerBody.Body, clientSocket);
 
 						using (
-							var request = new Request(Encoding.UTF8.GetChars(headerBody.Header), Encoding.UTF8.GetChars(headerBody.Body),
+							var request = new Request(Encoding.UTF8.GetChars(headerBody.Header), longBody,
 							                          clientSocket))
 						{
 							Debug.Print("\n\nClient connected\nURL: " + request.Url + "\nFinal byte count: " + availableBytes + "\n");
@@ -95,7 +96,7 @@ namespace NeonMika
 
 // ReSharper restore FunctionNeverReturns
 
-		private static int AwaitAvailableBytes(Socket clientSocket)
+		private static int AwaitAvailableBytes(Socket clientSocket, int max)
 		{
 			var availableBytes = 0;
 			do
@@ -106,15 +107,17 @@ namespace NeonMika
 					break;
 
 				availableBytes += newAvBytes;
-			} while (true); // Repeat until all bytes received
+				if (availableBytes >= max)
+					break;
+			} while (true); // Repeat until all (or max) bytes received
 
 			return availableBytes;
 		}
 
 		private static HeaderBody ReadAndBreakApart(Socket clientSocket, byte[] buffer)
 		{
-			clientSocket.Receive(buffer, buffer.Length, SocketFlags.None);
-			return new HeaderBody(buffer);
+			var countBytes = clientSocket.Receive(buffer, buffer.Length, SocketFlags.None);
+			return new HeaderBody(buffer, countBytes);
 		}
 
 		private void SendResponse(Request e)

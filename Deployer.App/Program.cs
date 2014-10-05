@@ -45,11 +45,18 @@ namespace Deployer.App
 
 		private void ProgramStarted()
 		{
+			var memory = Debug.GC(true);
+			Debug.Print("Memory at startup = " + memory);
+
 			SetupEthernet();
+			SetupWebServer();
+			SetupPersistence();
+
+			/*
 			SetupInputs();
 			SetupIndicators();
 			SetupPersistence();
-
+			  
 			var config = new FakeConfigurationService();
 			var charDisp = new CharDisplay(characterDisplay);
 			var keys = new SimultaneousKeys(ReversedSwitchA, ReversedSwitchB, new TimeService());
@@ -75,6 +82,7 @@ namespace Deployer.App
 
 			SetupInterrupts();
 			SetupTimers();
+			 */
 		}
 
 		#region Setup methods
@@ -101,16 +109,19 @@ namespace Deployer.App
 					Thread.Sleep(250);
 				}
 				_network = new NetworkWrapper(eth);
-
-				_webServer = new WebServer();
-				var response = new SampleResponder();
-				_webServer.AddResponse(response);
 			}
 			catch (Exception ex)
 			{
 				Debug.Print(ex.ToString());
 				throw;
 			}
+		}
+
+		private void SetupWebServer()
+		{
+			_webServer = new WebServer();
+			var response = new UpdateClientFilesResponder(Mainboard.SDCardStorageDevice.Volume);
+			_webServer.AddResponse(response);
 		}
 
 		private void SetupInterrupts()
@@ -160,19 +171,21 @@ namespace Deployer.App
 
 		private void SetupPersistence()
 		{
-			_storage = new Persistence(Mainboard.SDCardStorageDevice);
-
-			/* TODO: Experimentation
-			Need to throw error condition if no card is present?
-			var isStorage = Mainboard.IsSDCardInserted;
-			var existDir = _storage.DoesRootDirectoryExist("config");
-			if (existDir)
-				_storage.DeleteDirectory("config");
-			_storage.CreateDirectory("config");
-			existDir = _storage.DoesRootDirectoryExist("config");
-
-			var existFile = _storage.DoesFileExist(@"\config\projects.json");
-			*/
+			try
+			{
+				_storage = new Persistence(Mainboard.SDCardStorageDevice);
+				var isStorage = Mainboard.IsSDCardInserted;
+				if (!_storage.DoesRootDirectoryExist("auth"))
+					_storage.CreateDirectory("auth");
+				if (!_storage.DoesRootDirectoryExist("config"))
+					_storage.CreateDirectory("config");
+				if (!_storage.DoesRootDirectoryExist("client"))
+					_storage.CreateDirectory("client");
+			}
+			catch (Exception ex)
+			{
+				Debug.Print("Could not initialize storage - " + ex);
+			}
 		}
 
 		#endregion
