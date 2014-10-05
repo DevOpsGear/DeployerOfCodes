@@ -6,11 +6,9 @@ namespace NeonMika
     /// </summary>
     static class Settings
     {
-        /// <summary>
-        /// Maximum byte size for a HTTP request sent to the server
-        /// POST packages will get split up into smaller packages this size
-        /// </summary>
-        public const int MAX_REQUESTSIZE = 512;
+        public const int SLEEP_WAIT_FOR_SOCKET_DATA = 15;
+
+        public const int MAX_HEADER_SIZE = 512;
 
         /// <summary>
         /// Buffersize for response file sending 

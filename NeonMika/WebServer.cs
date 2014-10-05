@@ -7,48 +7,41 @@ using System.Threading;
 using Microsoft.SPOT;
 using NeonMika.Requests;
 using NeonMika.Responses;
-using NeonMika.Util;
 
 namespace NeonMika
 {
 	public class WebServer
 	{
-		public int Port { get; private set; }
-
-		private Socket _listeningSocket;
+		private readonly int _port;
 		private readonly ArrayList _responses;
-		private readonly Response _defaultResponse;
+		private readonly Socket _listeningSocket;
+		private readonly Thread _requestThread;
 
 		public WebServer(int port = 80)
 		{
-			Debug.Print("\n\n---------------------------");
-			Debug.Print("THANKS FOR USING NeonMika.Webserver");
-			Debug.Print("Version: " + Settings.SERVER_VERSION);
-			Debug.Print("---------------------------");
+			Debug.Print("Starting web server");
 
-			Port = port;
+			_port = port;
 			_responses = new ArrayList();
-			_defaultResponse = new FileResponse();
+			_listeningSocket = SetupListeningSocket();
 
-			SetupListeningSocket();
+			_requestThread = new Thread(WaitForNetworkRequest);
+			_requestThread.Start();
 
-			var webserverThread = new Thread(WaitForNetworkRequest);
-			webserverThread.Start();
-
-			Debug.Print("\n\n---------------------------");
-			Debug.Print("Webserver is now up and running");
+			Debug.Print("Webserver is running");
 		}
 
-		public void AddResponse(Response response)
+		public void AddResponse(Responder responder)
 		{
-			_responses.Add(response);
+			_responses.Add(responder);
 		}
 
-		private void SetupListeningSocket()
+		private Socket SetupListeningSocket()
 		{
-			_listeningSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-			_listeningSocket.Bind(new IPEndPoint(IPAddress.Any, Port));
-			_listeningSocket.Listen(5);
+			var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+			sock.Bind(new IPEndPoint(IPAddress.Any, _port));
+			sock.Listen(5);
+			return sock;
 		}
 
 		private void WaitForNetworkRequest()
@@ -59,18 +52,16 @@ namespace NeonMika
 				{
 					using (var clientSocket = _listeningSocket.Accept())
 					{
-						var availableBytes = AwaitAvailableBytes(clientSocket, Settings.MAX_REQUESTSIZE);
-						if (availableBytes <= 0) continue;
+						var availableBytes = AwaitAvailableBytes(clientSocket, Settings.MAX_HEADER_SIZE);
+						if (availableBytes <= 0)
+							continue;
 
-						var buffer = new byte[availableBytes > Settings.MAX_REQUESTSIZE ? Settings.MAX_REQUESTSIZE : availableBytes];
-						var headerBody = ReadAndBreakApart(clientSocket, buffer);
-						var longBody = new LongBody(headerBody.Body, clientSocket);
+						var headerBody = ReadAndBreakApart(clientSocket, availableBytes);
+						var longBody = new ClientRequestBody(headerBody.Body, clientSocket);
 
-						using (
-							var request = new Request(Encoding.UTF8.GetChars(headerBody.Header), longBody,
-							                          clientSocket))
+						using (var request = new Request(headerBody.Header, longBody, clientSocket))
 						{
-							Debug.Print("\n\nClient connected\nURL: " + request.Url + "\nFinal byte count: " + availableBytes + "\n");
+							Debug.Print(" * Client connected / URL: " + request.Url + " / Initial byte count: " + availableBytes);
 							SendResponse(request);
 						}
 
@@ -83,7 +74,8 @@ namespace NeonMika
 							Debug.Print(ex.ToString());
 						}
 
-						Debug.Print("Reqeust finished");
+						Debug.Print(" * Request finished");
+						Debug.GC(true);
 					}
 				}
 				catch (Exception ex)
@@ -96,42 +88,45 @@ namespace NeonMika
 
 // ReSharper restore FunctionNeverReturns
 
-		private static int AwaitAvailableBytes(Socket clientSocket, int max)
+		private static int AwaitAvailableBytes(Socket clientSocket, int maxToWaitFor)
 		{
 			var availableBytes = 0;
 			do
 			{
-				Thread.Sleep(15);
+				Thread.Sleep(Settings.SLEEP_WAIT_FOR_SOCKET_DATA);
 				var newAvBytes = clientSocket.Available - availableBytes;
 				if (newAvBytes == 0)
 					break;
 
 				availableBytes += newAvBytes;
-				if (availableBytes >= max)
+				if (availableBytes >= maxToWaitFor)
 					break;
-			} while (true); // Repeat until all (or max) bytes received
+			} while (true); // Repeat until enough bytes have arrived
 
 			return availableBytes;
 		}
 
-		private static HeaderBody ReadAndBreakApart(Socket clientSocket, byte[] buffer)
+		private static HeaderBody ReadAndBreakApart(Socket clientSocket, int availableBytes)
 		{
-			var countBytes = clientSocket.Receive(buffer, buffer.Length, SocketFlags.None);
-			return new HeaderBody(buffer, countBytes);
+			var bufferSize = availableBytes > Settings.MAX_HEADER_SIZE ? Settings.MAX_HEADER_SIZE : availableBytes;
+			var buffer = new byte[bufferSize];
+			var actualByteCount = clientSocket.Receive(buffer, buffer.Length, SocketFlags.None);
+			return new HeaderBody(buffer, actualByteCount);
 		}
 
 		private void SendResponse(Request e)
 		{
-			foreach (Response resp in _responses)
+			foreach (Responder resp in _responses)
 			{
-				if (!resp.CanRespond(e))
-					continue;
-				if (!resp.SendResponse(e))
-					Debug.Print("Sending response failed");
-				return;
+				if (resp.CanRespond(e))
+				{
+					if (!resp.SendResponse(e))
+						Debug.Print("Sending response failed");
+					return;
+				}
 			}
 
-			_defaultResponse.SendResponse(e);
+			RequestHelper.Send404_NotFound(e.Client);
 		}
 	}
 }

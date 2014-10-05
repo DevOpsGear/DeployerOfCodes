@@ -4,13 +4,13 @@ using System.Threading;
 
 namespace NeonMika.Requests
 {
-	public class LongBody
+	public class ClientRequestBody
 	{
 		private readonly byte[] _preRead;
 		private readonly Socket _client;
 		private int _preIndex;
 
-		public LongBody(byte[] preRead, Socket client)
+		public ClientRequestBody(byte[] preRead, Socket client)
 		{
 			_preRead = preRead;
 			_client = client;
@@ -29,7 +29,7 @@ namespace NeonMika.Requests
 				return countBytesToCopy;
 			}
 
-			Thread.Sleep(15);
+			Thread.Sleep(Settings.SLEEP_WAIT_FOR_SOCKET_DATA);
 			var availableBytes = _client.Available;
 			if (availableBytes > 0)
 			{

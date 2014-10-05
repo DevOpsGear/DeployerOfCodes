@@ -64,9 +64,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Webs\AuthResponder.cs" />
-    <Compile Include="Webs\ConfigResponder.cs" />
-    <Compile Include="Webs\UpdateClientFilesResponder.cs" />
+    <Compile Include="WebResponders\AuthResponder.cs" />
+    <Compile Include="WebResponders\ConfigResponder.cs" />
+    <Compile Include="WebResponders\FileResponder.cs" />
+    <Compile Include="WebResponders\UpdateClientFilesResponder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gadgeteer" />

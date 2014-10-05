@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Collections;
+using System.Text;
 
 namespace NeonMika.Requests
 {
 	public class Request : IDisposable
 	{
-		private readonly LongBody _body;
+		private readonly ClientRequestBody _body;
 		private readonly Socket _client;
 		private string _httpMethod;
 		private string _url;
 		private Hashtable _getArguments;
 		private readonly Hashtable _headers;
 
-		public Request(char[] header, LongBody body, Socket client)
+		public Request(byte[] header, ClientRequestBody body, Socket client)
 		{
 			_getArguments = new Hashtable();
 			_headers = ProcessHeader(header);
@@ -31,7 +32,7 @@ namespace NeonMika.Requests
 			get { return _getArguments; }
 		}
 
-		public LongBody Body
+		public ClientRequestBody Body
 		{
 			get { return _body; }
 		}
@@ -51,40 +52,41 @@ namespace NeonMika.Requests
 			get { return _client; }
 		}
 
-		private Hashtable ProcessHeader(char[] data)
+		private Hashtable ProcessHeader(byte[] bytes)
 		{
-			for (var i = 0; i < data.Length - 3; i++)
+			var chars = Encoding.UTF8.GetChars(bytes);
+			for (var i = 0; i < chars.Length - 3; i++)
 			{
 				var replace = false;
 
-				switch (data[i].ToString() + data[i + 1] + data[i + 2])
+				switch (chars[i].ToString() + chars[i + 1] + chars[i + 2])
 				{
 					case "%5C":
-						data[i] = '\\';
-						data[i + 1] = '\0';
-						data[i + 2] = '\0';
+						chars[i] = '\\';
+						chars[i + 1] = '\0';
+						chars[i + 2] = '\0';
 						replace = true;
 						break;
 
 					case "%2F":
-						data[i] = '/';
-						data[i + 1] = '\0';
-						data[i + 2] = '\0';
+						chars[i] = '/';
+						chars[i + 1] = '\0';
+						chars[i + 2] = '\0';
 						replace = true;
 						break;
 				}
 
 				if (!replace)
 					continue;
-				for (var x = i + 3; x < data.Length; x++)
-					if (data[x] != '\0')
+				for (var x = i + 3; x < chars.Length; x++)
+					if (chars[x] != '\0')
 					{
-						data[x - 2] = data[x];
-						data[x] = '\0';
+						chars[x - 2] = chars[x];
+						chars[x] = '\0';
 					}
 			}
 
-			var content = new string(data);
+			var content = new string(chars);
 			var lines = content.Split('\n');
 
 			// Parse the first line of the request: "GET /path/ HTTP/1.1"

@@ -1,22 +1,19 @@
 using System;
 using System.IO;
-using System.Text;
-using Gadgeteer;
 using Microsoft.SPOT;
-using Microsoft.SPOT.IO;
 using NeonMika.Requests;
 using NeonMika.Responses;
 using NeonMika.Util;
 
-namespace Deployer.App.Webs
+namespace Deployer.App.WebResponders
 {
-	public class UpdateClientFilesResponder : Response
+	public class UpdateClientFilesResponder : Responder
 	{
 		private readonly string _rootDirectory;
 
-		public UpdateClientFilesResponder(VolumeInfo vi)
+		public UpdateClientFilesResponder(string rootDirectory)
 		{
-			_rootDirectory = vi.RootDirectory;
+			_rootDirectory = rootDirectory;
 		}
 
 		public override bool CanRespond(Request e)
@@ -37,7 +34,6 @@ namespace Deployer.App.Webs
 
 				var receivedBytes = 0;
 				var fileHandle = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-				//var fileHandle = _sd.Open(filePath, FileMode.Create, FileAccess.Write);
 				var buffer = new byte[512];
 				while (true)
 				{
@@ -60,11 +56,11 @@ namespace Deployer.App.Webs
 			return true;
 		}
 
-		private void EstablishDirectory(string filePath)
+		private static void EstablishDirectory(string filePath)
 		{
 			var dir = Path.GetDirectoryName(filePath);
 			if (!Directory.Exists(dir))
-				Directory.CreateDirectory(dir); // Directory.CreateDirectory(dir);
+				Directory.CreateDirectory(dir);
 		}
 	}
 }

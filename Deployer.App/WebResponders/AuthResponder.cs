@@ -2,18 +2,18 @@ using NeonMika.Requests;
 using NeonMika.Responses;
 using NeonMika.Util;
 
-namespace Deployer.App.Webs
+namespace Deployer.App.WebResponders
 {
-	public class ConfigResponder : Response
+	public class AuthResponder : Responder
 	{
 		public override bool CanRespond(Request e)
 		{
-			return e.Url.StartsWith("config");
+			return e.Url.StartsWith("auth");
 		}
 
 		public override bool SendResponse(Request e)
 		{
-			var text = "ConfigResponder!!!! http-method=" + e.HttpMethod;
+			var text = "AuthResponder!!!! http-method=" + e.HttpMethod;
 			RequestHelper.SendTextUtf8("text/plain", text, e.Client);
 
 			return true;

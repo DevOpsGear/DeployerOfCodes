@@ -1,6 +1,6 @@
 ﻿using Deployer.App.Hardware;
 using Deployer.App.Micro;
-using Deployer.App.Webs;
+using Deployer.App.WebResponders;
 using Deployer.Services.Config;
 using Deployer.Services.Hardware;
 using Deployer.Services.Input;
@@ -79,7 +79,6 @@ namespace Deployer.App
 			var context = new DeployerContext(keys, project, charDisp, indicators, sound, webu, _network, webFactory, garbage);
 			_controller = new DeployerController(context);
 			context.SetController(_controller);
-
 			_controller.PreflightCheck();
 
 			SetupInterrupts();
@@ -121,8 +120,12 @@ namespace Deployer.App
 		private void SetupWebServer()
 		{
 			_webServer = new WebServer();
-			var response = new UpdateClientFilesResponder(Mainboard.SDCardStorageDevice.Volume);
-			_webServer.AddResponse(response);
+
+			var updateClientFilesResponder = new UpdateClientFilesResponder(_rootDir);
+			_webServer.AddResponse(updateClientFilesResponder);
+
+			var clientFileResponder = new FileResponder(_rootDir, "client");
+			_webServer.AddResponse(clientFileResponder);
 		}
 
 		private void SetupInputs()
@@ -176,6 +179,7 @@ namespace Deployer.App
 			{
 				_storage = new Persistence(Mainboard.SDCardStorageDevice);
 				var isStorage = Mainboard.IsSDCardInserted;
+				_rootDir = Mainboard.SDCardStorageDevice.Volume.RootDirectory;
 				if (!_storage.DoesRootDirectoryExist("auth"))
 					_storage.CreateDirectory("auth");
 				if (!_storage.DoesRootDirectoryExist("config"))
@@ -326,6 +330,7 @@ namespace Deployer.App
 		#region Debug
 
 		private bool _debugThingy;
+		private string _rootDir;
 
 		private void SetupDebugConflictCheckTimer()
 		{

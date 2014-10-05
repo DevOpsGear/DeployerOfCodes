@@ -1,24 +1,34 @@
 ﻿using System;
 using System.IO;
 using System.Net.Sockets;
-using System.Text;
 using Microsoft.SPOT;
 using NeonMika.Requests;
+using NeonMika.Responses;
 using NeonMika.Util;
 
-namespace NeonMika.Responses
+namespace Deployer.App.WebResponders
 {
-	public class FileResponse : Response
+	public class FileResponder : Responder
 	{
+		private readonly string _rootDirectory;
+		private readonly string _folder;
+		private readonly int _bufferSize;
+
+		public FileResponder(string rootDirectory, string folder, int bufferSize = 256)
+		{
+			_rootDirectory = rootDirectory;
+			_folder = folder;
+			_bufferSize = bufferSize;
+		}
+
 		public override bool CanRespond(Request e)
 		{
-			// Always returns true since it's the default reponder.
-			return true;
+			return e.HttpMethod == "GET" && e.Url.StartsWith(_folder);
 		}
 
 		public override bool SendResponse(Request e)
 		{
-			var filePath = @"\SD\" + UrlToPath(e.Url);
+			var filePath = Path.Combine(_rootDirectory, UrlToPath(e.Url));
 
 			if (!DoesFileExist(filePath))
 			{
@@ -27,16 +37,13 @@ namespace NeonMika.Responses
 			}
 
 			var mimeType = RequestHelper.GetMimeType(filePath);
-
-			//Debug.GC(true);
 			using (var inputStream = new FileStream(filePath, FileMode.Open))
 			{
 				RequestHelper.Send200_OK(mimeType, (int) inputStream.Length, e.Client);
 
-				// Send it in chunks so we don't exhaust memory
-				var readBuffer = new byte[256];
+				// Send it in chunks to conserve RAM
 				var sentBytes = 0;
-
+				var readBuffer = new byte[_bufferSize];
 				while (sentBytes < inputStream.Length)
 				{
 					try
@@ -47,13 +54,13 @@ namespace NeonMika.Responses
 						var now = e.Client.Send(readBuffer, bytesRead, SocketFlags.None);
 						sentBytes += now;
 					}
-					catch (Exception ex1)
+					catch (Exception ex)
 					{
-						Debug.Print("Error sending bytes - " + ex1);
+						Debug.Print("FileResponder - error sending - " + ex);
 						return false;
 					}
 				}
-				Debug.Print("Sent bytes - " + sentBytes);
+				Debug.Print("FileResponder - sent bytes - " + sentBytes);
 			}
 
 			return true;
