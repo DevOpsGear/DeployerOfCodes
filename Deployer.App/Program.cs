@@ -121,11 +121,17 @@ namespace Deployer.App
 		{
 			_webServer = new WebServer();
 
-			var updateClientFilesResponder = new UpdateClientFilesResponder(_rootDir);
-			_webServer.AddResponse(updateClientFilesResponder);
+			var auth = new AuthResponder();
+			_webServer.AddResponse(auth);
 
-			var clientFileResponder = new FileResponder(_rootDir, "client");
-			_webServer.AddResponse(clientFileResponder);
+			var config = new ConfigResponder();
+			_webServer.AddResponse(config);
+
+			var updateClient = new UpdateClientResponder(_rootDir);
+			_webServer.AddResponse(updateClient);
+
+			var fileServe = new FileResponder(_rootDir, "client");
+			_webServer.AddResponse(fileServe);
 		}
 
 		private void SetupInputs()

@@ -29,6 +29,7 @@ namespace NeonMika.Requests
 				return countBytesToCopy;
 			}
 
+			// More data coming from socket?
 			Thread.Sleep(Settings.SLEEP_WAIT_FOR_SOCKET_DATA);
 			var availableBytes = _client.Available;
 			if (availableBytes > 0)

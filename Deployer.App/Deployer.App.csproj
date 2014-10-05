@@ -67,7 +67,7 @@
     <Compile Include="WebResponders\AuthResponder.cs" />
     <Compile Include="WebResponders\ConfigResponder.cs" />
     <Compile Include="WebResponders\FileResponder.cs" />
-    <Compile Include="WebResponders\UpdateClientFilesResponder.cs" />
+    <Compile Include="WebResponders\UpdateClientResponder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gadgeteer" />
