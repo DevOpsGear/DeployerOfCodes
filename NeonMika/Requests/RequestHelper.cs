@@ -5,16 +5,28 @@ using Microsoft.SPOT;
 
 namespace NeonMika.Requests
 {
+	/*
+    StringBuilder headerBuilder = new StringBuilder();
+    headerBuilder.Append("HTTP/1.0 200 OK\r\n");
+    headerBuilder.Append("Content-Type: ");
+    headerBuilder.Append(MimeType);
+    headerBuilder.Append("; charset=utf-8\r\n");
+    headerBuilder.Append("Content-Length: ");
+    headerBuilder.Append(ContentLength.ToString());
+    headerBuilder.Append("\r\n");
+    headerBuilder.Append("Connection: close\r\n\r\n");
+    */
+
 	public class RequestHelper
 	{
 		public static void SendTextUtf8(string mimeType, string content, Socket client)
 		{
 			var bytes = Encoding.UTF8.GetBytes(content);
-			Send200_OK(mimeType, bytes.Length, client);
+			Send200_OK(client, mimeType, bytes.Length);
 			client.Send(bytes, bytes.Length, SocketFlags.None);
 		}
 
-		public static void Send200_OK(string mimeType, Socket client)
+		public static void Send200_OK(Socket client, string mimeType)
 		{
 			var header = "HTTP/1.0 200 OK\r\n"
 			             + "Content-Type: " + mimeType + "; charset=utf-8\r\n"
@@ -31,20 +43,8 @@ namespace NeonMika.Requests
 			}
 		}
 
-		public static void Send200_OK(string mimeType, int contentLength, Socket client)
+		public static void Send200_OK(Socket client, string mimeType, int contentLength)
 		{
-			/*
-            StringBuilder headerBuilder = new StringBuilder();
-            headerBuilder.Append("HTTP/1.0 200 OK\r\n");
-            headerBuilder.Append("Content-Type: ");
-            headerBuilder.Append(MimeType);
-            headerBuilder.Append("; charset=utf-8\r\n");
-            headerBuilder.Append("Content-Length: ");
-            headerBuilder.Append(ContentLength.ToString());
-            headerBuilder.Append("\r\n");
-            headerBuilder.Append("Connection: close\r\n\r\n");
-             * */
-
 			string header;
 			if (contentLength > 0)
 			{

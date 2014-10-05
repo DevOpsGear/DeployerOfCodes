@@ -28,6 +28,31 @@ namespace Deployer.Services.Config
 			return _projects;
 		}
 
+		public ProjectDomainModel[] GetProjectList()
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public void DeleteProject(string slug)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public void SaveProjectInfo(ProjectDomainModel project)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public Hashtable GetProjectConfig(string slug)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public void SaveProjectConfig(string slug, Hashtable config)
+		{
+			throw new System.NotImplementedException();
+		}
+
 		private static string AntiShaunJson()
 		{
 			var antiShaunConfig = new Hashtable

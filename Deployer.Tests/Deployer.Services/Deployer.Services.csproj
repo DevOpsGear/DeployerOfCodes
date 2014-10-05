@@ -39,7 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\Routing.cs" />
+    <Compile Include="Api\ApiRequest.cs" />
+    <Compile Include="Api\AuthApiService.cs" />
+    <Compile Include="Api\ConfigApiService.cs" />
+    <Compile Include="Api\Interfaces\IApiReadBody.cs" />
+    <Compile Include="Api\Interfaces\IApiService.cs" />
+    <Compile Include="Api\Interfaces\IApiSocket.cs" />
+    <Compile Include="Config\IJsonPersistence.cs" />
     <Compile Include="Micro\Web\IWebUtility.cs" />
     <Compile Include="Micro\Web\WebUtility.cs" />
     <Compile Include="Builders\AppVeyorBuildService.cs" />
@@ -69,6 +75,7 @@
     <Compile Include="Models\BuildState.cs" />
     <Compile Include="Models\BuildStatus.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\ProjectDomainModel.cs" />
     <Compile Include="Output\IIndicators.cs" />
     <Compile Include="Output\Indicators.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +96,7 @@
     <Compile Include="Micro\Web\IWebResponder.cs" />
     <Compile Include="Micro\Web\IWebResponderFactory.cs" />
     <Compile Include="Micro\Web\WebResponder.cs" />
+    <Compile Include="Util\ExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\NinaB.tinyfnt" />

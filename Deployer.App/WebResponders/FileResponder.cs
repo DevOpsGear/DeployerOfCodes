@@ -39,7 +39,7 @@ namespace Deployer.App.WebResponders
 			var mimeType = RequestHelper.GetMimeType(filePath);
 			using (var inputStream = new FileStream(filePath, FileMode.Open))
 			{
-				RequestHelper.Send200_OK(mimeType, (int) inputStream.Length, e.Client);
+				RequestHelper.Send200_OK(e.Client, mimeType, (int) inputStream.Length);
 
 				// Send it in chunks to conserve RAM
 				var sentBytes = 0;

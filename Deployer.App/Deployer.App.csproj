@@ -64,7 +64,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="WebResponders\DeployerServiceResponder.cs" />
+    <Compile Include="WebResponders\ApiReadBodyWrapper.cs" />
+    <Compile Include="WebResponders\ApiSocketWrapper.cs" />
+    <Compile Include="WebResponders\ApiServiceResponder.cs" />
     <Compile Include="WebResponders\FileResponder.cs" />
     <Compile Include="WebResponders\UpdateClientResponder.cs" />
   </ItemGroup>

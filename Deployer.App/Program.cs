@@ -1,6 +1,7 @@
 ﻿using Deployer.App.Hardware;
 using Deployer.App.Micro;
 using Deployer.App.WebResponders;
+using Deployer.Services.Api;
 using Deployer.Services.Config;
 using Deployer.Services.Hardware;
 using Deployer.Services.Input;
@@ -43,6 +44,7 @@ namespace Deployer.App
 		private WebServer _webServer;
 		private Persistence _storage;
 		private string _rootDir;
+		private FakeConfigurationService _configService;
 
 		private void ProgramStarted()
 		{
@@ -50,18 +52,17 @@ namespace Deployer.App
 			Debug.Print("Memory at startup = " + memory);
 
 			SetupEthernet();
-			SetupWebServer();
 			SetupPersistence();
 
 			SetupInputs();
 			SetupIndicators();
 
-			var config = new FakeConfigurationService();
+			_configService = new FakeConfigurationService();
 			var charDisp = new CharDisplay(characterDisplay);
 			var keys = new SimultaneousKeys(ReversedSwitchA, ReversedSwitchB, new TimeService());
 			var webFactory = new WebRequestFactory();
 			var garbage = new GarbageCollector();
-			var project = new ProjectSelector(charDisp, config);
+			var project = new ProjectSelector(charDisp, _configService);
 			var sound = new Sound(tunes);
 			var webu = new WebUtility(garbage);
 
@@ -77,6 +78,8 @@ namespace Deployer.App
 			_controller = new DeployerController(context);
 			context.SetController(_controller);
 			_controller.PreflightCheck();
+
+			SetupWebServer();
 
 			SetupInterrupts();
 			SetupTimers();
@@ -118,8 +121,13 @@ namespace Deployer.App
 		{
 			_webServer = new WebServer();
 
-			//var auth = new DeployerServiceResponder();
-			//_webServer.AddResponse(auth);
+			var authApiService = new AuthApiService();
+			var authResponder = new ApiServiceResponder(authApiService);
+			_webServer.AddResponse(authResponder);
+
+			var configApiService = new ConfigApiService(_configService);
+			var configResponder = new ApiServiceResponder(configApiService);
+			_webServer.AddResponse(configResponder);
 
 			var updateClient = new UpdateClientResponder(_rootDir);
 			_webServer.AddResponse(updateClient);

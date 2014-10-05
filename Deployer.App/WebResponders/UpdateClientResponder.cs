@@ -43,7 +43,7 @@ namespace Deployer.App.WebResponders
 				}
 
 				fileHandle.Close();
-				RequestHelper.Send200_OK("text/plain", e.Client);
+				RequestHelper.Send200_OK(e.Client, "text/plain");
 				Debug.Print("Received bytes = " + receivedBytes);
 			}
 			catch (Exception ex)
