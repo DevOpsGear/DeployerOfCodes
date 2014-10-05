@@ -43,6 +43,7 @@ namespace Deployer.App
 		private WebServer _webServer;
 		private Persistence _storage;
 
+
 		private void ProgramStarted()
 		{
 			var memory = Debug.GC(true);
@@ -52,11 +53,12 @@ namespace Deployer.App
 			SetupWebServer();
 			SetupPersistence();
 
-			/*
 			SetupInputs();
 			SetupIndicators();
+
+			//SetupDebugConflictCheckTimer();
 			SetupPersistence();
-			  
+
 			var config = new FakeConfigurationService();
 			var charDisp = new CharDisplay(characterDisplay);
 			var keys = new SimultaneousKeys(ReversedSwitchA, ReversedSwitchB, new TimeService());
@@ -82,8 +84,31 @@ namespace Deployer.App
 
 			SetupInterrupts();
 			SetupTimers();
-			 */
 		}
+
+		#region Debug
+
+		private bool _debugThingy;
+
+		private void SetupDebugConflictCheckTimer()
+		{
+			_timerBlink = new Gadgeteer.Timer(100);
+			_timerBlink.Tick += OnConflictCheckTimer;
+			_timerBlink.Start();
+		}
+
+		private void OnConflictCheckTimer(Gadgeteer.Timer timer)
+		{
+			_debugThingy = !_debugThingy;
+			_indicatorTurnKeyA.Write(_debugThingy);
+			_indicatorTurnKeyB.Write(_debugThingy);
+			_indicatorSelectProject.Write(_debugThingy);
+			_indicatorReadyToArm.Write(_debugThingy);
+			_indicatorReadyToDeploy.Write(_debugThingy);
+			_indicatorStateDeploying.Write(_debugThingy);
+		}
+
+		#endregion
 
 		#region Setup methods
 
@@ -124,16 +149,15 @@ namespace Deployer.App
 			_webServer.AddResponse(response);
 		}
 
-		private void SetupInterrupts()
+		private void SetupInputs()
 		{
-			_keySwitchA.OnInterrupt += KeySwitchAOnInterrupt;
-			_keySwitchB.OnInterrupt += KeySwitchBOnInterrupt;
+			_keySwitchA = SetupInterruptOffAndOn(PinsCerbuino.A0);
+			_keySwitchB = SetupInterruptOffAndOn(PinsCerbuino.A1);
 
-			_buttonUp.OnInterrupt += ButtonUpOnInterrupt;
-			_buttonDown.OnInterrupt += ButtonDownOnInterrupt;
-
-			_buttonArm.OnInterrupt += ButtonArmOnInterrupt;
-			_buttonDeploy.OnInterrupt += ButtonDeployOnInterrupt;
+			_buttonUp = SetupInterruptRelease(PinsCerbuino.D2);
+			_buttonDown = SetupInterruptRelease(PinsCerbuino.A2);
+			_buttonArm = SetupInterruptRelease(PinsCerbuino.D4);
+			_buttonDeploy = SetupInterruptRelease(PinsCerbuino.D5);
 		}
 
 		private void SetupIndicators()
@@ -151,15 +175,16 @@ namespace Deployer.App
 			_indicatorStateFailed = SetupBreakoutOutput(Socket.Pin.Five);
 		}
 
-		private void SetupInputs()
+		private void SetupInterrupts()
 		{
-			_keySwitchA = SetupInterruptOffAndOn(PinsCerbuino.A0);
-			_keySwitchB = SetupInterruptOffAndOn(PinsCerbuino.A1);
+			_keySwitchA.OnInterrupt += KeySwitchAOnInterrupt;
+			_keySwitchB.OnInterrupt += KeySwitchBOnInterrupt;
 
-			_buttonUp = SetupInterruptRelease(PinsCerbuino.D2);
-			_buttonDown = SetupInterruptRelease(PinsCerbuino.A2);
-			_buttonArm = SetupInterruptRelease(PinsCerbuino.D4);
-			_buttonDeploy = SetupInterruptRelease(PinsCerbuino.D5);
+			_buttonUp.OnInterrupt += ButtonUpOnInterrupt;
+			_buttonDown.OnInterrupt += ButtonDownOnInterrupt;
+
+			_buttonArm.OnInterrupt += ButtonArmOnInterrupt;
+			_buttonDeploy.OnInterrupt += ButtonDeployOnInterrupt;
 		}
 
 		private void SetupTimers()
