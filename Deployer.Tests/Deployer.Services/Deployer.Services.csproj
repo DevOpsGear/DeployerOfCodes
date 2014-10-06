@@ -45,7 +45,9 @@
     <Compile Include="Api\Interfaces\IApiReadBody.cs" />
     <Compile Include="Api\Interfaces\IApiService.cs" />
     <Compile Include="Api\Interfaces\IApiSocket.cs" />
+    <Compile Include="Config\RealConfigurationService.cs" />
     <Compile Include="Config\IJsonPersistence.cs" />
+    <Compile Include="Config\SlugCreator.cs" />
     <Compile Include="Micro\Web\IWebUtility.cs" />
     <Compile Include="Micro\Web\WebUtility.cs" />
     <Compile Include="Builders\AppVeyorBuildService.cs" />
@@ -74,8 +76,7 @@
     <Compile Include="Micro\Web\IWebRequestFactory.cs" />
     <Compile Include="Models\BuildState.cs" />
     <Compile Include="Models\BuildStatus.cs" />
-    <Compile Include="Models\Project.cs" />
-    <Compile Include="Models\ProjectDomainModel.cs" />
+    <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Output\IIndicators.cs" />
     <Compile Include="Output\Indicators.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,5 @@
-﻿using Deployer.Services.Hardware;
+﻿using Deployer.Services.Config;
+using Deployer.Services.Hardware;
 using Deployer.Services.Input;
 using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
@@ -19,12 +20,13 @@ namespace Deployer.Services.StateMachine
 		private readonly INetwork _network;
 		private readonly IWebRequestFactory _webFactory;
 		private readonly IGarbage _garbage;
+		private readonly IConfigurationService _configurationService;
 		private IDeployerController _controller;
 
 		public DeployerContext(ISimultaneousKeys keys, IProjectSelector projectSelect,
 		                       ICharDisplay lcd,
 		                       IIndicators indicatorRefresh, ISound sound, IWebUtility netio, INetwork network,
-		                       IWebRequestFactory webFactory, IGarbage garbage)
+		                       IWebRequestFactory webFactory, IGarbage garbage, IConfigurationService configurationService)
 		{
 			_keys = keys;
 			_projectSelect = projectSelect;
@@ -35,6 +37,7 @@ namespace Deployer.Services.StateMachine
 			_network = network;
 			_webFactory = webFactory;
 			_garbage = garbage;
+			_configurationService = configurationService;
 		}
 
 		public void SetController(IDeployerController controller)
@@ -80,6 +83,11 @@ namespace Deployer.Services.StateMachine
 		public IGarbage Garbage
 		{
 			get { return _garbage; }
+		}
+
+		public IConfigurationService ConfigurationService
+		{
+			get { return _configurationService; }
 		}
 
 		public void ChangeState(IDeployerState newState)

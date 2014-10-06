@@ -361,7 +361,7 @@ namespace Deployer.Tests.StateMachine
 		private void ConstructSut()
 		{
 			_context = new DeployerContext(_simKeys, _projSel, _display, _indicators.Object, _sound.Object, _netio, _net.Object,
-			                               _webFactory.Object, _garbage.Object);
+			                               _webFactory.Object, _garbage.Object, _config.Object);
 			_sut = new DeployerController(_context);
 			_context.SetController(_sut);
 			_sut.PreflightCheck();
@@ -371,8 +371,8 @@ namespace Deployer.Tests.StateMachine
 		{
 			_config.Setup(x => x.GetProjects()).Returns(new[]
 				{
-					new Project("Title1", "Sub1", BuildServiceProvider.Failing, "Dweezil"),
-					new Project("Title2", "Sub2", BuildServiceProvider.Succeeding, "Dweezil")
+					new ProjectModel("fail-1", "Title1", "Sub1", 1, BuildServiceProvider.Failing),
+					new ProjectModel("succ-2", "Title2", "Sub2", 2, BuildServiceProvider.Succeeding)
 				});
 		}
 

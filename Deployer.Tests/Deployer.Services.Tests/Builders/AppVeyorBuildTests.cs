@@ -97,7 +97,7 @@ namespace Deployer.Tests.Builders
 		[Test]
 		public void Empty_config__causes_failure()
 		{
-			var status = _sut.StartBuild(string.Empty);
+			var status = _sut.StartBuild(new Hashtable());
 
 			AssertFailed(status);
 		}
@@ -188,16 +188,15 @@ namespace Deployer.Tests.Builders
 			wr.SpyResponse.SetData(data);
 		}
 
-		private static string GetConfig()
+		private static Hashtable GetConfig()
 		{
-			var config = new Hashtable
+			return new Hashtable
 				{
 					{"apiToken", "TOKEN"},
 					{"accountName", "ACCOUNT"},
 					{"projectSlug", "SLUG"},
 					{"branch", "BRANCH"}
 				};
-			return JsonSerializer.SerializeObject(config);
 		}
 	}
 }

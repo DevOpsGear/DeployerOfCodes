@@ -1,4 +1,5 @@
-﻿using Deployer.Services.Builders;
+﻿using System.Collections;
+using Deployer.Services.Builders;
 using Deployer.Services.Models;
 using NUnit.Framework;
 
@@ -18,7 +19,7 @@ namespace Deployer.Tests.Builders
 		[Test]
 		public void Start()
 		{
-			var status = _sut.StartBuild(string.Empty);
+			var status = _sut.StartBuild(new Hashtable());
 			AssertQueued(status);
 		}
 

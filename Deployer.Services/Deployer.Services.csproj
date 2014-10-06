@@ -49,6 +49,15 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Api\Interfaces\IApiSocket.cs">
       <Link>Api\Interfaces\IApiSocket.cs</Link>
     </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Config\RealConfigurationService.cs">
+      <Link>Config\RealConfigurationService.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Config\IJsonPersistence.cs">
+      <Link>Config\IJsonPersistence.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Config\SlugCreator.cs">
+      <Link>Config\SlugCreator.cs</Link>
+    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\IWebUtility.cs">
       <Link>Micro\Web\IWebUtility.cs</Link>
     </Compile>
@@ -133,8 +142,8 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Models\BuildStatus.cs">
       <Link>Models\BuildStatus.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Models\Project.cs">
-      <Link>Models\Project.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Models\ProjectModel.cs">
+      <Link>Models\ProjectModel.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Output\IIndicators.cs">
       <Link>Output\IIndicators.cs</Link>
@@ -202,6 +211,7 @@
       <HintPath>..\packages\Json.NetMF.1.3.0.0\lib\netmf43\Json.NetMF.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.IO" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

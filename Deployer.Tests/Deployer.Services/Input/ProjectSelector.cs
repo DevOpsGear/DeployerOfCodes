@@ -45,7 +45,7 @@ namespace Deployer.Services.Input
 			get { return _position >= 0; }
 		}
 
-		public Project SelectedProject
+		public ProjectModel SelectedProject
 		{
 			get
 			{

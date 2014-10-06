@@ -8,7 +8,7 @@ namespace Deployer.Services.Input
 		void Up();
 		void Down();
 		bool IsProjectSelected { get; }
-		Project SelectedProject { get; }
+		ProjectModel SelectedProject { get; }
 		string SelectedProjectName { get; }
 	}
 }

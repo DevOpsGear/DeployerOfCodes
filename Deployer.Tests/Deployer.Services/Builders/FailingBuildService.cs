@@ -1,3 +1,4 @@
+using System.Collections;
 using Deployer.Services.Models;
 
 namespace Deployer.Services.Builders
@@ -6,7 +7,7 @@ namespace Deployer.Services.Builders
 	{
 		private int _index;
 
-		public BuildState StartBuild(string config)
+		public BuildState StartBuild(Hashtable config)
 		{
 			_index = 0;
 			return new BuildState(BuildStatus.Queued);

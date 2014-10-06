@@ -5,11 +5,10 @@ namespace Deployer.Services.Config
 {
 	public interface IConfigurationService
 	{
-		Project[] GetProjects();
-		ProjectDomainModel[] GetProjectList();
+		ProjectModel[] GetProjects();
 		void DeleteProject(string slug);
-		void SaveProjectInfo(ProjectDomainModel project);
-		Hashtable GetProjectConfig(string slug);
-		void SaveProjectConfig(string slug, Hashtable config);
+		void SaveProject(ProjectModel newProject);
+		Hashtable GetBuildParams(string slug);
+		void SaveBuildParams(string slug, Hashtable config);
 	}
 }

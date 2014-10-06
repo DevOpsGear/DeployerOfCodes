@@ -24,7 +24,7 @@ namespace Deployer.Services.Builders
 		// http://confluence.jetbrains.com/display/TCD8/REST+API
 		// http://confluence.jetbrains.com/display/TCD8/REST+API#RESTAPI-TriggeringaBuild
 		// TODO: JSON
-		public BuildState StartBuild(string config)
+		public BuildState StartBuild(Hashtable config)
 		{
 			try
 			{
@@ -51,9 +51,8 @@ namespace Deployer.Services.Builders
 		{
 		}
 
-		private void DecodeConfig(string config)
+		private void DecodeConfig(Hashtable hash)
 		{
-			var hash = JsonSerializer.DeserializeString(config) as Hashtable;
 			if (hash == null)
 				return;
 			var url = _webio.NormalizeUrl(hash["url"] as string);

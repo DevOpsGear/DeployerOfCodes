@@ -74,7 +74,16 @@ namespace Deployer.App
 			                                _indicatorStateDeploying,
 			                                _indicatorStateSucceeded,
 			                                _indicatorStateFailed);
-			var context = new DeployerContext(keys, project, charDisp, indicators, sound, webu, _network, webFactory, garbage);
+			var context = new DeployerContext(keys,
+			                                  project,
+			                                  charDisp,
+			                                  indicators,
+			                                  sound,
+			                                  webu,
+			                                  _network,
+			                                  webFactory,
+			                                  garbage,
+			                                  _configService);
 			_controller = new DeployerController(context);
 			context.SetController(_controller);
 			_controller.PreflightCheck();

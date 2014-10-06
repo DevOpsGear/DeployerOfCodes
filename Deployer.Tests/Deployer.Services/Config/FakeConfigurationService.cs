@@ -1,80 +1,76 @@
 using System.Collections;
 using Deployer.Services.Builders;
 using Deployer.Services.Models;
-using Json.NETMF;
 
 namespace Deployer.Services.Config
 {
 	public class FakeConfigurationService : IConfigurationService
 	{
-		private readonly Project[] _projects;
+		private readonly ProjectModel[] _projects;
 
 		public FakeConfigurationService()
 		{
-			var antiShaunJson = AntiShaunJson();
-			var teamCitynJson = TeamCityJson();
-
 			_projects = new[]
 				{
-					new Project("Failer", "-Fails after 2s", BuildServiceProvider.Failing, string.Empty),
-					new Project("Succeeder", "-Works after 2s", BuildServiceProvider.Succeeding, string.Empty),
-					new Project("AntiShaun", "-AppVeyor", BuildServiceProvider.AppVeyor, antiShaunJson),
-					new Project("BogusTeamCity", "-TeamCity", BuildServiceProvider.TeamCity, teamCitynJson)
+					new ProjectModel("fail-1", "Failer", "-Fails after 2s", 1, BuildServiceProvider.Failing),
+					new ProjectModel("succeed-1", "Succeeder", "-Works after 2s", 2, BuildServiceProvider.Succeeding),
+					new ProjectModel("appvey-1", "AntiShaun", "-AppVeyor", 3, BuildServiceProvider.AppVeyor),
+					new ProjectModel("tc-1", "BogusTeamCity", "-TeamCity", 4, BuildServiceProvider.TeamCity)
 				};
 		}
 
-		public Project[] GetProjects()
+		public ProjectModel[] GetProjects()
 		{
 			return _projects;
 		}
 
-		public ProjectDomainModel[] GetProjectList()
-		{
-			throw new System.NotImplementedException();
-		}
-
 		public void DeleteProject(string slug)
 		{
-			throw new System.NotImplementedException();
 		}
 
-		public void SaveProjectInfo(ProjectDomainModel project)
+		public void SaveProject(ProjectModel newProject)
 		{
-			throw new System.NotImplementedException();
 		}
 
-		public Hashtable GetProjectConfig(string slug)
+		public Hashtable GetBuildParams(string slug)
 		{
-			throw new System.NotImplementedException();
+			switch (slug)
+			{
+				case "appvey-1":
+					return AntiShaunJson();
+
+				case "tc-1":
+					return TeamCityJson();
+
+				default:
+					return new Hashtable();
+			}
 		}
 
-		public void SaveProjectConfig(string slug, Hashtable config)
+		public void SaveBuildParams(string slug, Hashtable config)
 		{
-			throw new System.NotImplementedException();
 		}
 
-		private static string AntiShaunJson()
+		private static Hashtable AntiShaunJson()
 		{
-			var antiShaunConfig = new Hashtable
+			return new Hashtable
 				{
 					{"apiToken", "ertwertwertwertwert"},
 					{"accountName", "wertwertwert"},
 					{"projectSlug", "ewrtwertwerter"},
 					{"branch", "master"}
 				};
-			return JsonSerializer.SerializeObject(antiShaunConfig);
 		}
 
-		private string TeamCityJson()
+		private static Hashtable TeamCityJson()
 		{
-			var antiShaunConfig = new Hashtable
+			return new Hashtable
 				{
 					{"url", "http://wertwertwert:8080"},
 					{"buildId", "ertwertwertw"},
 					{"username", "ertwertwert"},
 					{"password", "wertwertwertwert"},
 				};
-			return JsonSerializer.SerializeObject(antiShaunConfig);
 		}
 	}
 }

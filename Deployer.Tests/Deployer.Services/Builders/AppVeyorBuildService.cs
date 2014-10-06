@@ -27,7 +27,7 @@ namespace Deployer.Services.Builders
 		// https://www.ghielectronics.com/community/codeshare/entry/614
 
 		// http://www.appveyor.com/docs/api/projects-builds#start-build
-		public BuildState StartBuild(string config)
+		public BuildState StartBuild(Hashtable config)
 		{
 			try
 			{
@@ -95,9 +95,8 @@ namespace Deployer.Services.Builders
 			var result = GetValue(req);
 		}
 
-		private void DecodeConfig(string config)
+		private void DecodeConfig(Hashtable hash)
 		{
-			var hash = JsonSerializer.DeserializeString(config) as Hashtable;
 			if (hash == null)
 				return;
 			_apiToken = hash["apiToken"] as string;

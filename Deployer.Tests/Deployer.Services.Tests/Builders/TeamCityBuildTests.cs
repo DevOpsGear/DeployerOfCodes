@@ -39,18 +39,18 @@ namespace Deployer.Tests.Builders
 		}
 
 		[Test]
-		public void Empty_config_handling()
+		public void Empty_config_causes_failure()
 		{
-			var status = _sut.StartBuild(string.Empty);
+			var status = _sut.StartBuild(new Hashtable());
 
-			AssertQueued(status);
+			AssertFailed(status);
 		}
 
 		[Test]
 		public void Bad_response_causes_failure()
 		{
 			MockBadResponse();
-			var status = _sut.StartBuild(string.Empty);
+			var status = _sut.StartBuild(new Hashtable());
 
 			AssertFailed(status);
 		}
@@ -87,16 +87,15 @@ namespace Deployer.Tests.Builders
 			Assert.AreEqual(BuildStatus.Failed, state.Status);
 		}
 
-		private static string GetConfig()
+		private static Hashtable GetConfig()
 		{
-			var config = new Hashtable
+			return new Hashtable
 				{
 					{"url", "URL"},
 					{"buildId", "BUILDID"},
 					{"username", "USERNAME"},
 					{"password", "PASSWORD"}
 				};
-			return JsonSerializer.SerializeObject(config);
 		}
 
 		private void MockBadResponse()

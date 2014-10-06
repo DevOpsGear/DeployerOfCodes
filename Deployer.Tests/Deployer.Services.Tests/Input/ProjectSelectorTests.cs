@@ -14,8 +14,8 @@ namespace Deployer.Tests.Input
 	{
 		private CharDisplaySpy _display;
 		private Mock<IConfigurationService> _config;
-		private Project _projectOne;
-		private Project _projectTwo;
+		private ProjectModel _projectOne;
+		private ProjectModel _projectTwo;
 		private ProjectSelector _sut;
 
 		[SetUp]
@@ -23,8 +23,8 @@ namespace Deployer.Tests.Input
 		{
 			_display = new CharDisplaySpy();
 			_config = new Mock<IConfigurationService>();
-			_projectOne = new Project("Project 1", "Subtitle 1", BuildServiceProvider.Succeeding, string.Empty);
-			_projectTwo = new Project("Project 2", "Subtitle 2", BuildServiceProvider.Failing, string.Empty);
+			_projectOne = new ProjectModel("succ-1", "Project 1", "Subtitle 1", 1, BuildServiceProvider.Succeeding);
+			_projectTwo = new ProjectModel("fail-1", "Project 2", "Subtitle 2", 2, BuildServiceProvider.Failing);
 			_sut = new ProjectSelector(_display, _config.Object);
 		}
 
@@ -129,13 +129,13 @@ namespace Deployer.Tests.Input
 
 		private void MockConfigZeroProjects()
 		{
-			var models = new Project[] {};
+			var models = new ProjectModel[] {};
 			_config.Setup(x => x.GetProjects()).Returns(models);
 		}
 
 		private void MockConfigOneProject()
 		{
-			var models = new Project[]
+			var models = new ProjectModel[]
 				{
 					_projectOne
 				};
@@ -144,7 +144,7 @@ namespace Deployer.Tests.Input
 
 		private void MockConfigTwoProjects()
 		{
-			var models = new Project[]
+			var models = new ProjectModel[]
 				{
 					_projectOne,
 					_projectTwo
@@ -159,7 +159,7 @@ namespace Deployer.Tests.Input
 			Assert.AreEqual(string.Empty, _display.Line2, "Display line 2");
 		}
 
-		private void AssertProjectSelected(Project proj)
+		private void AssertProjectSelected(ProjectModel proj)
 		{
 			Assert.IsTrue(_sut.IsProjectSelected, "Is selected");
 			Assert.AreEqual(proj.Title, _sut.SelectedProjectName, "Name");
