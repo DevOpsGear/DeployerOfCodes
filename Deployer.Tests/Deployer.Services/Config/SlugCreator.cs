@@ -1,12 +1,8 @@
 ﻿using System;
+using Deployer.Services.Config.Interfaces;
 
 namespace Deployer.Services.Config
 {
-	public interface ISlugCreator
-	{
-		string CreateSlug(string[] existingSlugs);
-	}
-
 	public class SlugCreator : ISlugCreator
 	{
 		private const string Prefix = "project";

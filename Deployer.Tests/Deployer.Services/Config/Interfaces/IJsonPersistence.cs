@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace Deployer.Services.Config
+namespace Deployer.Services.Config.Interfaces
 {
 	public interface IJsonPersistence
 	{

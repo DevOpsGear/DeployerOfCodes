@@ -50,7 +50,8 @@
     <Compile Include="Builders\TeamCityBuildTests.cs" />
     <Compile Include="Builders\FailingBuilderTests.cs" />
     <Compile Include="Builders\SucceedingBuilderTests.cs" />
-    <Compile Include="Config\ConfigTests.cs" />
+    <Compile Include="Config\JsonPersistenceTests.cs" />
+    <Compile Include="Config\ConfigBuildParamTests.cs" />
     <Compile Include="Config\FakeConfigTests.cs" />
     <Compile Include="Config\ConfigProjectListTests.cs" />
     <Compile Include="Config\SlugCreatorTests.cs" />

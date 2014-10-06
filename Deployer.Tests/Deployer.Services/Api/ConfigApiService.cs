@@ -1,6 +1,7 @@
 ﻿using Deployer.Services.Api.Interfaces;
 using Deployer.Services.Config;
 // ReSharper disable RedundantUsingDirective
+using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Util;
 
 // ReSharper restore RedundantUsingDirective

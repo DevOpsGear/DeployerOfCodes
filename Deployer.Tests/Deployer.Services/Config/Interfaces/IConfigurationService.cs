@@ -1,7 +1,7 @@
 using System.Collections;
 using Deployer.Services.Models;
 
-namespace Deployer.Services.Config
+namespace Deployer.Services.Config.Interfaces
 {
 	public interface IConfigurationService
 	{

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Deployer.Services.Builders;
 using Deployer.Services.Config;
+using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Models;
 using Moq;
 using NUnit.Framework;

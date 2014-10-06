@@ -61,7 +61,7 @@ namespace Deployer.Services.Micro.Web
 
 		public string NormalizeUrl(string url)
 		{
-			url = url.Trim() ?? string.Empty;
+			url = url.Trim();
 			if (url.Substring(url.Length - 1) != "/")
 				url += "/";
 			return url;

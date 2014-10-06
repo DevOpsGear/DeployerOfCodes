@@ -1,6 +1,7 @@
 ﻿using System;
 using Deployer.Services.Builders;
 using Deployer.Services.Config;
+using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Input;
 using Deployer.Services.Models;
 using Deployer.Tests.SpiesFakes;

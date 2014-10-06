@@ -1,5 +1,6 @@
 using System;
 using Deployer.Services.Config;
+using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Hardware;
 using Deployer.Services.Models;
 

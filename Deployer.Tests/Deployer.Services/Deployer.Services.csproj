@@ -45,9 +45,13 @@
     <Compile Include="Api\Interfaces\IApiReadBody.cs" />
     <Compile Include="Api\Interfaces\IApiService.cs" />
     <Compile Include="Api\Interfaces\IApiSocket.cs" />
+    <Compile Include="Config\Interfaces\ISlugCreator.cs" />
+    <Compile Include="Config\Interfaces\ISmallTextFileIo.cs" />
+    <Compile Include="Config\JsonPersistence.cs" />
     <Compile Include="Config\RealConfigurationService.cs" />
-    <Compile Include="Config\IJsonPersistence.cs" />
+    <Compile Include="Config\Interfaces\IJsonPersistence.cs" />
     <Compile Include="Config\SlugCreator.cs" />
+    <Compile Include="Config\SmallTextFileIo.cs" />
     <Compile Include="Micro\Web\IWebUtility.cs" />
     <Compile Include="Micro\Web\WebUtility.cs" />
     <Compile Include="Builders\AppVeyorBuildService.cs" />
@@ -58,7 +62,7 @@
     <Compile Include="Builders\SuceedingBuildService.cs" />
     <Compile Include="Builders\TeamCityBuildService.cs" />
     <Compile Include="Config\FakeConfigurationService.cs" />
-    <Compile Include="Config\IConfigurationService.cs" />
+    <Compile Include="Config\Interfaces\IConfigurationService.cs" />
     <Compile Include="Hardware\ICharDisplay.cs" />
     <Compile Include="Hardware\ILed.cs" />
     <Compile Include="Hardware\INetwork.cs" />
@@ -93,10 +97,6 @@
     <Compile Include="StateMachine\States\SuccessState.cs" />
     <Compile Include="StateMachine\States\TurnBothKeysState.cs" />
     <Compile Include="StateMachine\IDeployerController.cs" />
-    <Compile Include="Micro\Web\WebResponderFactory.cs" />
-    <Compile Include="Micro\Web\IWebResponder.cs" />
-    <Compile Include="Micro\Web\IWebResponderFactory.cs" />
-    <Compile Include="Micro\Web\WebResponder.cs" />
     <Compile Include="Util\ExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
