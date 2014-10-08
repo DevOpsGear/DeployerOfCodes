@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -68,6 +69,28 @@ namespace Deployer.Tests.Api
 
 			_req.Url = "projectiles/";
 			Assert.IsFalse(_sut.CanRespond(_req));
+		}
+
+		[Test]
+		public void Rejects_unsupported_enpoints()
+		{
+			_req.HttpMethod = "GET";
+			_req.Url = "blerg/";
+
+			_sut.SendResponse(_req);
+
+			_socket.Verify(x => x.Send404_NotFound(), Times.Once);
+		}
+
+		[Test]
+		public void Returns_500_for_unexpected_exception()
+		{
+			_req.HttpMethod = "GET";
+			_config.Setup(x => x.GetProjects()).Throws(new ProtocolViolationException());
+
+			_sut.SendResponse(_req);
+
+			_socket.Verify(x => x.Send500_Failure(It.IsAny<string>()), Times.Once);
 		}
 
 		[Test]
