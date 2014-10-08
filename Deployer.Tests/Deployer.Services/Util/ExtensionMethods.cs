@@ -1,5 +1,8 @@
-﻿namespace Deployer.Services.Util
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Deployer.Services.Util
 {
+	[ExcludeFromCodeCoverage]
 	public static class ExtensionMethods
 	{
 // ReSharper disable StringIndexOfIsCultureSpecific.1

@@ -1,6 +1,4 @@
-﻿using System.Net.Sockets;
-using System.Text;
-using Deployer.Services.Input;
+﻿using Deployer.Services.Input;
 using Deployer.Services.StateMachine.States;
 
 namespace Deployer.Services.StateMachine
@@ -58,11 +56,5 @@ namespace Deployer.Services.StateMachine
 		}
 
 		public IDeployerState State { get; set; }
-
-		public void ReceivedGetWebRequest(string url, Socket response)
-		{
-			var bytes = Encoding.UTF8.GetBytes("Got this URL! " + url);
-			response.Send(bytes);
-		}
 	}
 }

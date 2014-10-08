@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using Deployer.Services.Builders;
 using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Models;
 
 namespace Deployer.Services.Config
 {
+	[ExcludeFromCodeCoverage]
 	public class FakeConfigurationService : IConfigurationService
 	{
 		private readonly ProjectModel[] _projects;
@@ -50,6 +52,11 @@ namespace Deployer.Services.Config
 
 		public void SaveBuildParams(string slug, Hashtable config)
 		{
+		}
+
+		public ProjectModel GetProject(string slug)
+		{
+			return _projects[0];
 		}
 
 		private static Hashtable AntiShaunJson()

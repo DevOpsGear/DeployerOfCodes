@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.IO;
 using Deployer.Services.Builders;
 using Deployer.Services.Config.Interfaces;
@@ -22,7 +23,18 @@ namespace Deployer.Services.Config
 		public ProjectModel[] GetProjects()
 		{
 			var projects = ReadConfigFile();
-			return (ProjectModel[]) projects.ToArray(typeof (ProjectModel));
+			return (ProjectModel[]) projects.ToArray(typeof(ProjectModel));
+		}
+
+		public ProjectModel GetProject(string slug)
+		{
+			var projects = ReadConfigFile();
+			foreach(ProjectModel proj in projects)
+			{
+				if(proj.Slug == slug)
+					return proj;
+			}
+			throw new ProjectDoesNotExistException(slug);
 		}
 
 		public void DeleteProject(string slug)
@@ -35,7 +47,7 @@ namespace Deployer.Services.Config
 		public void SaveProject(ProjectModel newProject)
 		{
 			var projects = ReadConfigFile();
-			if (newProject.Slug == "")
+			if(newProject.Slug == "")
 			{
 				var existingSlugs = GetSlugs(projects);
 				newProject.Slug = _slugCreator.CreateSlug(existingSlugs);
@@ -65,27 +77,29 @@ namespace Deployer.Services.Config
 		private static void RemoveBySlug(ArrayList projects, string slug)
 		{
 			var idxToReplace = -1;
-			for (var idx = 0; idx < projects.Count; idx++)
+			for(var idx = 0; idx < projects.Count; idx++)
 			{
 				var proj = (ProjectModel) projects[idx];
-				if (proj.Slug == slug)
+				if(proj.Slug == slug)
 				{
 					idxToReplace = idx;
 					break;
 				}
 			}
-			if (idxToReplace >= 0)
+			if(idxToReplace >= 0)
 				projects.RemoveAt(idxToReplace);
+			else
+				throw new ProjectDoesNotExistException(slug);
 		}
 
 		private static string[] GetSlugs(ArrayList projects)
 		{
 			var slugs = new ArrayList();
-			foreach (ProjectModel proj in projects)
+			foreach(ProjectModel proj in projects)
 			{
 				slugs.Add(proj.Slug);
 			}
-			return (string[]) slugs.ToArray(typeof (string));
+			return (string[]) slugs.ToArray(typeof(string));
 		}
 
 		#endregion
@@ -96,10 +110,10 @@ namespace Deployer.Services.Config
 		{
 			var list = _persistence.Read(ProjectListFilePath);
 			var projects = new ArrayList();
-			foreach (string slug in list.Keys)
+			foreach(string slug in list.Keys)
 			{
 				var projectHash = list[slug] as Hashtable;
-				if (projectHash == null) continue;
+				if(projectHash == null) continue;
 				var proj = new ProjectModel(slug,
 				                            projectHash["title"] as string,
 				                            projectHash["subtitle"] as string,
@@ -114,7 +128,7 @@ namespace Deployer.Services.Config
 		{
 			var listHash = new Hashtable();
 
-			foreach (ProjectModel proj in projects)
+			foreach(ProjectModel proj in projects)
 			{
 				var projectHash = new Hashtable
 					{
@@ -144,5 +158,13 @@ namespace Deployer.Services.Config
 		}
 
 		#endregion
+	}
+
+	public class ProjectDoesNotExistException : Exception
+	{
+		public ProjectDoesNotExistException(string slug)
+			: base(slug)
+		{
+		}
 	}
 }

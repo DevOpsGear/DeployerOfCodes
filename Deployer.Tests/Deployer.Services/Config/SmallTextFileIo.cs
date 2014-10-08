@@ -8,9 +8,16 @@ namespace Deployer.Services.Config
 	{
 		public string Read(string filePath)
 		{
-			var bytes = File.ReadAllBytes(filePath);
-			var chars = Encoding.UTF8.GetChars(bytes);
-			return new string(chars);
+			try
+			{
+				var bytes = File.ReadAllBytes(filePath);
+				var chars = Encoding.UTF8.GetChars(bytes);
+				return new string(chars);
+			}
+			catch
+			{
+				return string.Empty;
+			}
 		}
 
 		public void Write(string filePath, string content)

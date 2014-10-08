@@ -1,4 +1,3 @@
-using System.Net.Sockets;
 using Deployer.Services.Input;
 using Deployer.Services.StateMachine.States;
 
@@ -15,6 +14,5 @@ namespace Deployer.Services.StateMachine
 		void DeployPressedEvent();
 		void Tick();
 		IDeployerState State { get; set; }
-		void ReceivedGetWebRequest(string url, Socket response);
 	}
 }

@@ -39,9 +39,9 @@ namespace Deployer.Services.Micro.Web
 		{
 			int read;
 			var result = new byte[bufferSize];
-			using (var res = req.GetResponse())
+			using(var res = req.GetResponse())
 			{
-				using (var stream = res.GetResponseStream())
+				using(var stream = res.GetResponseStream())
 				{
 					read = stream.Read(result, 0, result.Length);
 				}
@@ -62,7 +62,7 @@ namespace Deployer.Services.Micro.Web
 		public string NormalizeUrl(string url)
 		{
 			url = url.Trim();
-			if (url.Substring(url.Length - 1) != "/")
+			if(url.Substring(url.Length - 1) != "/")
 				url += "/";
 			return url;
 		}
