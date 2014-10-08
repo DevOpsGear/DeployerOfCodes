@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Deployer.Services.Api;
 using Deployer.Services.Api.Interfaces;
 using Deployer.Services.Builders;
+using Deployer.Services.Config;
 using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Models;
 using Json.NETMF;
@@ -101,7 +102,6 @@ namespace Deployer.Tests.Api
 		public void Default_endpoint_returns_all_projects()
 		{
 			_req.HttpMethod = "GET";
-
 			_config.Setup(x => x.GetProjects()).Returns(new[]
 				{
 					_projectOne, _projectTwo
@@ -111,12 +111,49 @@ namespace Deployer.Tests.Api
 
 			_sut.SendResponse(_req);
 
-			_socket.Verify(x => x.Send200_OK("application/json", expectedBytes.Length), Times.Once());
+			_socket.Verify(x => x.Send200_OK("application/json", expectedBytes.Length), Times.Once);
+			_socket.Verify(x => x.Send(expectedBytes, expectedBytes.Length), Times.Once);
+
 			_socket.Verify(x => x.Send404_NotFound(), Times.Never);
 			_socket.Verify(x => x.Send405_MethodNotAllowed(), Times.Never);
 			_socket.Verify(x => x.Send500_Failure(It.IsAny<string>()), Times.Never);
+		}
 
+		[Test]
+		public void One_project_endpoint_returns_correct_json()
+		{
+			_req.HttpMethod = "GET";
+			_req.Url = "projects/" + _projectOne.Slug;
+			_config.Setup(x => x.GetProject(_projectOne.Slug)).Returns(_projectOne);
+			string expectedJson = _jsonOne;
+			var expectedBytes = Encoding.UTF8.GetBytes(expectedJson);
+
+			_sut.SendResponse(_req);
+
+			_socket.Verify(x => x.Send200_OK("application/json", expectedBytes.Length), Times.Once);
 			_socket.Verify(x => x.Send(expectedBytes, expectedBytes.Length), Times.Once);
+
+			_socket.Verify(x => x.Send404_NotFound(), Times.Never);
+			_socket.Verify(x => x.Send405_MethodNotAllowed(), Times.Never);
+			_socket.Verify(x => x.Send500_Failure(It.IsAny<string>()), Times.Never);
+		}
+
+		[Test]
+		public void One_project_endpoint_returns_404_if_bad_slug()
+		{
+			_req.HttpMethod = "GET";
+			_req.Url = "projects/bad-slug";
+
+			_config.Setup(x => x.GetProject("bad-slug")).Throws(new ProjectDoesNotExistException("bad-slug"));
+
+			_sut.SendResponse(_req);
+
+			_socket.Verify(x => x.Send404_NotFound(), Times.Once);
+
+			_socket.Verify(x => x.Send200_OK("application/json", It.IsAny<int>()), Times.Never);
+			_socket.Verify(x => x.Send405_MethodNotAllowed(), Times.Never);
+			_socket.Verify(x => x.Send500_Failure(It.IsAny<string>()), Times.Never);
+			_socket.Verify(x => x.Send(It.IsAny<byte[]>(), It.IsAny<int>()), Times.Never);
 		}
 	}
 }
