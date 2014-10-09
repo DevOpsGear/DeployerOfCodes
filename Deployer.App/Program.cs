@@ -57,7 +57,7 @@ namespace Deployer.App
 			SetupInputs();
 			SetupIndicators();
 
-			_configService = new FakeConfigurationService();
+			_configService = new RealConfigurationService();
 			var charDisp = new CharDisplay(characterDisplay);
 			var keys = new SimultaneousKeys(ReversedSwitchA, ReversedSwitchB, new TimeService());
 			var webFactory = new WebRequestFactory();

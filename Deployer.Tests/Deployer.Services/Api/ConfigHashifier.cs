@@ -1,10 +1,28 @@
-﻿using Deployer.Services.Models;
+﻿using System.Text;
+using Deployer.Services.Models;
 using System.Collections;
+using Json.NETMF;
 
 namespace Deployer.Services.Api
 {
 	public static class ConfigHashifier
 	{
+		public static byte[] Bytify(ProjectModel[] projects)
+		{
+			var hash = Hashify(projects);
+			var json = JsonSerializer.SerializeObject(hash);
+			var bytes = Encoding.UTF8.GetBytes(json);
+			return bytes;
+		}
+
+		public static byte[] Bytify(ProjectModel proj)
+		{
+			var hash = Hashify(proj);
+			var json = JsonSerializer.SerializeObject(hash);
+			var bytes = Encoding.UTF8.GetBytes(json);
+			return bytes;
+		}
+
 		public static Hashtable Hashify(ProjectModel proj)
 		{
 			var hash = new Hashtable();

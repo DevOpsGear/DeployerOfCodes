@@ -5,22 +5,26 @@ using Deployer.Services.Api.Interfaces;
 using Deployer.Services.Builders;
 using Deployer.Services.Config;
 using Deployer.Services.Config.Interfaces;
-// ReSharper disable RedundantUsingDirective
+using Deployer.Services.Micro;
 using Deployer.Services.Models;
+// ReSharper disable RedundantUsingDirective
 using Deployer.Services.Util;
+// ReSharper restore RedundantUsingDirective
 using Json.NETMF;
 
-// ReSharper restore RedundantUsingDirective
 
 namespace Deployer.Services.Api
 {
 	public class ConfigApiService : IApiService
 	{
 		private readonly IConfigurationService _configurationService;
+		private readonly IGarbage _garbage;
+		private const int BufferSize = 1024;
 
-		public ConfigApiService(IConfigurationService configurationService)
+		public ConfigApiService(IConfigurationService configurationService, IGarbage garbage)
 		{
 			_configurationService = configurationService;
+			_garbage = garbage;
 		}
 
 		public bool CanRespond(ApiRequest request)
@@ -30,6 +34,7 @@ namespace Deployer.Services.Api
 
 		public bool SendResponse(ApiRequest request)
 		{
+			_garbage.Collect();
 			try
 			{
 				var url = new UrlSplitter(request.Url);
@@ -37,8 +42,9 @@ namespace Deployer.Services.Api
 			}
 			catch(Exception ex)
 			{
-				request.Client.Send500_Failure();
+				request.Client.Send500_Failure(ex.ToString());
 			}
+			_garbage.Collect();
 			return true;
 		}
 
@@ -72,9 +78,7 @@ namespace Deployer.Services.Api
 			if(request.HttpMethod == "GET")
 			{
 				var projects = _configurationService.GetProjects();
-				var hash = ConfigHashifier.Hashify(projects);
-				var json = JsonSerializer.SerializeObject(hash);
-				var bytes = Encoding.UTF8.GetBytes(json);
+				var bytes = ConfigHashifier.Bytify(projects);
 				request.Client.Send200_OK("application/json", bytes.Length);
 				request.Client.Send(bytes, bytes.Length);
 				return;
@@ -121,9 +125,7 @@ namespace Deployer.Services.Api
 			try
 			{
 				var proj = _configurationService.GetProject(slug);
-				var hash = ConfigHashifier.Hashify(proj);
-				var json = JsonSerializer.SerializeObject(hash);
-				var bytes = Encoding.UTF8.GetBytes(json);
+				var bytes = ConfigHashifier.Bytify(proj);
 				request.Client.Send200_OK("application/json", bytes.Length);
 				request.Client.Send(bytes, bytes.Length);
 			}
@@ -210,7 +212,7 @@ namespace Deployer.Services.Api
 
 		private void PutOneBuild(string slug, ApiRequest request)
 		{
-			var buffer = new byte[1024];
+			var buffer = new byte[BufferSize];
 			var countBytes = request.Body.ReadBytes(buffer);
 			var chars = Encoding.UTF8.GetChars(buffer, 0, countBytes);
 			var json = new string(chars);

@@ -3,6 +3,7 @@ using Deployer.Services.Api.Interfaces;
 using Deployer.Services.Builders;
 using Deployer.Services.Config;
 using Deployer.Services.Config.Interfaces;
+using Deployer.Services.Micro;
 using Deployer.Services.Models;
 using Json.NETMF;
 using Moq;
@@ -20,6 +21,7 @@ namespace Deployer.Tests.Api
 		private Mock<IApiReadBody> _readBody;
 		private Mock<IApiSocket> _socket;
 		private Mock<IConfigurationService> _config;
+		private Mock<IGarbage> _garbage;
 		private ConfigApiService _sut;
 		private ApiRequest _req;
 		private ProjectModel _projectOne;
@@ -36,6 +38,8 @@ namespace Deployer.Tests.Api
 			_readBody = new Mock<IApiReadBody>();
 			_socket = new Mock<IApiSocket>();
 			_config = new Mock<IConfigurationService>();
+			_garbage = new Mock<IGarbage>();
+
 			_req = new ApiRequest
 				{
 					Headers = new Hashtable(),
@@ -45,7 +49,7 @@ namespace Deployer.Tests.Api
 					Url = "projects/",
 					Client = _socket.Object,
 				};
-			_sut = new ConfigApiService(_config.Object);
+			_sut = new ConfigApiService(_config.Object, _garbage.Object);
 		}
 
 		[Test]
