@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ConfigApiServiceTests.cs" />
+    <Compile Include="Api\UrlSplitterTests.cs" />
     <Compile Include="Builders\AppVeyorBuildTests.cs" />
     <Compile Include="Builders\BuildFactoryTests.cs" />
     <Compile Include="Builders\TeamCityBuildTests.cs" />

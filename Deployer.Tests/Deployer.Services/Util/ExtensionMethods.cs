@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Deployer.Services.Util
 {
@@ -9,7 +10,7 @@ namespace Deployer.Services.Util
 		public static string[] EasySplit(this string s, string separator)
 		{
 			int pos = s.IndexOf(separator);
-			if (pos != -1)
+			if(pos != -1)
 				return new[]
 					{
 						s.Substring(0, pos).Trim(new[] {' ', '\n', '\r'}),
@@ -22,8 +23,8 @@ namespace Deployer.Services.Util
 
 		public static bool StartsWith(this string s, string start)
 		{
-			for (var i = 0; i < start.Length; i++)
-				if (s[i] != start[i])
+			for(var i = 0; i < start.Length; i++)
+				if(s[i] != start[i])
 					return false;
 
 			return true;
@@ -32,14 +33,21 @@ namespace Deployer.Services.Util
 		public static string Replace(this string s, char replaceThis, char replaceWith)
 		{
 			var temp = string.Empty;
-			for (var i = 0; i < s.Length; i++)
+			for(var i = 0; i < s.Length; i++)
 			{
-				if (s[i] == replaceThis)
+				if(s[i] == replaceThis)
 					temp += replaceWith;
 				else
 					temp += s[i];
 			}
 			return temp;
 		}
+	}
+}
+
+namespace System.Diagnostics.CodeAnalysis
+{
+	public class ExcludeFromCodeCoverageAttribute : Attribute
+	{
 	}
 }

@@ -4,6 +4,15 @@ namespace Deployer.Services.Models
 {
 	public class ProjectModel
 	{
+		public ProjectModel()
+		{
+			Slug = "";
+			Title = "";
+			Subtitle = "";
+			Rank = 0;
+			Provider = BuildServiceProvider.Failing;
+		}
+
 		public ProjectModel(string slug, string title, string subtitle, int rank, BuildServiceProvider provider)
 		{
 			Slug = slug;

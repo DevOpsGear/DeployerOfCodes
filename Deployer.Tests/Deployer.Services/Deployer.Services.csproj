@@ -42,9 +42,11 @@
     <Compile Include="Api\ApiRequest.cs" />
     <Compile Include="Api\AuthApiService.cs" />
     <Compile Include="Api\ConfigApiService.cs" />
+    <Compile Include="Api\ConfigHashifier.cs" />
     <Compile Include="Api\Interfaces\IApiReadBody.cs" />
     <Compile Include="Api\Interfaces\IApiService.cs" />
     <Compile Include="Api\Interfaces\IApiSocket.cs" />
+    <Compile Include="Api\UrlSplitter.cs" />
     <Compile Include="Config\Interfaces\ISlugCreator.cs" />
     <Compile Include="Config\Interfaces\ISmallTextFileIo.cs" />
     <Compile Include="Config\JsonPersistence.cs" />
