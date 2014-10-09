@@ -36,7 +36,7 @@ namespace Deployer.Services.Builders
 				var todo = _webio.ReadJsonObject(req, 4096);
 				return new BuildState(BuildStatus.Queued);
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				return new BuildState(BuildStatus.Failed);
 			}
@@ -53,8 +53,8 @@ namespace Deployer.Services.Builders
 
 		private void DecodeConfig(Hashtable hash)
 		{
-			if (hash == null)
-				return;
+			if(hash == null)
+				throw new Exception("bad config");
 			var url = _webio.NormalizeUrl(hash["url"] as string);
 			_apiRoot = url + "httpAuth/app/rest/";
 			_buildId = hash["buildId"] as string;

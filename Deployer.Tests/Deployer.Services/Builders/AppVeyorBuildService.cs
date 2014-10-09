@@ -48,7 +48,7 @@ namespace Deployer.Services.Builders
 				var status = result["status"].ToString();
 				return DecodeBuildState(status);
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				return new BuildState(BuildStatus.Failed);
 			}
@@ -65,7 +65,7 @@ namespace Deployer.Services.Builders
 				var status = build["status"].ToString();
 				return DecodeBuildState(status);
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				return new BuildState(BuildStatus.Failed);
 			}
@@ -73,7 +73,7 @@ namespace Deployer.Services.Builders
 
 		private BuildState DecodeBuildState(string status)
 		{
-			switch (status)
+			switch(status)
 			{
 				case "queued":
 					return new BuildState(BuildStatus.Queued);
@@ -97,8 +97,8 @@ namespace Deployer.Services.Builders
 
 		private void DecodeConfig(Hashtable hash)
 		{
-			if (hash == null)
-				return;
+			if(hash == null)
+				throw new Exception("No config");
 			_apiToken = hash["apiToken"] as string;
 			_accountName = hash["accountName"] as string;
 			_projectSlug = hash["projectSlug"] as string;

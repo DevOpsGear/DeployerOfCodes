@@ -30,6 +30,14 @@ namespace Deployer.Tests.Builders
 		}
 
 		[Test]
+		public void Bad_config()
+		{
+			var status = _sut.StartBuild(null);
+
+			AssertFailed(status);
+		}
+
+		[Test]
 		public void Start()
 		{
 			var config = GetConfig();

@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\AuthApiTests.cs" />
     <Compile Include="Api\ConfigApiServiceTests.cs" />
     <Compile Include="Api\UrlSplitterTests.cs" />
     <Compile Include="Builders\AppVeyorBuildTests.cs" />
