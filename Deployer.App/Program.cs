@@ -138,10 +138,10 @@ namespace Deployer.App
 			var configResponder = new ApiServiceResponder(configApiService);
 			_webServer.AddResponse(configResponder);
 
-			var updateClient = new UpdateClientResponder(_rootDir);
+			var updateClient = new FilePutResponder(_rootDir);
 			_webServer.AddResponse(updateClient);
 
-			var fileServe = new FileResponder(_rootDir, "client");
+			var fileServe = new FileGetResponder(_rootDir, "client");
 			_webServer.AddResponse(fileServe);
 		}
 

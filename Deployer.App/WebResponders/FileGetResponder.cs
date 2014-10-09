@@ -8,13 +8,13 @@ using NeonMika.Util;
 
 namespace Deployer.App.WebResponders
 {
-	public class FileResponder : Responder
+	public class FileGetResponder : Responder
 	{
 		private readonly string _rootDirectory;
 		private readonly string _folder;
 		private readonly int _bufferSize;
 
-		public FileResponder(string rootDirectory, string folder, int bufferSize = 256)
+		public FileGetResponder(string rootDirectory, string folder, int bufferSize = 256)
 		{
 			_rootDirectory = rootDirectory;
 			_folder = folder;

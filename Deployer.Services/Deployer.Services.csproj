@@ -40,6 +40,9 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Api\ConfigApiService.cs">
       <Link>Api\ConfigApiService.cs</Link>
     </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Api\ConfigHashifier.cs">
+      <Link>Api\ConfigHashifier.cs</Link>
+    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Api\Interfaces\IApiReadBody.cs">
       <Link>Api\Interfaces\IApiReadBody.cs</Link>
     </Compile>

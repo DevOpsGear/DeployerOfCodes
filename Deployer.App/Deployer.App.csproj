@@ -67,8 +67,8 @@
     <Compile Include="WebResponders\ApiReadBodyWrapper.cs" />
     <Compile Include="WebResponders\ApiSocketWrapper.cs" />
     <Compile Include="WebResponders\ApiServiceResponder.cs" />
-    <Compile Include="WebResponders\FileResponder.cs" />
-    <Compile Include="WebResponders\UpdateClientResponder.cs" />
+    <Compile Include="WebResponders\FileGetResponder.cs" />
+    <Compile Include="WebResponders\FilePutResponder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gadgeteer" />

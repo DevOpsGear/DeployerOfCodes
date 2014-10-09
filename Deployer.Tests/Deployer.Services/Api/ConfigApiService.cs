@@ -35,7 +35,7 @@ namespace Deployer.Services.Api
 				var url = new UrlSplitter(request.Url);
 				HandleStuff(request, url);
 			}
-			catch(Exception)
+			catch(Exception ex)
 			{
 				request.Client.Send500_Failure();
 			}
@@ -185,7 +185,38 @@ namespace Deployer.Services.Api
 
 		private void HandleBuild(string slug, ApiRequest request)
 		{
-			throw new System.NotImplementedException();
+			if(request.HttpMethod == "GET")
+			{
+				GetOneBuid(slug, request);
+				return;
+			}
+
+			if(request.HttpMethod == "PUT")
+			{
+				PutOneBuild(slug, request);
+				return;
+			}
+			request.Client.Send405_MethodNotAllowed();
+		}
+
+		private void GetOneBuid(string slug, ApiRequest request)
+		{
+			var build = _configurationService.GetBuildParams(slug);
+			var json = JsonSerializer.SerializeObject(build);
+			var bytes = Encoding.UTF8.GetBytes(json);
+			request.Client.Send200_OK("application/json", bytes.Length);
+			request.Client.Send(bytes, bytes.Length);
+		}
+
+		private void PutOneBuild(string slug, ApiRequest request)
+		{
+			var buffer = new byte[1024];
+			var countBytes = request.Body.ReadBytes(buffer);
+			var chars = Encoding.UTF8.GetChars(buffer, 0, countBytes);
+			var json = new string(chars);
+			var build = JsonSerializer.DeserializeString(json) as Hashtable;
+			_configurationService.SaveBuildParams(slug, build);
+			request.Client.Send200_OK("application/json");
 		}
 	}
 }

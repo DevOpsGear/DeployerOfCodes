@@ -7,11 +7,11 @@ using NeonMika.Util;
 
 namespace Deployer.App.WebResponders
 {
-	public class UpdateClientResponder : Responder
+	public class FilePutResponder : Responder
 	{
 		private readonly string _rootDirectory;
 
-		public UpdateClientResponder(string rootDirectory)
+		public FilePutResponder(string rootDirectory)
 		{
 			_rootDirectory = rootDirectory;
 		}

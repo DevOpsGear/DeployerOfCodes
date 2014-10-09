@@ -37,7 +37,7 @@ namespace NeonMika.Requests
 				var buffer = Encoding.UTF8.GetBytes(header);
 				client.Send(buffer, buffer.Length, SocketFlags.None);
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Debug.Print(e.Message);
 			}
@@ -46,7 +46,7 @@ namespace NeonMika.Requests
 		public static void Send200_OK(Socket client, string mimeType, int contentLength)
 		{
 			string header;
-			if (contentLength > 0)
+			if(contentLength > 0)
 			{
 				header = "HTTP/1.0 200 OK\r\n"
 				         + "Content-Type: " + mimeType + "; charset=utf-8\r\n"
@@ -65,10 +65,30 @@ namespace NeonMika.Requests
 				var buffer = Encoding.UTF8.GetBytes(header);
 				client.Send(buffer, buffer.Length, SocketFlags.None);
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Debug.Print(e.Message);
 			}
+		}
+
+		public static void Send400_BadRequest(Socket client)
+		{
+			const string header = "HTTP/1.1 400 Bad Request\r\n"
+			                      + "Content-Length: 0\r\nConnection: close\r\n\r\n";
+			var buffer = Encoding.UTF8.GetBytes(header);
+			if(client != null)
+				client.Send(buffer, buffer.Length, SocketFlags.None);
+			Debug.Print("Sent 400 Bad Request");
+		}
+
+		public static void Send405_MethodNotAllowed(Socket client)
+		{
+			const string header = "HTTP/1.1 405 Method Not Allowed\r\n"
+			                      + "Content-Length: 0\r\nConnection: close\r\n\r\n";
+			var buffer = Encoding.UTF8.GetBytes(header);
+			if(client != null)
+				client.Send(buffer, buffer.Length, SocketFlags.None);
+			Debug.Print("Sent 405 Method Not Allowed");
 		}
 
 		public static void Send404_NotFound(Socket client)
@@ -76,7 +96,7 @@ namespace NeonMika.Requests
 			const string header = "HTTP/1.1 404 Not Found\r\n"
 			                      + "Content-Length: 0\r\nConnection: close\r\n\r\n";
 			var buffer = Encoding.UTF8.GetBytes(header);
-			if (client != null)
+			if(client != null)
 				client.Send(buffer, buffer.Length, SocketFlags.None);
 			Debug.Print("Sent 404 Not Found");
 		}
@@ -88,7 +108,7 @@ namespace NeonMika.Requests
 			             + "Connection: close\r\n\r\n"
 			             + message;
 			var buffer = Encoding.UTF8.GetBytes(header);
-			if (client != null)
+			if(client != null)
 				client.Send(buffer, buffer.Length, SocketFlags.None);
 			Debug.Print("Sent 500 Internal Server Error");
 		}
@@ -98,14 +118,14 @@ namespace NeonMika.Requests
 			var ret = 0;
 			try
 			{
-				if (IsSocketConnected(client))
+				if(IsSocketConnected(client))
 					ret = client.Send(data, data.Length, SocketFlags.None);
 				else
 				{
 					client.Close();
 				}
 			}
-			catch (Exception)
+			catch(Exception)
 			{
 				Debug.Print("Error on sending data to client / Closing Client");
 				try
@@ -125,7 +145,7 @@ namespace NeonMika.Requests
 			string result;
 			var dot = filename.LastIndexOf('.');
 			var ext = (dot >= 0) ? filename.Substring(dot + 1) : string.Empty;
-			switch (ext.ToLower())
+			switch(ext.ToLower())
 			{
 				case "txt":
 					result = "text/plain";

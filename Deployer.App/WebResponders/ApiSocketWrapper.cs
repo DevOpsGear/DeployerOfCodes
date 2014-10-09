@@ -23,6 +23,11 @@ namespace Deployer.App.WebResponders
 			RequestHelper.Send200_OK(_socket, mimeType);
 		}
 
+		public void Send400_BadRequest()
+		{
+			RequestHelper.Send400_BadRequest(_socket);
+		}
+
 		public void Send200_OK(string mimeType, int contentLength)
 		{
 			RequestHelper.Send200_OK(_socket, mimeType, contentLength);
@@ -31,6 +36,11 @@ namespace Deployer.App.WebResponders
 		public void Send404_NotFound()
 		{
 			RequestHelper.Send404_NotFound(_socket);
+		}
+
+		public void Send405_MethodNotAllowed()
+		{
+			RequestHelper.Send405_MethodNotAllowed(_socket);
 		}
 
 		public void Send500_Failure(string message = "")

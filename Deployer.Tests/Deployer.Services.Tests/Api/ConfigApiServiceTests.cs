@@ -71,7 +71,7 @@ namespace Deployer.Tests.Api
 			_req.HttpMethod = "GET";
 			_req.Url = "blerg/";
 
-			SendResponse();
+			SutSendResponse();
 
 			_socket.Verify(x => x.Send404_NotFound(), Times.Once);
 		}
@@ -82,7 +82,7 @@ namespace Deployer.Tests.Api
 			_req.HttpMethod = "DELETE";
 			_req.Url = "projects/";
 
-			SendResponse();
+			SutSendResponse();
 
 			_socket.Verify(x => x.Send405_MethodNotAllowed(), Times.Once);
 		}
@@ -93,7 +93,7 @@ namespace Deployer.Tests.Api
 			_req.HttpMethod = "POST";
 			_req.Url = "projects/";
 
-			SendResponse();
+			SutSendResponse();
 
 			_socket.Verify(x => x.Send405_MethodNotAllowed(), Times.Once);
 		}
@@ -104,7 +104,7 @@ namespace Deployer.Tests.Api
 			_req.HttpMethod = "POST";
 			_req.Url = "projects/bad-slug";
 
-			SendResponse();
+			SutSendResponse();
 
 			_socket.Verify(x => x.Send405_MethodNotAllowed(), Times.Once);
 		}
@@ -115,7 +115,7 @@ namespace Deployer.Tests.Api
 			_req.HttpMethod = "GET";
 			_config.Setup(x => x.GetProjects()).Throws(new ProtocolViolationException());
 
-			SendResponse();
+			SutSendResponse();
 
 			_socket.Verify(x => x.Send500_Failure(It.IsAny<string>()), Times.Once);
 		}
@@ -126,7 +126,7 @@ namespace Deployer.Tests.Api
 			_req.HttpMethod = "GET";
 			_req.Url = "projects/slug/dingus/flark";
 
-			SendResponse();
+			SutSendResponse();
 
 			_socket.Verify(x => x.Send404_NotFound(), Times.Once);
 		}
@@ -137,7 +137,7 @@ namespace Deployer.Tests.Api
 			_req.HttpMethod = "GET";
 			_req.Url = "projects/";
 
-			SendResponse();
+			SutSendResponse();
 
 			_socket.Verify(x => x.Send200_OK("application/json", It.IsAny<int>()), Times.Once);
 		}
@@ -162,7 +162,7 @@ namespace Deployer.Tests.Api
 					       Assert.AreEqual(_projectOne.Provider, proj.Provider);
 				       });
 
-			SendResponse();
+			SutSendResponse();
 
 			_socket.Verify(x => x.Send200_OK("application/json"), Times.Once);
 			_config.Verify(x => x.SaveProject(It.IsAny<ProjectModel>()), Times.Once);
@@ -176,11 +176,11 @@ namespace Deployer.Tests.Api
 		public void Default_endpoint_rejects_other_verbs()
 		{
 			_req.HttpMethod = "POST";
-			SendResponse();
+			SutSendResponse();
 			_socket.Verify(x => x.Send405_MethodNotAllowed(), Times.Once);
 
 			_req.HttpMethod = "DELETE";
-			SendResponse();
+			SutSendResponse();
 			_socket.Verify(x => x.Send405_MethodNotAllowed(), Times.Exactly(2));
 
 			_socket.Verify(x => x.Send200_OK(It.IsAny<string>(), It.IsAny<int>()), Times.Never);
@@ -201,7 +201,7 @@ namespace Deployer.Tests.Api
 			string expectedJson = JsonSerializer.SerializeObject(ConfigHashifier.Hashify(projects));
 			var expectedBytes = Encoding.UTF8.GetBytes(expectedJson);
 
-			SendResponse();
+			SutSendResponse();
 
 			_socket.Verify(x => x.Send200_OK("application/json", expectedBytes.Length), Times.Once);
 			_socket.Verify(x => x.Send(expectedBytes, expectedBytes.Length), Times.Once);
@@ -220,7 +220,7 @@ namespace Deployer.Tests.Api
 			string expectedJson = _jsonOne;
 			var expectedBytes = Encoding.UTF8.GetBytes(expectedJson);
 
-			SendResponse();
+			SutSendResponse();
 
 			_socket.Verify(x => x.Send200_OK("application/json", expectedBytes.Length), Times.Once);
 			_socket.Verify(x => x.Send(expectedBytes, expectedBytes.Length), Times.Once);
@@ -237,7 +237,7 @@ namespace Deployer.Tests.Api
 			_req.Url = "projects/bad-slug";
 			_config.Setup(x => x.GetProject("bad-slug")).Throws(new ProjectDoesNotExistException("bad-slug"));
 
-			SendResponse();
+			SutSendResponse();
 
 			_socket.Verify(x => x.Send404_NotFound(), Times.Once);
 
@@ -278,7 +278,7 @@ namespace Deployer.Tests.Api
 			         .Callback((byte[] buffer) => Array.Copy(bytesModifiedProject, buffer, bytesModifiedProject.Length))
 			         .Returns(bytesModifiedProject.Length);
 
-			SendResponse();
+			SutSendResponse();
 
 			_config.Verify(x => x.SaveProject(It.IsAny<ProjectModel>()), Times.Once);
 			_socket.Verify(x => x.Send200_OK("application/json"), Times.Once);
@@ -296,7 +296,7 @@ namespace Deployer.Tests.Api
 			_req.HttpMethod = "PUT";
 			_req.Url = "projects/whatever";
 
-			SendResponse();
+			SutSendResponse();
 
 			_socket.Verify(x => x.Send404_NotFound(), Times.Once);
 
@@ -314,7 +314,7 @@ namespace Deployer.Tests.Api
 			_req.HttpMethod = "PUT";
 			_req.Url = "projects/whatever";
 
-			SendResponse();
+			SutSendResponse();
 
 			_socket.Verify(x => x.Send400_BadRequest(), Times.Once);
 
@@ -330,7 +330,7 @@ namespace Deployer.Tests.Api
 			_req.HttpMethod = "DELETE";
 			_req.Url = "projects/slug-gone";
 
-			SendResponse();
+			SutSendResponse();
 
 			_config.Verify(x => x.DeleteProject("slug-gone"), Times.Once);
 			_socket.Verify(x => x.Send200_OK("application/json"), Times.Once);
@@ -347,7 +347,7 @@ namespace Deployer.Tests.Api
 			_req.Url = "projects/slug-bad";
 			_config.Setup(x => x.DeleteProject("slug-bad")).Throws(new ProjectDoesNotExistException("slug-bad"));
 
-			SendResponse();
+			SutSendResponse();
 
 			_config.Verify(x => x.DeleteProject("slug-bad"), Times.Once);
 			_socket.Verify(x => x.Send404_NotFound(), Times.Once);
@@ -364,7 +364,7 @@ namespace Deployer.Tests.Api
 			_req.Url = "projects/slug-bad";
 			_config.Setup(x => x.DeleteProject("slug-bad")).Throws(new Exception("something-else"));
 
-			SendResponse();
+			SutSendResponse();
 
 			_config.Verify(x => x.DeleteProject("slug-bad"), Times.Once);
 			_socket.Verify(x => x.Send400_BadRequest(), Times.Once);
@@ -375,7 +375,82 @@ namespace Deployer.Tests.Api
 			_socket.Verify(x => x.Send500_Failure(It.IsAny<string>()), Times.Never);
 		}
 
-		private void SendResponse()
+		[Test]
+		public void Build_endpoint_rejects_post_with_405()
+		{
+			_req.HttpMethod = "POST";
+			_req.Url = "projects/slug/build";
+
+			SutSendResponse();
+
+			_socket.Verify(x => x.Send405_MethodNotAllowed(), Times.Once);
+
+			_socket.Verify(x => x.Send404_NotFound(), Times.Never);
+			_socket.Verify(x => x.Send200_OK("application/json"), Times.Never);
+			_socket.Verify(x => x.Send500_Failure(It.IsAny<string>()), Times.Never);
+		}
+
+		[Test]
+		public void Build_endpoint_rejects_delete_with_405()
+		{
+			_req.HttpMethod = "DELETE";
+			_req.Url = "projects/slug/build";
+
+			SutSendResponse();
+
+			_socket.Verify(x => x.Send405_MethodNotAllowed(), Times.Once);
+
+			_socket.Verify(x => x.Send404_NotFound(), Times.Never);
+			_socket.Verify(x => x.Send200_OK("application/json"), Times.Never);
+			_socket.Verify(x => x.Send500_Failure(It.IsAny<string>()), Times.Never);
+		}
+
+		[Test]
+		public void Build_endpoint_accepts_get()
+		{
+			var hash = new Hashtable
+				{
+					{"key1", "value1"}
+				};
+			var json = JsonSerializer.SerializeObject(hash);
+			var expectedBytes = Encoding.UTF8.GetBytes(json);
+			_req.HttpMethod = "GET";
+			_req.Url = "projects/slug/build";
+			_config.Setup(x => x.GetBuildParams("slug")).Returns(hash);
+
+			SutSendResponse();
+
+			_config.Verify(x => x.GetBuildParams("slug"), Times.Once);
+			_socket.Verify(x => x.Send200_OK("application/json", expectedBytes.Length), Times.Once);
+			_socket.Verify(x => x.Send(expectedBytes, expectedBytes.Length), Times.Once);
+
+			_socket.Verify(x => x.Send404_NotFound(), Times.Never);
+			_socket.Verify(x => x.Send405_MethodNotAllowed(), Times.Never);
+			_socket.Verify(x => x.Send500_Failure(It.IsAny<string>()), Times.Never);
+		}
+
+		[Test]
+		public void Build_endpoint_accepts_put()
+		{
+			var hash = new Hashtable
+				{
+					{"key1", "value1"}
+				};
+			var json = JsonSerializer.SerializeObject(hash);
+			var bytesBuild = Encoding.UTF8.GetBytes(json);
+			_req.HttpMethod = "PUT";
+			_req.Url = "projects/slug/build";
+			_readBody.Setup(x => x.ReadBytes(It.IsAny<byte[]>()))
+			         .Callback((byte[] buffer) => Array.Copy(bytesBuild, buffer, bytesBuild.Length))
+			         .Returns(bytesBuild.Length);
+
+			SutSendResponse();
+
+			_config.Verify(x => x.SaveBuildParams("slug", hash), Times.Once);
+			_socket.Verify(x => x.Send200_OK("application/json"), Times.Once);
+		}
+
+		private void SutSendResponse()
 		{
 			Assert.IsTrue(_sut.SendResponse(_req));
 		}
