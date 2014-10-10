@@ -114,11 +114,13 @@ namespace Deployer.Services.Config
 			{
 				var projectHash = list[slug] as Hashtable;
 				if(projectHash == null) continue;
+				var provider = Int32.Parse(projectHash["provider"].ToString());
+				var prov = (BuildServiceProvider) provider;
 				var proj = new ProjectModel(slug,
 				                            projectHash["title"] as string,
 				                            projectHash["subtitle"] as string,
-				                            (int) projectHash["rank"],
-				                            (BuildServiceProvider) projectHash["provider"]);
+				                            Int32.Parse(projectHash["rank"].ToString()),
+				                            prov);
 				projects.Add(proj);
 			}
 			return projects;

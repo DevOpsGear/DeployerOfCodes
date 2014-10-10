@@ -1,10 +1,13 @@
-﻿using Deployer.App.Hardware;
+﻿using System.IO;
+using Deployer.App.Hardware;
 using Deployer.App.Micro;
 using Deployer.App.WebResponders;
 using Deployer.Services.Api;
 using Deployer.Services.Config;
+using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Hardware;
 using Deployer.Services.Input;
+using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
@@ -42,9 +45,10 @@ namespace Deployer.App
 
 		private NetworkWrapper _network;
 		private WebServer _webServer;
-		private Persistence _storage;
+		private IPersistence _storage;
 		private string _rootDir;
-		private FakeConfigurationService _configService;
+		private IGarbage _garbage;
+		private IConfigurationService _configService;
 
 		private void ProgramStarted()
 		{
@@ -57,14 +61,17 @@ namespace Deployer.App
 			SetupInputs();
 			SetupIndicators();
 
-			_configService = new RealConfigurationService();
+			_garbage = new GarbageCollector();
+			var smallIo = new SmallTextFileIo();
+			var jsonPersist = new JsonPersistence(smallIo);
+			var slugCreator = new SlugCreator();
+			_configService = new RealConfigurationService(_rootDir, jsonPersist, slugCreator);
 			var charDisp = new CharDisplay(characterDisplay);
 			var keys = new SimultaneousKeys(ReversedSwitchA, ReversedSwitchB, new TimeService());
 			var webFactory = new WebRequestFactory();
-			var garbage = new GarbageCollector();
 			var project = new ProjectSelector(charDisp, _configService);
 			var sound = new Sound(tunes);
-			var webu = new WebUtility(garbage);
+			var webu = new WebUtility(_garbage);
 
 			var indicators = new Indicators(_indicatorTurnKeyA,
 			                                _indicatorTurnKeyB,
@@ -82,7 +89,7 @@ namespace Deployer.App
 			                                  webu,
 			                                  _network,
 			                                  webFactory,
-			                                  garbage,
+			                                  _garbage,
 			                                  _configService);
 			_controller = new DeployerController(context);
 			context.SetController(_controller);
@@ -112,14 +119,14 @@ namespace Deployer.App
 				eth.Open();
 				eth.EnableDhcp();
 				eth.EnableDynamicDns();
-				while (eth.IPAddress == "0.0.0.0")
+				while(eth.IPAddress == "0.0.0.0")
 				{
 					Debug.Print("Waiting for DHCP");
 					Thread.Sleep(250);
 				}
 				_network = new NetworkWrapper(eth);
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				Debug.Print("Could not set up Ethernet - " + ex);
 				throw;
@@ -130,11 +137,11 @@ namespace Deployer.App
 		{
 			_webServer = new WebServer();
 
-			var authApiService = new AuthApiService();
+			var authApiService = new AuthApiService(_configService, _garbage);
 			var authResponder = new ApiServiceResponder(authApiService);
 			_webServer.AddResponse(authResponder);
 
-			var configApiService = new ConfigApiService(_configService);
+			var configApiService = new ConfigApiService(_configService, _garbage);
 			var configResponder = new ApiServiceResponder(configApiService);
 			_webServer.AddResponse(configResponder);
 
@@ -196,17 +203,20 @@ namespace Deployer.App
 			{
 				_storage = new Persistence(Mainboard.SDCardStorageDevice);
 				var isStorage = Mainboard.IsSDCardInserted;
-				if (!isStorage)
+				if(!isStorage)
 					throw new Exception("No SD card has been inserted");
 				_rootDir = Mainboard.SDCardStorageDevice.Volume.RootDirectory;
-				if (!_storage.DoesRootDirectoryExist("auth"))
-					_storage.CreateDirectory("auth");
-				if (!_storage.DoesRootDirectoryExist("config"))
-					_storage.CreateDirectory("config");
-				if (!_storage.DoesRootDirectoryExist("client"))
-					_storage.CreateDirectory("client");
+				var authDir = Path.Combine(_rootDir, "auth");
+				var projectsDir = Path.Combine(_rootDir, "projects");
+				var clientDir = Path.Combine(_rootDir, "client");
+				if(!Directory.Exists(authDir))
+					Directory.CreateDirectory(authDir);
+				if(!Directory.Exists(projectsDir))
+					Directory.CreateDirectory(projectsDir);
+				if(!Directory.Exists(clientDir))
+					Directory.CreateDirectory(clientDir);
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				Debug.Print("Could not initialize storage - " + ex);
 			}
@@ -228,7 +238,7 @@ namespace Deployer.App
 
 		private void KeySwitchAOnInterrupt(uint data1, uint data2, DateTime time)
 		{
-			if (ReversedSwitchA)
+			if(ReversedSwitchA)
 				_controller.KeyOnEvent(KeySwitch.KeyA);
 			else
 				_controller.KeyOffEvent(KeySwitch.KeyA);
@@ -236,7 +246,7 @@ namespace Deployer.App
 
 		private void KeySwitchBOnInterrupt(uint data1, uint data2, DateTime time)
 		{
-			if (ReversedSwitchB)
+			if(ReversedSwitchB)
 				_controller.KeyOnEvent(KeySwitch.KeyB);
 			else
 				_controller.KeyOffEvent(KeySwitch.KeyB);
@@ -278,7 +288,7 @@ namespace Deployer.App
 				var port = new OutputPort(pin, false);
 				return new Led(port);
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				Debug.Print(ex.ToString());
 			}

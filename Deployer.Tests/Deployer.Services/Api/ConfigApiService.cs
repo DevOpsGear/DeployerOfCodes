@@ -157,7 +157,7 @@ namespace Deployer.Services.Api
 		private static void SnarfProject(ApiRequest request, ProjectModel proj)
 		{
 			var buffer = new byte[1024];
-			var countBytes = request.Body.ReadBytes(buffer);
+			var countBytes = ShortBodyReader.ReadBody(request.Body, buffer);
 			var chars = Encoding.UTF8.GetChars(buffer, 0, countBytes);
 			var json = new string(chars);
 			var project = JsonSerializer.DeserializeString(json) as Hashtable;
@@ -213,7 +213,7 @@ namespace Deployer.Services.Api
 		private void PutOneBuild(string slug, ApiRequest request)
 		{
 			var buffer = new byte[BufferSize];
-			var countBytes = request.Body.ReadBytes(buffer);
+			var countBytes = ShortBodyReader.ReadBody(request.Body, buffer);
 			var chars = Encoding.UTF8.GetChars(buffer, 0, countBytes);
 			var json = new string(chars);
 			var build = JsonSerializer.DeserializeString(json) as Hashtable;

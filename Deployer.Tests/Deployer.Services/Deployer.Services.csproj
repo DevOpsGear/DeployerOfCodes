@@ -46,6 +46,7 @@
     <Compile Include="Api\Interfaces\IApiReadBody.cs" />
     <Compile Include="Api\Interfaces\IApiService.cs" />
     <Compile Include="Api\Interfaces\IApiSocket.cs" />
+    <Compile Include="Api\ShortBodyReader.cs" />
     <Compile Include="Api\UrlSplitter.cs" />
     <Compile Include="Config\Interfaces\ISlugCreator.cs" />
     <Compile Include="Config\Interfaces\ISmallTextFileIo.cs" />

@@ -30,7 +30,7 @@ namespace Deployer.Services.Api
 			hash["title"] = proj.Title;
 			hash["subtitle"] = proj.Subtitle;
 			hash["rank"] = proj.Rank;
-			hash["provider"] = (int) proj.Provider;
+			hash["provider"] = ((int) proj.Provider);
 
 			return hash;
 		}

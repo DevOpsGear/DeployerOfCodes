@@ -18,7 +18,7 @@ namespace Deployer.Tests.Api
 	[TestFixture]
 	internal class ConfigApiServiceTests
 	{
-		private Mock<IApiReadBody> _readBody;
+		private FakeApiReadBody _readBody;
 		private Mock<IApiSocket> _socket;
 		private Mock<IConfigurationService> _config;
 		private Mock<IGarbage> _garbage;
@@ -35,7 +35,7 @@ namespace Deployer.Tests.Api
 			_projectTwo = new ProjectModel("proj-2", "Project Two", "Subtitle Two", 2, BuildServiceProvider.TeamCity);
 			_jsonOne = JsonSerializer.SerializeObject(ConfigHashifier.Hashify(_projectOne));
 
-			_readBody = new Mock<IApiReadBody>();
+			_readBody = new FakeApiReadBody();
 			_socket = new Mock<IApiSocket>();
 			_config = new Mock<IConfigurationService>();
 			_garbage = new Mock<IGarbage>();
@@ -44,7 +44,7 @@ namespace Deployer.Tests.Api
 				{
 					Headers = new Hashtable(),
 					GetArguments = new Hashtable(),
-					Body = _readBody.Object,
+					Body = _readBody,
 					HttpMethod = "GET",
 					Url = "projects/",
 					Client = _socket.Object,
@@ -153,9 +153,8 @@ namespace Deployer.Tests.Api
 			_req.Url = "projects/";
 			var bytes = Encoding.UTF8.GetBytes(_jsonOne);
 
-			_readBody.Setup(x => x.ReadBytes(It.IsAny<byte[]>()))
-			         .Callback((byte[] buf) => Array.Copy(bytes, buf, bytes.Length))
-			         .Returns(bytes.Length);
+			_readBody.SetUp(bytes);
+
 			_config.Setup(x => x.SaveProject(It.IsAny<ProjectModel>()))
 			       .Callback((ProjectModel proj) =>
 				       {
@@ -278,9 +277,7 @@ namespace Deployer.Tests.Api
 
 			_req.HttpMethod = "PUT";
 			_req.Url = "projects/" + _projectOne.Slug;
-			_readBody.Setup(x => x.ReadBytes(It.IsAny<byte[]>()))
-			         .Callback((byte[] buffer) => Array.Copy(bytesModifiedProject, buffer, bytesModifiedProject.Length))
-			         .Returns(bytesModifiedProject.Length);
+			_readBody.SetUp(bytesModifiedProject);
 
 			SutSendResponse();
 
@@ -444,9 +441,7 @@ namespace Deployer.Tests.Api
 			var bytesBuild = Encoding.UTF8.GetBytes(json);
 			_req.HttpMethod = "PUT";
 			_req.Url = "projects/slug/build";
-			_readBody.Setup(x => x.ReadBytes(It.IsAny<byte[]>()))
-			         .Callback((byte[] buffer) => Array.Copy(bytesBuild, buffer, bytesBuild.Length))
-			         .Returns(bytesBuild.Length);
+			_readBody.SetUp(bytesBuild);
 
 			SutSendResponse();
 
@@ -457,6 +452,29 @@ namespace Deployer.Tests.Api
 		private void SutSendResponse()
 		{
 			Assert.IsTrue(_sut.SendResponse(_req));
+		}
+	}
+
+	internal class FakeApiReadBody : IApiReadBody
+	{
+		private byte[] _data;
+		private bool _first;
+
+		public void SetUp(byte[] data)
+		{
+			_data = data;
+			_first = true;
+		}
+
+		public int ReadBytes(byte[] buffer)
+		{
+			if(_first)
+			{
+				_first = false;
+				Array.Copy(_data, 0, buffer, 0, _data.Length);
+				return _data.Length;
+			}
+			return 0;
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Deployer.Services.Api;
 using Deployer.Services.Builders;
 using Deployer.Services.Config;
 using Deployer.Services.Config.Interfaces;
@@ -122,8 +123,8 @@ namespace Deployer.Tests.Config
 		[Test]
 		public void Start_with_two_project_and_delete_one()
 		{
-			var survivingHash = HashFromProject(_survivingProject);
-			var doomedHash = HashFromProject(_doomedProject);
+			var survivingHash = ConfigHashifier.Hashify(_survivingProject);
+			var doomedHash = ConfigHashifier.Hashify(_doomedProject);
 
 			_jsonPersist.Setup(x => x.Read(@"\root\config\projects.json"))
 			            .Returns(new Hashtable
@@ -210,24 +211,13 @@ namespace Deployer.Tests.Config
 			                                       "Existing subtitle",
 			                                       3, BuildServiceProvider.Failing);
 
-			var existingHash = HashFromProject(existingProject);
+			var existingHash = ConfigHashifier.Hashify(existingProject);
 			_jsonPersist.Setup(x => x.Read(@"\root\config\projects.json"))
 			            .Returns(new Hashtable
 				            {
 					            {existingProject.Slug, existingHash}
 				            });
 			return existingProject;
-		}
-
-		private static Hashtable HashFromProject(ProjectModel proj)
-		{
-			return new Hashtable
-				{
-					{"title", proj.Title},
-					{"subtitle", proj.Subtitle},
-					{"rank", proj.Rank},
-					{"provider", proj.Provider},
-				};
 		}
 
 		#endregion

@@ -52,6 +52,9 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Api\Interfaces\IApiSocket.cs">
       <Link>Api\Interfaces\IApiSocket.cs</Link>
     </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Api\ShortBodyReader.cs">
+      <Link>Api\ShortBodyReader.cs</Link>
+    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Api\UrlSplitter.cs">
       <Link>Api\UrlSplitter.cs</Link>
     </Compile>
