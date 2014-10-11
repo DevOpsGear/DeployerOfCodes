@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using Deployer.Services.Micro.Web;
 using Deployer.Services.Models;
-using Json.NETMF;
 
 namespace Deployer.Services.Builders
 {
@@ -21,10 +20,6 @@ namespace Deployer.Services.Builders
 			_webFactory = webFactory;
 			_netio = netio;
 		}
-
-		// TODO: Figure out HTTPS support?
-		// https://www.ghielectronics.com/community/forum/topic?id=13927
-		// https://www.ghielectronics.com/community/codeshare/entry/614
 
 		// http://www.appveyor.com/docs/api/projects-builds#start-build
 		public BuildState StartBuild(Hashtable config)
@@ -48,7 +43,7 @@ namespace Deployer.Services.Builders
 				var status = result["status"].ToString();
 				return DecodeBuildState(status);
 			}
-			catch(Exception ex)
+			catch
 			{
 				return new BuildState(BuildStatus.Failed);
 			}
@@ -65,7 +60,7 @@ namespace Deployer.Services.Builders
 				var status = build["status"].ToString();
 				return DecodeBuildState(status);
 			}
-			catch(Exception ex)
+			catch
 			{
 				return new BuildState(BuildStatus.Failed);
 			}
