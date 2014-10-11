@@ -15,22 +15,18 @@ namespace Deployer.Services.Micro.Web
 			_garbage = garbage;
 		}
 
-		public int WriteJsonObject(Stream output, object obj)
+		public void WriteJsonObject(IWebRequest req, object obj)
 		{
 			var data = JsonSerializer.SerializeObject(obj);
 			var encoded = Encoding.UTF8.GetBytes(data);
-			output.Write(encoded, 0, encoded.Length);
-			return encoded.Length;
-		}
-
-		public void WriteJsonObject(IWebRequest req, object obj)
-		{
+			req.ContentLength = encoded.Length;
 			var output = req.GetRequestStream();
-			req.ContentLength = WriteJsonObject(output, obj);
+			output.Write(encoded, 0, encoded.Length);
 		}
 
 		public Hashtable ReadJsonObject(IWebRequest req, int bufferSize)
 		{
+			_garbage.Collect();
 			var response = ReadText(req, bufferSize);
 			return JsonSerializer.DeserializeString(response) as Hashtable;
 		}

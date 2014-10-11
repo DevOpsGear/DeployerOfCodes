@@ -5,7 +5,7 @@ namespace Deployer.Services.Micro.Web
 {
 	public interface IWebUtility
 	{
-		int WriteJsonObject(Stream output, object obj);
+		//int WriteJsonObject(Stream output, object obj);
 		void WriteJsonObject(IWebRequest req, object obj);
 		Hashtable ReadJsonObject(IWebRequest req, int bufferSize);
 		string ReadText(IWebRequest req, int bufferSize);
