@@ -207,12 +207,12 @@ namespace Deployer.App
 					throw new Exception("No SD card has been inserted");
 				_rootDir = Mainboard.SDCardStorageDevice.Volume.RootDirectory;
 				var authDir = Path.Combine(_rootDir, "auth");
-				var projectsDir = Path.Combine(_rootDir, "projects");
+				var configDir = Path.Combine(_rootDir, "config");
 				var clientDir = Path.Combine(_rootDir, "client");
 				if(!Directory.Exists(authDir))
 					Directory.CreateDirectory(authDir);
-				if(!Directory.Exists(projectsDir))
-					Directory.CreateDirectory(projectsDir);
+				if(!Directory.Exists(configDir))
+					Directory.CreateDirectory(configDir);
 				if(!Directory.Exists(clientDir))
 					Directory.CreateDirectory(clientDir);
 			}

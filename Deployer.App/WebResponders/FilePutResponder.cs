@@ -32,7 +32,7 @@ namespace Deployer.App.WebResponders
 
 				var receivedBytes = 0;
 				var fileHandle = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-				var buffer = new byte[512];
+				var buffer = new byte[256];
 				while (true)
 				{
 					var countBytes = e.Body.ReadBytes(buffer);

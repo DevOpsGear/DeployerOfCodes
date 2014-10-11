@@ -87,7 +87,7 @@ namespace Deployer.Services.Api
 			if(request.HttpMethod == "PUT")
 			{
 				var proj = new ProjectModel();
-				SnarfProject(request, proj);
+				UnpackProject(request, proj);
 				proj.Slug = "";
 				_configurationService.SaveProject(proj);
 				request.Client.Send200_OK("application/json");
@@ -140,7 +140,7 @@ namespace Deployer.Services.Api
 			try
 			{
 				var proj = _configurationService.GetProject(slug);
-				SnarfProject(request, proj);
+				UnpackProject(request, proj);
 				_configurationService.SaveProject(proj);
 				request.Client.Send200_OK("application/json");
 			}
@@ -154,9 +154,9 @@ namespace Deployer.Services.Api
 			}
 		}
 
-		private static void SnarfProject(ApiRequest request, ProjectModel proj)
+		private static void UnpackProject(ApiRequest request, ProjectModel proj)
 		{
-			var buffer = new byte[1024];
+			var buffer = new byte[BufferSize];
 			var countBytes = ShortBodyReader.ReadBody(request.Body, buffer);
 			var chars = Encoding.UTF8.GetChars(buffer, 0, countBytes);
 			var json = new string(chars);
