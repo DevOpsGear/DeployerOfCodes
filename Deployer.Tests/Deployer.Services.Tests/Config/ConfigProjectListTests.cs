@@ -14,7 +14,7 @@ namespace Deployer.Tests.Config
 	{
 		private Mock<IJsonPersistence> _jsonPersist;
 		private Mock<ISlugCreator> _slugCreator;
-		private ConfigurationService _sut;
+		private RealConfigurationService _sut;
 		private ProjectModel _newProject;
 		private ProjectModel _survivingProject;
 		private ProjectModel _doomedProject;
@@ -38,7 +38,7 @@ namespace Deployer.Tests.Config
 
 			_jsonPersist.Setup(x => x.Read(@"\root\config\projects.json")).Returns(new Hashtable());
 
-			_sut = new ConfigurationService(@"\root\", _jsonPersist.Object, _slugCreator.Object);
+			_sut = new RealConfigurationService(@"\root\", _jsonPersist.Object, _slugCreator.Object);
 		}
 
 		[Test]

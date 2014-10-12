@@ -11,7 +11,7 @@ namespace Deployer.Tests.Config
 	{
 		private Mock<IJsonPersistence> _jsonPersist;
 		private Mock<ISlugCreator> _slugCreator;
-		private ConfigurationService _sut;
+		private RealConfigurationService _sut;
 
 		[SetUp]
 		public void BeforeEachTest()
@@ -19,7 +19,7 @@ namespace Deployer.Tests.Config
 			_jsonPersist = new Mock<IJsonPersistence>();
 			_slugCreator = new Mock<ISlugCreator>();
 
-			_sut = new ConfigurationService(@"\root\", _jsonPersist.Object, _slugCreator.Object);
+			_sut = new RealConfigurationService(@"\root\", _jsonPersist.Object, _slugCreator.Object);
 		}
 
 		[Test]

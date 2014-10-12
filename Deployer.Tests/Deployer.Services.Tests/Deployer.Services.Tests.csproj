@@ -56,6 +56,7 @@
     <Compile Include="Builders\SucceedingBuilderTests.cs" />
     <Compile Include="Config\JsonPersistenceTests.cs" />
     <Compile Include="Config\ConfigBuildParamTests.cs" />
+    <Compile Include="Config\FakeConfigTests.cs" />
     <Compile Include="Config\ConfigProjectListTests.cs" />
     <Compile Include="Config\SlugCreatorTests.cs" />
     <Compile Include="Config\SmallTextFileIoTests.cs" />

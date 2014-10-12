@@ -51,7 +51,7 @@
     <Compile Include="Config\Interfaces\ISlugCreator.cs" />
     <Compile Include="Config\Interfaces\ISmallTextFileIo.cs" />
     <Compile Include="Config\JsonPersistence.cs" />
-    <Compile Include="Config\ConfigurationService.cs" />
+    <Compile Include="Config\RealConfigurationService.cs" />
     <Compile Include="Config\Interfaces\IJsonPersistence.cs" />
     <Compile Include="Config\SlugCreator.cs" />
     <Compile Include="Config\SmallTextFileIo.cs" />
@@ -64,6 +64,7 @@
     <Compile Include="Builders\IBuildService.cs" />
     <Compile Include="Builders\SuceedingBuildService.cs" />
     <Compile Include="Builders\TeamCityBuildService.cs" />
+    <Compile Include="Config\FakeConfigurationService.cs" />
     <Compile Include="Config\Interfaces\IConfigurationService.cs" />
     <Compile Include="Hardware\ICharDisplay.cs" />
     <Compile Include="Hardware\ILed.cs" />
