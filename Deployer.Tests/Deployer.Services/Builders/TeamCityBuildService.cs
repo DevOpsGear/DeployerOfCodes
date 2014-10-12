@@ -65,7 +65,7 @@ namespace Deployer.Services.Builders
 		private IWebRequest CreateRequest(string apiRoot, string apiEndpoint, string method = "GET")
 		{
 			var req = _webFactory.CreateRequest(apiRoot, apiEndpoint, method);
-			req.ContentType = "application/json";
+			req.ContentType = "application/xml";
 			req.AddHeader("Accept", "application/json");
 			req.AddHeader("Authorization", "Basic " + _webio.GetHttpBasicAuthToken(_username, _password));
 			return req;

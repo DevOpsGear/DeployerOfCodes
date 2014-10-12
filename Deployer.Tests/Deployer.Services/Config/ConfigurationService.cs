@@ -7,13 +7,13 @@ using Deployer.Services.Models;
 
 namespace Deployer.Services.Config
 {
-	public class RealConfigurationService : IConfigurationService
+	public class ConfigurationService : IConfigurationService
 	{
 		private readonly string _configDirectory;
 		private readonly IJsonPersistence _persistence;
 		private readonly ISlugCreator _slugCreator;
 
-		public RealConfigurationService(string rootDirectory, IJsonPersistence persistence, ISlugCreator slugCreator)
+		public ConfigurationService(string rootDirectory, IJsonPersistence persistence, ISlugCreator slugCreator)
 		{
 			_configDirectory = Path.Combine(rootDirectory, "config");
 			_persistence = persistence;

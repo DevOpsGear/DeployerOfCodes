@@ -67,8 +67,8 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Config\JsonPersistence.cs">
       <Link>Config\JsonPersistence.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Config\RealConfigurationService.cs">
-      <Link>Config\RealConfigurationService.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Config\ConfigurationService.cs">
+      <Link>Config\ConfigurationService.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Config\Interfaces\IJsonPersistence.cs">
       <Link>Config\Interfaces\IJsonPersistence.cs</Link>
@@ -105,9 +105,6 @@
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Builders\TeamCityBuildService.cs">
       <Link>Builders\TeamCityBuildService.cs</Link>
-    </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Config\FakeConfigurationService.cs">
-      <Link>Config\FakeConfigurationService.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Config\Interfaces\IConfigurationService.cs">
       <Link>Config\Interfaces\IConfigurationService.cs</Link>
