@@ -9,6 +9,7 @@ namespace Deployer.Services.Config
 	[ExcludeFromCodeCoverage]
 	public class FakeConfigurationService : IConfigurationService
 	{
+		/*
 		private readonly ProjectModel[] _projects;
 
 		public FakeConfigurationService()
@@ -18,13 +19,25 @@ namespace Deployer.Services.Config
 					new ProjectModel("fail-1", "Failer", "-Fails after 2s", 1, BuildServiceProvider.Failing),
 					new ProjectModel("succeed-1", "Succeeder", "-Works after 2s", 2, BuildServiceProvider.Succeeding),
 					new ProjectModel("appvey-1", "AntiShaun", "-AppVeyor", 3, BuildServiceProvider.AppVeyor),
-					new ProjectModel("tc-1", "BogusTeamCity", "-TeamCity", 4, BuildServiceProvider.TeamCity)
+					new ProjectModel("tc-f", "TeamCity fails", "-TeamCity", 4, BuildServiceProvider.TeamCity),
+					new ProjectModel("tc-s", "TeamCity succeeds", "-TeamCity", 4, BuildServiceProvider.TeamCity),
+					new ProjectModel("tc-x", "TeamCity missing", "-TeamCity", 4, BuildServiceProvider.TeamCity)
 				};
 		}
+		*/
 
 		public ProjectModel[] GetProjects()
 		{
-			return _projects;
+			//return _projects;
+			return new[]
+				{
+					new ProjectModel("fail-1", "Failer", "-Fails after 2s", 1, BuildServiceProvider.Failing),
+					new ProjectModel("succeed-1", "Succeeder", "-Works after 2s", 2, BuildServiceProvider.Succeeding),
+					new ProjectModel("appvey-1", "AntiShaun", "-AppVeyor", 3, BuildServiceProvider.AppVeyor),
+					new ProjectModel("tc-f", "TeamCity fails", "-TeamCity", 4, BuildServiceProvider.TeamCity),
+					new ProjectModel("tc-s", "TeamCity succeeds", "-TeamCity", 4, BuildServiceProvider.TeamCity),
+					new ProjectModel("tc-x", "TeamCity missing", "-TeamCity", 4, BuildServiceProvider.TeamCity)
+				};
 		}
 
 		public void DeleteProject(string slug)
@@ -37,14 +50,19 @@ namespace Deployer.Services.Config
 
 		public Hashtable GetBuildParams(string slug)
 		{
-			switch (slug)
+			switch(slug)
 			{
 				case "appvey-1":
 					return AntiShaunJson();
 
-				case "tc-1":
-					return TeamCityJson();
+				case "tc-f":
+					return TeamCityJsonFail();
 
+				case "tc-s":
+					return TeamCityJsonSucceed();
+
+				case "tc-x":
+					return TeamCityJsonMissing();
 				default:
 					return new Hashtable();
 			}
@@ -56,7 +74,7 @@ namespace Deployer.Services.Config
 
 		public ProjectModel GetProject(string slug)
 		{
-			return _projects[0];
+			return GetProjects()[0];
 		}
 
 		private static Hashtable AntiShaunJson()
@@ -70,12 +88,34 @@ namespace Deployer.Services.Config
 				};
 		}
 
-		private static Hashtable TeamCityJson()
+		private static Hashtable TeamCityJsonFail()
 		{
 			return new Hashtable
 				{
 					{"url", "http://192.168.0.31:8111"},
-					{"buildId", "TestProject_Fail2"},
+					{"buildId", "TestProject_Fail10Sec"},
+					{"username", "spamagnet"},
+					{"password", "kjs*11301"},
+				};
+		}
+
+		private static Hashtable TeamCityJsonSucceed()
+		{
+			return new Hashtable
+				{
+					{"url", "http://192.168.0.31:8111"},
+					{"buildId", "TestProject_Succeeds10Sec"},
+					{"username", "spamagnet"},
+					{"password", "kjs*11301"},
+				};
+		}
+
+		private static Hashtable TeamCityJsonMissing()
+		{
+			return new Hashtable
+				{
+					{"url", "http://192.168.0.31:8111"},
+					{"buildId", "sdfjdfgkjdfkj"},
 					{"username", "spamagnet"},
 					{"password", "kjs*11301"},
 				};

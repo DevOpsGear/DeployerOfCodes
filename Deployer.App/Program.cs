@@ -95,7 +95,7 @@ namespace Deployer.App
 			context.SetController(_controller);
 			_controller.PreflightCheck();
 
-			SetupWebServer();
+			//SetupWebServer();
 
 			SetupInterrupts();
 			SetupTimers();
