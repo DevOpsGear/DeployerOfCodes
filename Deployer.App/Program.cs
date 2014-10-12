@@ -65,7 +65,7 @@ namespace Deployer.App
 			var smallIo = new SmallTextFileIo();
 			var jsonPersist = new JsonPersistence(smallIo);
 			var slugCreator = new SlugCreator();
-			_configService = new RealConfigurationService(_rootDir, jsonPersist, slugCreator);
+			_configService = new FakeConfigurationService(); // RealConfigurationService(_rootDir, jsonPersist, slugCreator);
 			var charDisp = new CharDisplay(characterDisplay);
 			var keys = new SimultaneousKeys(ReversedSwitchA, ReversedSwitchB, new TimeService());
 			var webFactory = new WebRequestFactory();

@@ -7,6 +7,5 @@ namespace Deployer.Services.Builders
 	{
 		BuildState StartBuild(Hashtable config);
 		BuildState GetStatus();
-		void CancelBuild();
 	}
 }

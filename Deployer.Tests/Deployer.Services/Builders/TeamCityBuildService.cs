@@ -14,8 +14,7 @@ namespace Deployer.Services.Builders
 		private string _buildId;
 		private string _username;
 		private string _password;
-		private string _taskId;
-		private const int BufferSize = 1024;
+		private const int BufferSize = 4096;
 
 		public TeamCityBuildService(IWebRequestFactory webFactory, IWebUtility webio)
 		{
@@ -25,7 +24,6 @@ namespace Deployer.Services.Builders
 
 		// http://confluence.jetbrains.com/display/TCD8/REST+API
 		// http://confluence.jetbrains.com/display/TCD8/REST+API#RESTAPI-TriggeringaBuild
-		// TODO: JSON
 		public BuildState StartBuild(Hashtable config)
 		{
 			try
@@ -35,17 +33,7 @@ namespace Deployer.Services.Builders
 				var req = CreateRequest(_apiRoot, "buildQueue", "POST");
 				var body = @"<build><buildType id=""" + _buildId + @""" /></build>";
 				_webio.WriteJsonObject(req, body);
-				//var icky = _webio.ReadJsonObject(req, BufferSize);
-				//_taskId = icky["taskId"] as string;
-
-				// Immediately do another request
-				// builds/?locator=buildType:TestProject_Fail2,running:any,count:1
-				var req2 = CreateRequest(_apiRoot, "builds/?locator=running:any,count:1,buildType:" + _buildId);
-				var icky = _webio.ReadJsonObject(req2, BufferSize);
-				var count = Int32.Parse(icky["count"].ToString());
-				var builds = icky["build"];
-
-				return DecodeState(icky["state"] as string);
+				return new BuildState(BuildStatus.Queued);
 			}
 			catch(Exception ex)
 			{
@@ -55,13 +43,27 @@ namespace Deployer.Services.Builders
 
 		public BuildState GetStatus()
 		{
-			// builds/?buildType=TestProject_Fails&count=2
-			var req = CreateRequest(_apiRoot, "builds/?count=1&buildType=" + _buildId);
-			return new BuildState(BuildStatus.Running);
-		}
+			var reqQ = CreateRequest(_apiRoot, "buildQueue/?locator=buildType:" + _buildId);
+			var hashQ = _webio.ReadJsonObject(reqQ, BufferSize);
+			var countQ = Int32.Parse(hashQ["count"].ToString());
+			if (countQ > 0)
+			{
+				return new BuildState(BuildStatus.Queued);
+			}
 
-		public void CancelBuild()
-		{
+			// Assume it's the first one
+			var reqBuilding = CreateRequest(_apiRoot, "builds/?locator=running:any,count:1,buildType:" + _buildId);
+			var hashBuilding = _webio.ReadJsonObject(reqBuilding, BufferSize);
+			var countBuilding = Int32.Parse(hashBuilding["count"].ToString());
+			if(countBuilding > 0)
+			{
+				var builds = hashBuilding["build"] as ArrayList;
+				var build = builds[0] as Hashtable;
+				var tcStatus = build["status"] as string;
+				var tcState = build["state"] as string;
+				return DecodeState(tcStatus, tcState);
+			}
+			return new BuildState(BuildStatus.Queued);
 		}
 
 		private void DecodeConfig(Hashtable hash)
@@ -75,19 +77,30 @@ namespace Deployer.Services.Builders
 			_password = hash["password"] as string;
 		}
 
-		private BuildState DecodeState(string state)
+		private BuildState DecodeState(string tcStatus, string tcState)
 		{
-			BuildStatus status;
-			switch(state)
+			BuildStatus bs;
+			switch(tcState.ToLower())
 			{
-				case "queued":
-					status = BuildStatus.Queued;
+				case "running":
+					bs = BuildStatus.Running;
+					break;
+				case "finished":
+					switch(tcStatus.ToLower())
+					{
+						case "success":
+							bs = BuildStatus.Succeeded;
+							break;
+						default: // failure
+							bs = BuildStatus.Failed;
+							break;
+					}
 					break;
 				default:
-					status = BuildStatus.Failed;
+					bs = BuildStatus.Failed;
 					break;
 			}
-			return new BuildState(status);
+			return new BuildState(bs);
 		}
 
 		private IWebRequest CreateRequest(string apiRoot, string apiEndpoint, string method = "GET")

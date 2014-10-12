@@ -74,10 +74,10 @@ namespace Deployer.Services.Config
 		{
 			return new Hashtable
 				{
-					{"url", "http://wertwertwert:8080"},
-					{"buildId", "ertwertwertw"},
-					{"username", "ertwertwert"},
-					{"password", "wertwertwertwert"},
+					{"url", "http://192.168.0.31:8111"},
+					{"buildId", "TestProject_Fail2"},
+					{"username", "spamagnet"},
+					{"password", "kjs*11301"},
 				};
 		}
 	}

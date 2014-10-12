@@ -22,9 +22,5 @@ namespace Deployer.Services.Builders
 				return new BuildState(BuildStatus.Running);
 			return new BuildState(BuildStatus.Queued);
 		}
-
-		public void CancelBuild()
-		{
-		}
 	}
 }

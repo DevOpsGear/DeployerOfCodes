@@ -82,13 +82,13 @@ namespace Deployer.Services.Builders
 		}
 
 		// http://www.appveyor.com/docs/api/projects-builds#cancel-build
-		public void CancelBuild()
+		/* public void CancelBuild()
 		{
 			// DELETE /api/builds/{accountName}/{projectSlug}/{buildVersion}
 			var endPoint = "builds/" + _accountName + "/" + _projectSlug + "/" + _buildVersion;
 			var req = CreateRequest(endPoint, "DELETE");
 			var result = GetValue(req);
-		}
+		} */
 
 		private void DecodeConfig(Hashtable hash)
 		{
