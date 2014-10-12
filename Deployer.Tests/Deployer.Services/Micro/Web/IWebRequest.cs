@@ -4,8 +4,9 @@ namespace Deployer.Services.Micro.Web
 {
 	public interface IWebRequest
 	{
-		string ContentType { get; set; }
 		long ContentLength { get; set; }
+		string ContentType { get; set; }
+		string Accept { get; set; }
 		void AddHeader(string key, string value);
 		IHttpWebResponse GetResponse();
 		Stream GetRequestStream();

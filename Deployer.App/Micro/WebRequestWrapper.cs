@@ -13,6 +13,12 @@ namespace Deployer.App.Micro
 			_request = request;
 		}
 
+		public string Accept
+		{
+			get { return _request.Accept; }
+			set { _request.Accept = value; }
+		}
+
 		public string ContentType
 		{
 			get { return _request.ContentType; }

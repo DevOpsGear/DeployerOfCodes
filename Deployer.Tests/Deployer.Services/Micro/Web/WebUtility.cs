@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.IO;
 using System.Text;
 using Json.NETMF;
 
@@ -22,6 +21,13 @@ namespace Deployer.Services.Micro.Web
 			req.ContentLength = encoded.Length;
 			var output = req.GetRequestStream();
 			output.Write(encoded, 0, encoded.Length);
+
+			// ReSharper disable RedundantAssignment
+			// Clean up
+			data = null;
+			encoded = null;
+			_garbage.Collect();
+			// ReSharper restore RedundantAssignment
 		}
 
 		public Hashtable ReadJsonObject(IWebRequest req, int bufferSize)
@@ -44,6 +50,7 @@ namespace Deployer.Services.Micro.Web
 			}
 			_garbage.Collect();
 			var chars = Encoding.UTF8.GetChars(result, 0, read);
+			result = null;
 			_garbage.Collect();
 			return new string(chars);
 		}
