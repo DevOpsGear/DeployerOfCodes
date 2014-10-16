@@ -45,9 +45,11 @@ namespace Deployer.Services.Util
 	}
 }
 
+#if NETMF
 namespace System.Diagnostics.CodeAnalysis
 {
 	public class ExcludeFromCodeCoverageAttribute : Attribute
 	{
 	}
 }
+#endif

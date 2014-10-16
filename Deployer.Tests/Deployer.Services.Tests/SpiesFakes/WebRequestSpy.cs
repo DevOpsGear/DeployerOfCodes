@@ -1,15 +1,14 @@
-﻿using System.Text;
-using Deployer.Services.Micro;
+﻿using Deployer.Services.Micro.Web;
 using System.Collections.Generic;
 using System.IO;
-using Deployer.Services.Micro.Web;
 
 namespace Deployer.Tests.SpiesFakes
 {
 	public class WebRequestSpy : IWebRequest
 	{
 		public string ContentType { get; set; }
-		public long ContentLength { get; set; }
+	    public string Accept { get; set; }
+	    public long ContentLength { get; set; }
 
 		public string ApiRoot { get; set; }
 		public string ApiEndpoint { get; set; }

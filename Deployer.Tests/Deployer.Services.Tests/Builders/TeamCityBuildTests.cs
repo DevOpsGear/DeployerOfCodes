@@ -64,12 +64,6 @@ namespace Deployer.Tests.Builders
 		}
 
 		[Test]
-		public void Stop()
-		{
-			_sut.CancelBuild();
-		}
-
-		[Test]
 		public void Sequence()
 		{
 			AssertRunning(_sut.GetStatus());

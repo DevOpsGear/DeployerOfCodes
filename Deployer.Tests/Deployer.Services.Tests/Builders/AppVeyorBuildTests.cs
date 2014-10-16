@@ -49,14 +49,6 @@ namespace Deployer.Tests.Builders
 		}
 
 		[Test]
-		public void Stop()
-		{
-			MockCancelBuild();
-
-			_sut.CancelBuild();
-		}
-
-		[Test]
 		public void Status_is_queued()
 		{
 			MockStatus("queued");
