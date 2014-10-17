@@ -1,14 +1,19 @@
-using System;
+using Deployer.Services.Micro;
 using Microsoft.SPOT;
 using NeonMika.Interfaces;
 
 namespace Deployer.App.Micro
 {
-    public class Logger : INeonLogger
+    public class Logger : INeonLogger, IDeployerLogger
     {
-        public void Debug(string text)
+        void INeonLogger.Debug(string text)
         {
-            Microsoft.SPOT.Debug.Print(text);
+            Debug.Print(text);
+        }
+
+        void IDeployerLogger.Debug(string text)
+        {
+            Debug.Print(text);
         }
     }
 }

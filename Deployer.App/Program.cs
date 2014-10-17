@@ -49,7 +49,7 @@ namespace Deployer.App
         private IPersistence _storage;
         private string _rootDir;
         private GarbageCollector _garbage;
-        private INeonLogger _logger;
+        private Logger _logger;
         private IConfigurationService _configService;
 
         private void ProgramStarted()
@@ -149,10 +149,10 @@ namespace Deployer.App
             var configResponder = new ApiServiceResponder(configApiService);
             _webServer.AddResponse(configResponder);
 
-            var updateClient = new FilePutResponder(_rootDir);
+            var updateClient = new FilePutResponder(_rootDir,_logger);
             _webServer.AddResponse(updateClient);
 
-            var fileServe = new FileGetResponder(_rootDir, "client");
+            var fileServe = new FileGetResponder(_rootDir, "client", _logger);
             _webServer.AddResponse(fileServe);
         }
 

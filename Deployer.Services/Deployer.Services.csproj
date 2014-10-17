@@ -82,6 +82,9 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Config\SmallTextFileIo.cs">
       <Link>Config\SmallTextFileIo.cs</Link>
     </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\IDeployerLogger.cs">
+      <Link>Micro\IDeployerLogger.cs</Link>
+    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\IWebUtility.cs">
       <Link>Micro\Web\IWebUtility.cs</Link>
     </Compile>
@@ -217,6 +220,21 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Util\ExtensionMethods.cs">
       <Link>Util\ExtensionMethods.cs</Link>
     </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\WebResponders\ApiReadBodyWrapper.cs">
+      <Link>WebResponders\ApiReadBodyWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\WebResponders\ApiServiceResponder.cs">
+      <Link>WebResponders\ApiServiceResponder.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\WebResponders\ApiSocketWrapper.cs">
+      <Link>WebResponders\ApiSocketWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\WebResponders\FileGetResponder.cs">
+      <Link>WebResponders\FileGetResponder.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\WebResponders\FilePutResponder.cs">
+      <Link>WebResponders\FilePutResponder.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Json.NetMF">
@@ -230,5 +248,10 @@
     <None Include="Resources\NinaB.tinyfnt" />
     <None Include="Resources\small.tinyfnt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\NeonMika\NeonMika.csproj">
+      <Project>{90F5F9C2-FC49-4BA6-81CD-7C9EC9A6C2D9}</Project>
+      <Name>NeonMika</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

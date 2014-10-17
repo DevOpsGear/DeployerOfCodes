@@ -65,11 +65,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="WebResponders\ApiReadBodyWrapper.cs" />
-    <Compile Include="WebResponders\ApiSocketWrapper.cs" />
-    <Compile Include="WebResponders\ApiServiceResponder.cs" />
-    <Compile Include="WebResponders\FileGetResponder.cs" />
-    <Compile Include="WebResponders\FilePutResponder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gadgeteer" />
