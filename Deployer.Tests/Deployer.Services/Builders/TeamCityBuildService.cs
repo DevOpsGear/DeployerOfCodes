@@ -36,7 +36,7 @@ namespace Deployer.Services.Builders
 				var result = _webio.ReadJsonObject(req, BufferSize);
 				return new BuildState(BuildStatus.Queued);
 			}
-			catch(Exception ex)
+			catch(Exception)
 			{
 				return new BuildState(BuildStatus.Failed);
 			}

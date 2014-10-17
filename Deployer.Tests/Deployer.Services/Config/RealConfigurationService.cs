@@ -161,12 +161,4 @@ namespace Deployer.Services.Config
 
 		#endregion
 	}
-
-	public class ProjectDoesNotExistException : Exception
-	{
-		public ProjectDoesNotExistException(string slug)
-			: base(slug)
-		{
-		}
-	}
 }

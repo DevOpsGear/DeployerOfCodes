@@ -30,20 +30,42 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="Requests\HeaderBody.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requests\ClientRequestBody.cs" />
-    <Compile Include="Requests\RequestHelper.cs" />
-    <Compile Include="Requests\Request.cs" />
-    <Compile Include="Responses\Responder.cs" />
-    <Compile Include="WebServer.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="Util\Converter.cs" />
-    <Compile Include="Util\ExtensionMethods.cs" />
+    <Compile Include="..\Deployer.Tests\NeonMika\Interfaces\IGarbage.cs">
+      <Link>Interfaces\IGarbage.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\NeonMika\Interfaces\ILog.cs">
+      <Link>Interfaces\ILog.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\NeonMika\Requests\ClientRequestBody.cs">
+      <Link>Requests\ClientRequestBody.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\NeonMika\Requests\HeaderBody.cs">
+      <Link>Requests\HeaderBody.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\NeonMika\Requests\Request.cs">
+      <Link>Requests\Request.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\NeonMika\Requests\RequestHelper.cs">
+      <Link>Requests\RequestHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\NeonMika\Responses\Responder.cs">
+      <Link>Responses\Responder.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\NeonMika\Settings.cs">
+      <Link>Settings.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\NeonMika\Util\Converter.cs">
+      <Link>Util\Converter.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\NeonMika\Util\ExtensionMethods.cs">
+      <Link>Util\ExtensionMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\NeonMika\WebServer.cs">
+      <Link>WebServer.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.SPOT.Native">
-    </Reference>
+    <Reference Include="Microsoft.SPOT.Native"></Reference>
     <Reference Include="System" />
     <Reference Include="System.IO" />
   </ItemGroup>

@@ -67,6 +67,9 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Config\JsonPersistence.cs">
       <Link>Config\JsonPersistence.cs</Link>
     </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Config\ProjectDoesNotExistException.cs">
+      <Link>Config\ProjectDoesNotExistException.cs</Link>
+    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Config\RealConfigurationService.cs">
       <Link>Config\RealConfigurationService.cs</Link>
     </Compile>

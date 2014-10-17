@@ -48,6 +48,7 @@
     <Compile Include="Hardware\Sound.cs" />
     <Compile Include="Micro\GarbageCollector.cs" />
     <Compile Include="Micro\HttpWebResponseWrapper.cs" />
+    <Compile Include="Micro\Logger.cs" />
     <Compile Include="Micro\TimeService.cs" />
     <Compile Include="Micro\WebRequestFactory.cs" />
     <Compile Include="Micro\WebRequestWrapper.cs" />
