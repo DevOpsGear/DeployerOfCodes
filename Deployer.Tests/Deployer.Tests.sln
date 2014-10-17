@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deployer.Wpf", "Deployer.Wp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeonMika", "NeonMika\NeonMika.csproj", "{7FBC44D5-A43D-44F4-A1EA-0D515EC973FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deployer.Text", "Deployer.Console\Deployer.Text.csproj", "{B6AC23F4-1F5F-4A79-AFC7-72CCFB35BA4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{7FBC44D5-A43D-44F4-A1EA-0D515EC973FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FBC44D5-A43D-44F4-A1EA-0D515EC973FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FBC44D5-A43D-44F4-A1EA-0D515EC973FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6AC23F4-1F5F-4A79-AFC7-72CCFB35BA4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6AC23F4-1F5F-4A79-AFC7-72CCFB35BA4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6AC23F4-1F5F-4A79-AFC7-72CCFB35BA4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6AC23F4-1F5F-4A79-AFC7-72CCFB35BA4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

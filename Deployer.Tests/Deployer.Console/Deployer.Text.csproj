@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B6AC23F4-1F5F-4A79-AFC7-72CCFB35BA4B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Deployer.Text</RootNamespace>
+    <AssemblyName>Deployer.Text</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Hardware\CharDisplay.cs" />
+    <Compile Include="Hardware\Led.cs" />
+    <Compile Include="Hardware\NetworkWrapper.cs" />
+    <Compile Include="Hardware\Persistence.cs" />
+    <Compile Include="Hardware\Sound.cs" />
+    <Compile Include="Micro\Garbage.cs" />
+    <Compile Include="Micro\HttpWebResponseWrapper.cs" />
+    <Compile Include="Micro\Logger.cs" />
+    <Compile Include="Micro\TimeService.cs" />
+    <Compile Include="Micro\WebRequestFactory.cs" />
+    <Compile Include="Micro\WebRequestWrapper.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Deployer.Services\Deployer.Services.csproj">
+      <Project>{d1104a21-882d-4875-9f01-7758f2acbd9f}</Project>
+      <Name>Deployer.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Json.NETMF\Json.NETMF.csproj">
+      <Project>{3fd3d714-a431-42ec-99d0-2f7d9f0e1bd3}</Project>
+      <Name>Json.NETMF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NeonMika\NeonMika.csproj">
+      <Project>{7fbc44d5-a43d-44f4-a1ea-0d515ec973fb}</Project>
+      <Name>NeonMika</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
