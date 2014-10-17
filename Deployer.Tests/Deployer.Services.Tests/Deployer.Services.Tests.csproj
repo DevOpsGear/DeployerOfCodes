@@ -45,8 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\AuthApiTests.cs" />
+    <Compile Include="Api\AuthApiServiceTests.cs" />
     <Compile Include="Api\ConfigApiServiceTests.cs" />
+    <Compile Include="Api\FakeApiBody.cs" />
+    <Compile Include="Api\FakeApiReadBody.cs" />
     <Compile Include="Api\ShortBodyReaderTests.cs" />
     <Compile Include="Api\UrlSplitterTests.cs" />
     <Compile Include="Builders\AppVeyorBuildTests.cs" />

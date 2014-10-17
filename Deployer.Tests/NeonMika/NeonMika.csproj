@@ -39,8 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IGarbage.cs" />
-    <Compile Include="Interfaces\ILog.cs" />
+    <Compile Include="Interfaces\INeonGarbage.cs" />
+    <Compile Include="Interfaces\INeonLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\ClientRequestBody.cs" />
     <Compile Include="Requests\HeaderBody.cs" />
