@@ -2,6 +2,8 @@
 using System.IO;
 using System.Timers;
 using System.Windows.Threading;
+using Deployer.App.WebResponders;
+using Deployer.Services.Api;
 using Deployer.Services.Config;
 using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Hardware;
@@ -15,6 +17,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Deployer.Wpf.Micro;
+using NeonMika;
+using NeonMika.Interfaces;
 
 namespace Deployer.Wpf
 {
@@ -37,9 +41,11 @@ namespace Deployer.Wpf
         //private WebServer _webServer;
         private IPersistence _storage;
         private readonly string _rootDir;
-        private readonly IGarbage _garbage;
+        private readonly Garbage _garbage;
+        private readonly Logger _logger;
         private readonly IConfigurationService _configService;
         private readonly Timer _timer;
+        private WebServer _webServer;
 
         public MainWindow()
         {
@@ -52,6 +58,7 @@ namespace Deployer.Wpf
 
 
             _garbage = new Garbage();
+            _logger = new Logger();
             var smallIo = new SmallTextFileIo();
             var jsonPersist = new JsonPersistence(smallIo);
             var slugCreator = new SlugCreator();
@@ -96,6 +103,8 @@ namespace Deployer.Wpf
             _controller = new DeployerController(context);
             context.SetController(_controller);
             _controller.PreflightCheck();
+
+            SetupWebServer();
 
             _timer = new Timer {Interval = 500.0};
             _timer.Elapsed += _timer_Elapsed;
@@ -152,6 +161,25 @@ namespace Deployer.Wpf
                     _controller.DeployPressedEvent();
                     break;
             }
+        }
+
+        private void SetupWebServer()
+        {
+            _webServer = new WebServer(_logger, _garbage);
+
+            var authApiService = new AuthApiService(_configService, _garbage);
+            var authResponder = new ApiServiceResponder(authApiService);
+            _webServer.AddResponse(authResponder);
+
+            var configApiService = new ConfigApiService(_configService, _garbage);
+            var configResponder = new ApiServiceResponder(configApiService);
+            _webServer.AddResponse(configResponder);
+
+            var updateClient = new FilePutResponder(_rootDir, _logger);
+            _webServer.AddResponse(updateClient);
+
+            var fileServe = new FileGetResponder(_rootDir, "client", _logger);
+            _webServer.AddResponse(fileServe);
         }
     }
 }

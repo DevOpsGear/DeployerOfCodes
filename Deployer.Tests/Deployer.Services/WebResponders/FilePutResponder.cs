@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using Microsoft.SPOT;
+using Deployer.Services.Micro;
 using NeonMika.Requests;
 using NeonMika.Responses;
 using NeonMika.Util;
@@ -10,13 +10,15 @@ namespace Deployer.App.WebResponders
 	public class FilePutResponder : Responder
 	{
 		private readonly string _rootDirectory;
+	    private readonly IDeployerLogger _logger;
 
-		public FilePutResponder(string rootDirectory)
+	    public FilePutResponder(string rootDirectory, IDeployerLogger logger)
 		{
-			_rootDirectory = rootDirectory;
+		    _rootDirectory = rootDirectory;
+		    _logger = logger;
 		}
 
-		public override bool CanRespond(Request e)
+	    public override bool CanRespond(Request e)
 		{
 			return e.HttpMethod == "PUT" && e.Url.StartsWith("client");
 		}
@@ -44,7 +46,7 @@ namespace Deployer.App.WebResponders
 
 				fileHandle.Close();
 				RequestHelper.Send200_OK(e.Client, "text/plain");
-				Debug.Print("Received bytes = " + receivedBytes);
+				_logger.Debug("Received bytes = " + receivedBytes);
 			}
 			catch (Exception ex)
 			{

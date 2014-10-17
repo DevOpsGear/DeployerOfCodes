@@ -72,6 +72,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Micro\Logger.cs" />
     <Compile Include="Micro\HttpWebResponseWrapper.cs" />
     <Compile Include="Micro\TimeService.cs" />
     <Compile Include="Micro\WebRequestFactory.cs" />
@@ -107,6 +108,14 @@
     <ProjectReference Include="..\Deployer.Services\Deployer.Services.csproj">
       <Project>{d1104a21-882d-4875-9f01-7758f2acbd9f}</Project>
       <Name>Deployer.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Json.NETMF\Json.NETMF.csproj">
+      <Project>{3fd3d714-a431-42ec-99d0-2f7d9f0e1bd3}</Project>
+      <Name>Json.NETMF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NeonMika\NeonMika.csproj">
+      <Project>{7fbc44d5-a43d-44f4-a1ea-0d515ec973fb}</Project>
+      <Name>NeonMika</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -14,6 +14,7 @@ namespace Deployer.Services.Builders
 		private string _projectSlug;
 		private string _branch;
 		private string _buildVersion;
+        private const int BufferSize = 3072;
 
 		public AppVeyorBuildService(IWebRequestFactory webFactory, IWebUtility netio)
 		{
@@ -81,15 +82,6 @@ namespace Deployer.Services.Builders
 			}
 		}
 
-		// http://www.appveyor.com/docs/api/projects-builds#cancel-build
-		/* public void CancelBuild()
-		{
-			// DELETE /api/builds/{accountName}/{projectSlug}/{buildVersion}
-			var endPoint = "builds/" + _accountName + "/" + _projectSlug + "/" + _buildVersion;
-			var req = CreateRequest(endPoint, "DELETE");
-			var result = GetValue(req);
-		} */
-
 		private void DecodeConfig(Hashtable hash)
 		{
 			if(hash == null)
@@ -115,7 +107,7 @@ namespace Deployer.Services.Builders
 
 		private Hashtable GetValue(IWebRequest req)
 		{
-			return _netio.ReadJsonObject(req, 3072);
+            return _netio.ReadJsonObject(req, BufferSize);
 		}
 	}
 }

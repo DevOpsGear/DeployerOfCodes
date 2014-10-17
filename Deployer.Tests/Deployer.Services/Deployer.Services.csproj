@@ -56,6 +56,7 @@
     <Compile Include="Config\Interfaces\IJsonPersistence.cs" />
     <Compile Include="Config\SlugCreator.cs" />
     <Compile Include="Config\SmallTextFileIo.cs" />
+    <Compile Include="Micro\IDeployerLogger.cs" />
     <Compile Include="Micro\Web\IWebUtility.cs" />
     <Compile Include="Micro\Web\WebUtility.cs" />
     <Compile Include="Builders\AppVeyorBuildService.cs" />
@@ -102,6 +103,11 @@
     <Compile Include="StateMachine\States\TurnBothKeysState.cs" />
     <Compile Include="StateMachine\IDeployerController.cs" />
     <Compile Include="Util\ExtensionMethods.cs" />
+    <Compile Include="WebResponders\ApiReadBodyWrapper.cs" />
+    <Compile Include="WebResponders\ApiServiceResponder.cs" />
+    <Compile Include="WebResponders\ApiSocketWrapper.cs" />
+    <Compile Include="WebResponders\FileGetResponder.cs" />
+    <Compile Include="WebResponders\FilePutResponder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\NinaB.tinyfnt" />
@@ -111,6 +117,10 @@
     <ProjectReference Include="..\Json.NETMF\Json.NETMF.csproj">
       <Project>{3fd3d714-a431-42ec-99d0-2f7d9f0e1bd3}</Project>
       <Name>Json.NETMF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NeonMika\NeonMika.csproj">
+      <Project>{7fbc44d5-a43d-44f4-a1ea-0d515ec973fb}</Project>
+      <Name>NeonMika</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

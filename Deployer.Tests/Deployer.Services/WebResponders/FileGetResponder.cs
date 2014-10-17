@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net.Sockets;
-using Microsoft.SPOT;
+using Deployer.Services.Micro;
 using NeonMika.Requests;
 using NeonMika.Responses;
 using NeonMika.Util;
@@ -12,13 +12,15 @@ namespace Deployer.App.WebResponders
 	{
 		private readonly string _rootDirectory;
 		private readonly string _folder;
-		private readonly int _bufferSize;
+	    private readonly IDeployerLogger _logger;
+	    private readonly int _bufferSize;
 
-		public FileGetResponder(string rootDirectory, string folder, int bufferSize = 256)
+		public FileGetResponder(string rootDirectory, string folder, IDeployerLogger logger, int bufferSize = 256)
 		{
 			_rootDirectory = rootDirectory;
 			_folder = folder;
-			_bufferSize = bufferSize;
+		    _logger = logger;
+		    _bufferSize = bufferSize;
 		}
 
 		public override bool CanRespond(Request e)
@@ -56,11 +58,11 @@ namespace Deployer.App.WebResponders
 					}
 					catch (Exception ex)
 					{
-						Debug.Print("FileResponder - error sending - " + ex);
+						_logger.Debug("FileResponder - error sending - " + ex);
 						return false;
 					}
 				}
-				Debug.Print("FileResponder - sent bytes - " + sentBytes);
+				_logger.Debug("FileResponder - sent bytes - " + sentBytes);
 			}
 
 			return true;
@@ -71,7 +73,7 @@ namespace Deployer.App.WebResponders
 			return url.Replace('/', '\\');
 		}
 
-		private static bool DoesFileExist(string filePath)
+		private bool DoesFileExist(string filePath)
 		{
 			try
 			{
@@ -79,7 +81,7 @@ namespace Deployer.App.WebResponders
 			}
 			catch (Exception ex)
 			{
-				Debug.Print("Error accessing file - " + ex);
+				_logger.Debug("Error accessing file - " + ex);
 				return false;
 			}
 		}
