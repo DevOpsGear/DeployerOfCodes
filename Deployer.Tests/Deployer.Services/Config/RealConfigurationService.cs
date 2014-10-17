@@ -16,6 +16,8 @@ namespace Deployer.Services.Config
 		public RealConfigurationService(string rootDirectory, IJsonPersistence persistence, ISlugCreator slugCreator)
 		{
 			_configDirectory = Path.Combine(rootDirectory, "config");
+			if(!Directory.Exists(_configDirectory))
+				Directory.CreateDirectory(_configDirectory);
 			_persistence = persistence;
 			_slugCreator = slugCreator;
 		}
