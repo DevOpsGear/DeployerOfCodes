@@ -1,7 +1,7 @@
 ﻿
 namespace NeonMika.Interfaces
 {
-    public interface INeonLogger
+    public interface ILogger
     {
         void Debug(string text);
     }

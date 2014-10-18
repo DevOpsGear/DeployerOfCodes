@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using Deployer.App.Hardware;
 using Deployer.App.Micro;
-using Deployer.App.WebResponders;
 using Deployer.Services.Api;
 using Deployer.Services.Config;
 using Deployer.Services.Config.Interfaces;
@@ -11,6 +10,7 @@ using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
+using Deployer.Services.WebResponders;
 using Gadgeteer;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
@@ -18,7 +18,6 @@ using Microsoft.SPOT.Net.NetworkInformation;
 using NeonMika;
 using System;
 using System.Threading;
-using NeonMika.Interfaces;
 
 namespace Deployer.App
 {
@@ -69,7 +68,7 @@ namespace Deployer.App
             var jsonPersist = new JsonPersistence(smallIo);
             var slugCreator = new SlugCreator();
             _configService = new FakeConfigurationService();
-                // RealConfigurationService(_rootDir, jsonPersist, slugCreator);
+            // RealConfigurationService(_rootDir, jsonPersist, slugCreator);
             var charDisp = new CharDisplay(characterDisplay);
             var keys = new SimultaneousKeys(ReversedSwitchA, ReversedSwitchB, new TimeService());
             var webFactory = new WebRequestFactory();
@@ -149,7 +148,7 @@ namespace Deployer.App
             var configResponder = new ApiServiceResponder(configApiService);
             _webServer.AddResponse(configResponder);
 
-            var updateClient = new FilePutResponder(_rootDir,_logger);
+            var updateClient = new FilePutResponder(_rootDir, "client", _logger);
             _webServer.AddResponse(updateClient);
 
             var fileServe = new FileGetResponder(_rootDir, "client", _logger);

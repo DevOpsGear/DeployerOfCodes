@@ -1,10 +1,10 @@
 ﻿using Deployer.Services.Api;
 using Deployer.Services.Api.Interfaces;
 using Deployer.Services.Config.Interfaces;
-using Deployer.Services.Micro;
 using Moq;
 using NUnit.Framework;
 using System.Collections;
+using NeonMika.Interfaces;
 
 namespace Deployer.Tests.Api
 {
@@ -14,7 +14,7 @@ namespace Deployer.Tests.Api
 		private Mock<IApiReadBody> _readBody;
 		private Mock<IApiSocket> _socket;
 		private Mock<IConfigurationService> _config;
-		private Mock<IDeployerGarbage> _garbage;
+		private Mock<IGarbage> _garbage;
 		private AuthApiService _sut;
 		private ApiRequest _req;
 
@@ -24,7 +24,7 @@ namespace Deployer.Tests.Api
 			_readBody = new Mock<IApiReadBody>();
 			_socket = new Mock<IApiSocket>();
 			_config = new Mock<IConfigurationService>();
-			_garbage = new Mock<IDeployerGarbage>();
+			_garbage = new Mock<IGarbage>();
 
 			_req = new ApiRequest
 				{

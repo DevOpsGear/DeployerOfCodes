@@ -1,6 +1,7 @@
 using System;
 using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
+using NeonMika.Interfaces;
 
 namespace Deployer.Services.Builders
 {
@@ -9,7 +10,7 @@ namespace Deployer.Services.Builders
 		public static IBuildService Create(BuildServiceProvider which,
 		                                   IWebRequestFactory webFactory,
 		                                   IWebUtility netio,
-		                                   IDeployerGarbage garbage)
+                                           IGarbage garbage)
 		{
 			switch (which)
 			{

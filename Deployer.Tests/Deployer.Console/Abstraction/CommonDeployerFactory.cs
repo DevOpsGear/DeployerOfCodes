@@ -5,7 +5,7 @@ using Deployer.Services.Input;
 using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
 using Deployer.Text.Hardware;
-using Deployer.Text.Micro;
+using NeonMika.Interfaces;
 
 namespace Deployer.Text.Abstraction
 {
@@ -53,7 +53,7 @@ namespace Deployer.Text.Abstraction
             return new ProjectSelector(charDisplay, configurationService);
         }
 
-        public IWebUtility CreateWebUtility(IDeployerGarbage garbage)
+        public IWebUtility CreateWebUtility(IGarbage garbage)
         {
             return new WebUtility(garbage);
         }

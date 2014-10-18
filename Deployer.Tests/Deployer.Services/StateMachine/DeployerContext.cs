@@ -5,6 +5,7 @@ using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine.States;
+using NeonMika.Interfaces;
 
 namespace Deployer.Services.StateMachine
 {
@@ -18,14 +19,14 @@ namespace Deployer.Services.StateMachine
         private readonly IWebUtility _netio;
         private readonly INetwork _network;
         private readonly IWebRequestFactory _webFactory;
-        private readonly IDeployerGarbage _garbage;
+        private readonly IGarbage _garbage;
         private readonly IConfigurationService _configurationService;
         private IDeployerController _controller;
 
         public DeployerContext(ISimultaneousKeys keys, IProjectSelector projectSelect,
                                ICharDisplay lcd,
                                IIndicators indicatorRefresh, ISound sound, IWebUtility netio, INetwork network,
-                               IWebRequestFactory webFactory, IDeployerGarbage garbage,
+                               IWebRequestFactory webFactory, IGarbage garbage,
                                IConfigurationService configurationService)
         {
             _keys = keys;
@@ -80,7 +81,7 @@ namespace Deployer.Services.StateMachine
             get { return _webFactory; }
         }
 
-        public IDeployerGarbage Garbage
+        public IGarbage Garbage
         {
             get { return _garbage; }
         }

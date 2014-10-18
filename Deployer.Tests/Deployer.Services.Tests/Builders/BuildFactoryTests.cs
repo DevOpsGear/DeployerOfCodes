@@ -4,6 +4,7 @@ using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
 using Moq;
 using NUnit.Framework;
+using NeonMika.Interfaces;
 
 namespace Deployer.Tests.Builders
 {
@@ -11,14 +12,14 @@ namespace Deployer.Tests.Builders
 	public class BuildFactoryTests
 	{
 		private Mock<IWebRequestFactory> _webFactory;
-		private Mock<IDeployerGarbage> _garbage;
+		private Mock<IGarbage> _garbage;
 		private Mock<IWebUtility> _netio;
 
 		[SetUp]
 		public void BeforeEachTest()
 		{
 			_webFactory = new Mock<IWebRequestFactory>();
-			_garbage = new Mock<IDeployerGarbage>();
+            _garbage = new Mock<IGarbage>();
 			_netio = new Mock<IWebUtility>();
 		}
 

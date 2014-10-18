@@ -1,8 +1,9 @@
 using System;
 using System.IO;
-using Deployer.Services.Micro;
+using NeonMika.Interfaces;
 using NeonMika.Requests;
 using NeonMika.Responses;
+using NeonMika.Util;
 
 namespace Deployer.Services.WebResponders
 {
@@ -10,9 +11,9 @@ namespace Deployer.Services.WebResponders
     {
         private readonly string _rootDirectory;
         private readonly string _folder;
-        private readonly IDeployerLogger _logger;
+        private readonly ILogger _logger;
 
-        public FilePutResponder(string rootDirectory, string folder, IDeployerLogger logger)
+        public FilePutResponder(string rootDirectory, string folder, ILogger logger)
         {
             _rootDirectory = rootDirectory;
             _folder = folder;

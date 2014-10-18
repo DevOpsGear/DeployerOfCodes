@@ -1,9 +1,9 @@
 ﻿using Deployer.Services.Abstraction;
 using Deployer.Services.Hardware;
-using Deployer.Services.Micro;
 using Deployer.Wpf.Hardware;
 using Deployer.Wpf.Micro;
 using System.Windows.Media;
+using NeonMika.Interfaces;
 
 namespace Deployer.Wpf.Abstraction
 {
@@ -56,12 +56,12 @@ namespace Deployer.Wpf.Abstraction
             return new Led(_mainWindow.IndicatorFailed, _mainWindow.Dispatcher, Colors.Red);
         }
 
-        public override IDeployerGarbage CreateGarbage()
+        public override IGarbage CreateGarbage()
         {
             return new WpfGarbage();
         }
 
-        public override IDeployerLogger CreateLogger()
+        public override ILogger CreateLogger()
         {
             return new WpfLogger();
         }

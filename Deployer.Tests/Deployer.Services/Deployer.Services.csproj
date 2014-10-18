@@ -59,7 +59,6 @@
     <Compile Include="Config\Interfaces\IJsonPersistence.cs" />
     <Compile Include="Config\SlugCreator.cs" />
     <Compile Include="Config\SmallTextFileIo.cs" />
-    <Compile Include="Micro\IDeployerLogger.cs" />
     <Compile Include="Micro\Interface1.cs" />
     <Compile Include="Micro\Web\HttpWebResponseWrapper.cs" />
     <Compile Include="Micro\Web\IWebUtility.cs" />
@@ -86,7 +85,6 @@
     <Compile Include="Input\KeySwitch.cs" />
     <Compile Include="Input\ProjectSelector.cs" />
     <Compile Include="Input\SimultaneousKeys.cs" />
-    <Compile Include="Micro\IDeployerGarbage.cs" />
     <Compile Include="Micro\Web\IHttpWebResponse.cs" />
     <Compile Include="Micro\Web\IWebRequest.cs" />
     <Compile Include="Micro\Web\IWebRequestFactory.cs" />
@@ -109,7 +107,6 @@
     <Compile Include="StateMachine\States\SuccessState.cs" />
     <Compile Include="StateMachine\States\TurnBothKeysState.cs" />
     <Compile Include="StateMachine\IDeployerController.cs" />
-    <Compile Include="Util\ExtensionMethods.cs" />
     <Compile Include="WebResponders\ApiReadBodyWrapper.cs" />
     <Compile Include="WebResponders\ApiServiceResponder.cs" />
     <Compile Include="WebResponders\ApiSocketWrapper.cs" />

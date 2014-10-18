@@ -4,6 +4,7 @@ using Deployer.Services.Hardware;
 using Deployer.Services.Input;
 using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
+using NeonMika.Interfaces;
 
 namespace Deployer.Services.Abstraction
 {
@@ -51,7 +52,7 @@ namespace Deployer.Services.Abstraction
             return new ProjectSelector(charDisplay, configurationService);
         }
 
-        public IWebUtility CreateWebUtility(IDeployerGarbage garbage)
+        public IWebUtility CreateWebUtility(IGarbage garbage)
         {
             return new WebUtility(garbage);
         }
@@ -65,8 +66,8 @@ namespace Deployer.Services.Abstraction
         public abstract ILed CreateIndicatorRunning();
         public abstract ILed CreateIndicatorSucceeded();
         public abstract ILed CreateIndicatorFailed();
-        public abstract IDeployerGarbage CreateGarbage();
-        public abstract IDeployerLogger CreateLogger();
+        public abstract IGarbage CreateGarbage();
+        public abstract ILogger CreateLogger();
         public abstract ICharDisplay CreateCharacterDisplay();
         public abstract ISound CreateSound();
     }

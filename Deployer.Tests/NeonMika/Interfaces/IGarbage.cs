@@ -1,7 +1,7 @@
 ﻿
 namespace NeonMika.Interfaces
 {
-    public interface INeonGarbage
+    public interface IGarbage
     {
         void Collect();
     }

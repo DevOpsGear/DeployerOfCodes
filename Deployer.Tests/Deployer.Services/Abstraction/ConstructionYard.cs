@@ -15,8 +15,8 @@ namespace Deployer.Services.Abstraction
         private readonly IDeployerFactory _factory;
 
         private readonly string _rootDir;
-        private readonly IDeployerGarbage _garbage;
-        private readonly IDeployerLogger _logger;
+        private readonly IGarbage _garbage;
+        private readonly ILogger _logger;
         private readonly IConfigurationService _configService;
 
         public ConstructionYard(IDeployerFactory factory, string rootDir)
@@ -71,7 +71,7 @@ namespace Deployer.Services.Abstraction
 
         public WebServer SetupWebServer(int port = 80)
         {
-            var webServer = new WebServer(_logger as INeonLogger, _garbage as INeonGarbage, port);
+            var webServer = new WebServer(_logger as ILogger, _garbage as IGarbage, port);
 
             var authApiService = new AuthApiService(_configService, _garbage);
             var authResponder = new ApiServiceResponder(authApiService);

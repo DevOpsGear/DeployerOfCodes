@@ -19,9 +19,9 @@ namespace NeonMika.Requests
 
     public class RequestHelper
     {
-        private static INeonLogger _logger;
+        private static ILogger _logger;
 
-        public static void SetLogger(INeonLogger logger)
+        public static void SetLogger(ILogger logger)
         {
             _logger = logger;
         }

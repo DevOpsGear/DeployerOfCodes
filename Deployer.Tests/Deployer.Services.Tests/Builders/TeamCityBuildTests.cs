@@ -1,20 +1,18 @@
-﻿using System.Collections;
-using System.Text;
-using Deployer.Services.Builders;
-using Deployer.Services.Micro;
+﻿using Deployer.Services.Builders;
 using Deployer.Services.Micro.Web;
 using Deployer.Services.Models;
 using Deployer.Tests.SpiesFakes;
-using Json.NETMF;
 using Moq;
+using NeonMika.Interfaces;
 using NUnit.Framework;
+using System.Collections;
 
 namespace Deployer.Tests.Builders
 {
 	[TestFixture]
 	public class TeamCityBuildTests
 	{
-		private Mock<IDeployerGarbage> _garbage;
+		private Mock<IGarbage> _garbage;
 		private IWebUtility _webUtility;
 		private WebFactorySpy _webFactory;
 		private TeamCityBuildService _sut;
@@ -23,7 +21,7 @@ namespace Deployer.Tests.Builders
 		public void BeforeEachTest()
 		{
 			_webFactory = new WebFactorySpy();
-			_garbage = new Mock<IDeployerGarbage>();
+			_garbage = new Mock<IGarbage>();
 			_webUtility = new WebUtility(_garbage.Object);
 
 			_sut = new TeamCityBuildService(_webFactory, _webUtility);

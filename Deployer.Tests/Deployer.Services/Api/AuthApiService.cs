@@ -1,19 +1,16 @@
 ﻿using Deployer.Services.Api.Interfaces;
-// ReSharper disable RedundantUsingDirective
 using Deployer.Services.Config.Interfaces;
-using Deployer.Services.Micro;
-using Deployer.Services.Util;
-
-// ReSharper restore RedundantUsingDirective
+using NeonMika.Interfaces;
+using NeonMika.Util;
 
 namespace Deployer.Services.Api
 {
 	public class AuthApiService : IApiService
 	{
 		private readonly IConfigurationService _configurationService;
-		private readonly IDeployerGarbage _garbage;
+        private readonly IGarbage _garbage;
 
-		public AuthApiService(IConfigurationService configurationService, IDeployerGarbage garbage)
+        public AuthApiService(IConfigurationService configurationService, IGarbage garbage)
 		{
 			_configurationService = configurationService;
 			_garbage = garbage;

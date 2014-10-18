@@ -1,8 +1,8 @@
 ﻿using Deployer.Services.Abstraction;
 using Deployer.Services.Hardware;
-using Deployer.Services.Micro;
 using Deployer.Text.Hardware;
 using Deployer.Text.Micro;
+using NeonMika.Interfaces;
 
 namespace Deployer.Text.Abstraction
 {
@@ -48,12 +48,12 @@ namespace Deployer.Text.Abstraction
             return new Led("Failed");
         }
 
-        public override IDeployerGarbage CreateGarbage()
+        public override IGarbage CreateGarbage()
         {
             return new Garbage();
         }
 
-        public override IDeployerLogger CreateLogger()
+        public override ILogger CreateLogger()
         {
             return new Logger();
         }

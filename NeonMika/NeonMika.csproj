@@ -30,11 +30,11 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="..\Deployer.Tests\NeonMika\Interfaces\INeonGarbage.cs">
-      <Link>Interfaces\INeonGarbage.cs</Link>
+    <Compile Include="..\Deployer.Tests\NeonMika\Interfaces\IGarbage.cs">
+      <Link>Interfaces\IGarbage.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\NeonMika\Interfaces\INeonLogger.cs">
-      <Link>Interfaces\INeonLogger.cs</Link>
+    <Compile Include="..\Deployer.Tests\NeonMika\Interfaces\ILogger.cs">
+      <Link>Interfaces\ILogger.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\NeonMika\Requests\ClientRequestBody.cs">
       <Link>Requests\ClientRequestBody.cs</Link>
@@ -56,6 +56,9 @@
     </Compile>
     <Compile Include="..\Deployer.Tests\NeonMika\Util\Converter.cs">
       <Link>Util\Converter.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\NeonMika\Util\ExcludeFromCodeCoverageAttribute.cs">
+      <Link>Util\ExcludeFromCodeCoverageAttribute.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\NeonMika\Util\ExtensionMethods.cs">
       <Link>Util\ExtensionMethods.cs</Link>

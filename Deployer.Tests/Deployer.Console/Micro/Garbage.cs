@@ -1,17 +1,11 @@
-﻿using Deployer.Services.Micro;
-using System;
+﻿using System;
 using NeonMika.Interfaces;
 
 namespace Deployer.Text.Micro
 {
-    public class Garbage : IDeployerGarbage, INeonGarbage
+    public class Garbage : IGarbage
     {
-        void IDeployerGarbage.Collect()
-        {
-            GC.Collect();
-        }
-
-        void INeonGarbage.Collect()
+        public void Collect()
         {
             GC.Collect();
         }

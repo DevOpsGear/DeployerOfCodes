@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Net.Sockets;
-using Deployer.Services.Micro;
+using NeonMika.Interfaces;
 using NeonMika.Requests;
 using NeonMika.Responses;
+using NeonMika.Util;
 
 namespace Deployer.Services.WebResponders
 {
@@ -11,10 +12,10 @@ namespace Deployer.Services.WebResponders
 	{
 		private readonly string _rootDirectory;
 		private readonly string _folder;
-	    private readonly IDeployerLogger _logger;
+        private readonly ILogger _logger;
 	    private readonly int _bufferSize;
 
-		public FileGetResponder(string rootDirectory, string folder, IDeployerLogger logger, int bufferSize = 256)
+        public FileGetResponder(string rootDirectory, string folder, ILogger logger, int bufferSize = 256)
 		{
 			_rootDirectory = rootDirectory;
 			_folder = folder;

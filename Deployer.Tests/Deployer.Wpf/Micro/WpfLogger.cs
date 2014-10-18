@@ -1,17 +1,11 @@
-﻿using Deployer.Services.Micro;
-using NeonMika.Interfaces;
+﻿using NeonMika.Interfaces;
 using System;
 
 namespace Deployer.Wpf.Micro
 {
-    public class WpfLogger : INeonLogger, IDeployerLogger
+    public class WpfLogger : ILogger
     {
-        void INeonLogger.Debug(string text)
-        {
-            Console.WriteLine(text);
-        }
-
-        void IDeployerLogger.Debug(string text)
+        public void Debug(string text)
         {
             Console.WriteLine(text);
         }

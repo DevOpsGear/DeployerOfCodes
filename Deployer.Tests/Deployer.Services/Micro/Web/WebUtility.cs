@@ -2,14 +2,15 @@
 using System.Collections;
 using System.Text;
 using Json.NETMF;
+using NeonMika.Interfaces;
 
 namespace Deployer.Services.Micro.Web
 {
 	public class WebUtility : IWebUtility
 	{
-		private readonly IDeployerGarbage _garbage;
+		private readonly IGarbage _garbage;
 
-		public WebUtility(IDeployerGarbage garbage)
+        public WebUtility(IGarbage garbage)
 		{
 			_garbage = garbage;
 		}

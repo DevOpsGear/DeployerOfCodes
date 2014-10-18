@@ -86,6 +86,10 @@
       <Project>{3fd3d714-a431-42ec-99d0-2f7d9f0e1bd3}</Project>
       <Name>Json.NETMF</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NeonMika\NeonMika.csproj">
+      <Project>{7FBC44D5-A43D-44F4-A1EA-0D515EC973FB}</Project>
+      <Name>NeonMika</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

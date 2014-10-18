@@ -11,18 +11,18 @@ namespace NeonMika
 {
     public class WebServer
     {
+        private readonly ILogger _logger;
+        private readonly IGarbage _garbage;
         private readonly int _port;
-        private readonly INeonLogger _logger;
-        private readonly INeonGarbage _neonGarbage;
         private readonly ArrayList _responses;
         private readonly Socket _listeningSocket;
         private readonly Thread _requestThread;
 
-        public WebServer(INeonLogger logger, INeonGarbage neonGarbage, int port = 80)
+        public WebServer(ILogger logger, IGarbage garbage, int port = 80)
         {
-            _port = port;
             _logger = logger;
-            _neonGarbage = neonGarbage;
+            _garbage = garbage;
+            _port = port;
 
             _logger.Debug("Starting web server");
 
@@ -80,7 +80,7 @@ namespace NeonMika
                         }
 
                         _logger.Debug(" * Request finished");
-                        _neonGarbage.Collect();
+                        _garbage.Collect();
                     }
                 }
                 catch (Exception ex)
@@ -123,16 +123,13 @@ namespace NeonMika
         {
             foreach (Responder resp in _responses)
             {
-                if (resp.CanRespond(e))
-                {
-                    if (!resp.SendResponse(e))
-                        _logger.Debug("Sending response failed");
-                    return;
-                }
+                if (!resp.CanRespond(e)) continue;
+                if (!resp.SendResponse(e))
+                    _logger.Debug("Sending response failed");
+                return;
             }
 
             RequestHelper.Send404_NotFound(e.Client);
         }
     }
-
 }

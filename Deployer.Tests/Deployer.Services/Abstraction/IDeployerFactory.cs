@@ -3,6 +3,7 @@ using Deployer.Services.Hardware;
 using Deployer.Services.Input;
 using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
+using NeonMika.Interfaces;
 
 namespace Deployer.Services.Abstraction
 {
@@ -16,8 +17,8 @@ namespace Deployer.Services.Abstraction
         ILed CreateIndicatorRunning();
         ILed CreateIndicatorSucceeded();
         ILed CreateIndicatorFailed();
-        IDeployerGarbage CreateGarbage();
-        IDeployerLogger CreateLogger();
+        IGarbage CreateGarbage();
+        ILogger CreateLogger();
         ISmallTextFileIo CreateSmallTextIo();
         IJsonPersistence CreateJsonPersistence(ISmallTextFileIo smallIo);
         ISlugCreator CreateSlugCreator();
@@ -37,7 +38,7 @@ namespace Deployer.Services.Abstraction
             IConfigurationService configurationService);
 
         ISound CreateSound();
-        IWebUtility CreateWebUtility(IDeployerGarbage garbage);
+        IWebUtility CreateWebUtility(IGarbage garbage);
         INetwork CreateNetworkWrapper();
     }
 }

@@ -31,6 +31,15 @@
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Abstraction\CommonFactory.cs">
+      <Link>Abstraction\CommonFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Abstraction\ConstructionYard.cs">
+      <Link>Abstraction\ConstructionYard.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Abstraction\IDeployerFactory.cs">
+      <Link>Abstraction\IDeployerFactory.cs</Link>
+    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Api\ApiRequest.cs">
       <Link>Api\ApiRequest.cs</Link>
     </Compile>
@@ -82,11 +91,20 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Config\SmallTextFileIo.cs">
       <Link>Config\SmallTextFileIo.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\IDeployerLogger.cs">
-      <Link>Micro\IDeployerLogger.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Interface1.cs">
+      <Link>Micro\Interface1.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\HttpWebResponseWrapper.cs">
+      <Link>Micro\Web\HttpWebResponseWrapper.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\IWebUtility.cs">
       <Link>Micro\Web\IWebUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\WebRequestFactory.cs">
+      <Link>Micro\Web\WebRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\WebRequestWrapper.cs">
+      <Link>Micro\Web\WebRequestWrapper.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\WebUtility.cs">
       <Link>Micro\Web\WebUtility.cs</Link>
@@ -151,9 +169,6 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Input\SimultaneousKeys.cs">
       <Link>Input\SimultaneousKeys.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\IGarbage.cs">
-      <Link>Micro\IGarbage.cs</Link>
-    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\IHttpWebResponse.cs">
       <Link>Micro\Web\IHttpWebResponse.cs</Link>
     </Compile>
@@ -217,9 +232,6 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\IDeployerController.cs">
       <Link>StateMachine\IDeployerController.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Util\ExtensionMethods.cs">
-      <Link>Util\ExtensionMethods.cs</Link>
-    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\WebResponders\ApiReadBodyWrapper.cs">
       <Link>WebResponders\ApiReadBodyWrapper.cs</Link>
     </Compile>
@@ -241,6 +253,7 @@
       <HintPath>..\packages\Json.NetMF.1.3.0.0\lib\netmf43\Json.NetMF.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Http" />
     <Reference Include="System.IO" />
   </ItemGroup>
   <ItemGroup>
