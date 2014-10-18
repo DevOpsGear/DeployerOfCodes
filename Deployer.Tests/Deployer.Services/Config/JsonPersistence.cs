@@ -6,16 +6,16 @@ namespace Deployer.Services.Config
 {
 	public class JsonPersistence : IJsonPersistence
 	{
-		private readonly ISmallTextFileIo _textIo;
+		private readonly ISmallTextFileIo _io;
 
-		public JsonPersistence(ISmallTextFileIo textIo)
+		public JsonPersistence(ISmallTextFileIo io)
 		{
-			_textIo = textIo;
+			_io = io;
 		}
 
 		public Hashtable Read(string filePath)
 		{
-			var content = _textIo.Read(filePath);
+			var content = _io.Read(filePath);
 			var hash = JsonSerializer.DeserializeString(content) as Hashtable;
 			return hash ?? new Hashtable();
 		}
@@ -23,7 +23,7 @@ namespace Deployer.Services.Config
 		public void Write(string filePath, Hashtable hash)
 		{
 			var content = JsonSerializer.SerializeObject(hash);
-			_textIo.Write(filePath, content);
+			_io.Write(filePath, content);
 		}
 	}
 }

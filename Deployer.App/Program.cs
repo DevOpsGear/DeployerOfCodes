@@ -1,32 +1,16 @@
-﻿using System.IO;
-using Deployer.App.Hardware;
-using Deployer.App.Micro;
-using Deployer.Services.Api;
-using Deployer.Services.Config;
-using Deployer.Services.Config.Interfaces;
-using Deployer.Services.Hardware;
+﻿using Deployer.App.Abstraction;
+using Deployer.Services.Abstraction;
 using Deployer.Services.Input;
-using Deployer.Services.Micro;
-using Deployer.Services.Micro.Web;
-using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
-using Deployer.Services.WebResponders;
-using Gadgeteer;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
-using Microsoft.SPOT.Net.NetworkInformation;
-using NeonMika;
 using System;
-using System.Threading;
+using System.IO;
 
 namespace Deployer.App
 {
     public partial class Program
     {
-        private IDeployerController _controller;
-
-        private Gadgeteer.Timer _timerBlink;
-
         private InterruptPort _keySwitchA;
         private InterruptPort _keySwitchB;
         private InterruptPort _buttonUp;
@@ -34,69 +18,23 @@ namespace Deployer.App
         private InterruptPort _buttonArm;
         private InterruptPort _buttonDeploy;
 
-        private ILed _indicatorTurnKeyA;
-        private ILed _indicatorTurnKeyB;
-        private ILed _indicatorSelectProject;
-        private ILed _indicatorReadyToArm;
-        private ILed _indicatorReadyToDeploy;
-        private ILed _indicatorStateDeploying;
-        private ILed _indicatorStateSucceeded;
-        private ILed _indicatorStateFailed;
-
-        private NetworkWrapper _network;
-        private WebServer _webServer;
-        private IPersistence _storage;
+        //private WebServer _webServer;
         private string _rootDir;
-        private GarbageCollector _garbage;
-        private Logger _logger;
-        private IConfigurationService _configService;
+        private Gadgeteer.Timer _timerBlink;
+
+        private IDeployerController _controller;
 
         private void ProgramStarted()
         {
             var memory = Debug.GC(true);
             Debug.Print("Memory at startup = " + memory);
 
-            SetupEthernet();
             SetupPersistence();
-
             SetupInputs();
-            SetupIndicators();
 
-            _garbage = new GarbageCollector();
-            _logger = new Logger();
-            var smallIo = new SmallTextFileIo();
-            var jsonPersist = new JsonPersistence(smallIo);
-            var slugCreator = new SlugCreator();
-            _configService = new FakeConfigurationService();
-            // RealConfigurationService(_rootDir, jsonPersist, slugCreator);
-            var charDisp = new CharDisplay(characterDisplay);
-            var keys = new SimultaneousKeys(ReversedSwitchA, ReversedSwitchB, new TimeService());
-            var webFactory = new WebRequestFactory();
-            var project = new ProjectSelector(charDisp, _configService);
-            var sound = new Sound(tunes);
-            var webu = new WebUtility(_garbage);
-
-            var indicators = new Indicators(_indicatorTurnKeyA,
-                                            _indicatorTurnKeyB,
-                                            _indicatorSelectProject,
-                                            _indicatorReadyToArm,
-                                            _indicatorReadyToDeploy,
-                                            _indicatorStateDeploying,
-                                            _indicatorStateSucceeded,
-                                            _indicatorStateFailed);
-            var context = new DeployerContext(keys,
-                                              project,
-                                              charDisp,
-                                              indicators,
-                                              sound,
-                                              webu,
-                                              _network,
-                                              webFactory,
-                                              _garbage,
-                                              _configService);
-            _controller = new DeployerController(context);
-            context.SetController(_controller);
-            _controller.PreflightCheck();
+            var factory = new RealDeployerFactory(Mainboard, breakoutTB10, characterDisplay, tunes);
+            var yard = new ConstructionYard(factory, _rootDir);
+            _controller = yard.BuildRunMode();
 
             //SetupWebServer();
 
@@ -106,36 +44,7 @@ namespace Deployer.App
 
         #region Setup methods
 
-        // Try mIP? http://mip.codeplex.com/
-        private void SetupEthernet()
-        {
-            try
-            {
-                characterDisplay.Clear();
-                characterDisplay.SetCursorPosition(0, 0);
-                characterDisplay.Print("Getting IP address...");
-
-                NetworkChange.NetworkAddressChanged += OnNetworkAddressChanged;
-                NetworkChange.NetworkAvailabilityChanged += OnNetworkAvailabilityChanged;
-
-                var eth = Mainboard.Ethernet;
-                eth.Open();
-                eth.EnableDhcp();
-                eth.EnableDynamicDns();
-                while (eth.IPAddress == "0.0.0.0")
-                {
-                    Debug.Print("Waiting for DHCP");
-                    Thread.Sleep(250);
-                }
-                _network = new NetworkWrapper(eth);
-            }
-            catch (Exception ex)
-            {
-                Debug.Print("Could not set up Ethernet - " + ex);
-                throw;
-            }
-        }
-
+        /*
         private void SetupWebServer()
         {
             _webServer = new WebServer(_logger, _garbage);
@@ -154,6 +63,7 @@ namespace Deployer.App
             var fileServe = new FileGetResponder(_rootDir, "client", _logger);
             _webServer.AddResponse(fileServe);
         }
+         * */
 
         private void SetupInputs()
         {
@@ -164,21 +74,6 @@ namespace Deployer.App
             _buttonDown = SetupInterruptRelease(PinsCerbuino.A2);
             _buttonArm = SetupInterruptRelease(PinsCerbuino.D4);
             _buttonDeploy = SetupInterruptRelease(PinsCerbuino.D5);
-        }
-
-        private void SetupIndicators()
-        {
-            _indicatorTurnKeyA = SetupHeaderOutput(PinsCerbuino.D6);
-            _indicatorTurnKeyB = SetupHeaderOutput(PinsCerbuino.D7);
-
-            _indicatorSelectProject = SetupHeaderOutput(PinsCerbuino.D8);
-            _indicatorReadyToArm = SetupHeaderOutput(PinsCerbuino.D9);
-
-            _indicatorReadyToDeploy = SetupHeaderOutput(PinsCerbuino.D10);
-
-            _indicatorStateDeploying = SetupBreakoutOutput(Socket.Pin.Three);
-            _indicatorStateSucceeded = SetupBreakoutOutput(Socket.Pin.Four);
-            _indicatorStateFailed = SetupBreakoutOutput(Socket.Pin.Five);
         }
 
         private void SetupInterrupts()
@@ -204,7 +99,7 @@ namespace Deployer.App
         {
             try
             {
-                _storage = new Persistence(Mainboard.SDCardStorageDevice);
+                //var storage = new Persistence(Mainboard.SDCardStorageDevice);
                 var isStorage = Mainboard.IsSDCardInserted;
                 if (!isStorage)
                     throw new Exception("No SD card has been inserted");
@@ -282,30 +177,6 @@ namespace Deployer.App
 
         #endregion
 
-        #region Indicator outputs
-
-        private Led SetupHeaderOutput(Cpu.Pin pin)
-        {
-            try
-            {
-                var port = new OutputPort(pin, false);
-                return new Led(port);
-            }
-            catch (Exception ex)
-            {
-                Debug.Print(ex.ToString());
-            }
-            return new Led();
-        }
-
-        private LedDigital SetupBreakoutOutput(Socket.Pin pin)
-        {
-            var output = breakoutTB10.CreateDigitalOutput(pin, false);
-            return new LedDigital(output);
-        }
-
-        #endregion
-
         #region Interrupt setup
 
         private InterruptPort SetupInterruptOffAndOn(Cpu.Pin pin)
@@ -320,20 +191,6 @@ namespace Deployer.App
             return new InterruptPort(pin, true,
                                      Port.ResistorMode.PullUp,
                                      Port.InterruptMode.InterruptEdgeLow);
-        }
-
-        #endregion
-
-        #region Network up/down
-
-        private void OnNetworkAvailabilityChanged(object sender, NetworkAvailabilityEventArgs e)
-        {
-            Debug.Print("NetworkChange_NetworkAvailabilityChanged");
-        }
-
-        private void OnNetworkAddressChanged(object sender, EventArgs e)
-        {
-            Debug.Print("NetworkChange_NetworkAddressChanged");
         }
 
         #endregion

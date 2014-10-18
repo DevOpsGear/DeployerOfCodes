@@ -18,7 +18,7 @@ namespace Deployer.Tests.Config
 		public void GetProjects()
 		{
 			var projects = _sut.GetProjects();
-			Assert.AreEqual(4, projects.Length);
+			Assert.AreEqual(6, projects.Length);
 		}
 	}
 }

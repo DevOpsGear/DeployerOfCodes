@@ -20,7 +20,7 @@ namespace Deployer.Services.Abstraction
         IGarbage CreateGarbage();
         ILogger CreateLogger();
         ISmallTextFileIo CreateSmallTextIo();
-        IJsonPersistence CreateJsonPersistence(ISmallTextFileIo smallIo);
+        IJsonPersistence CreateJsonPersistence(ISmallTextFileIo io);
         ISlugCreator CreateSlugCreator();
 
         IConfigurationService CreateConfigurationService(

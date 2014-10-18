@@ -40,6 +40,7 @@
   <!-- Everything below here is custom to .NET MF / Gadgeteer template-->
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
+    <Compile Include="Abstraction\RealDeployerFactory.cs" />
     <Compile Include="Hardware\CharDisplay.cs" />
     <Compile Include="Hardware\Led.cs" />
     <Compile Include="Hardware\LedDigital.cs" />

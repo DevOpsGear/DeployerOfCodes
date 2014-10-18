@@ -20,9 +20,9 @@ namespace Deployer.Services.Abstraction
             return new SmallTextFileIo();
         }
 
-        public IJsonPersistence CreateJsonPersistence(ISmallTextFileIo smallIo)
+        public IJsonPersistence CreateJsonPersistence(ISmallTextFileIo io)
         {
-            return new JsonPersistence(smallIo);
+            return new JsonPersistence(io);
         }
 
         public ISlugCreator CreateSlugCreator()
