@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstraction\CommonDeployerFactory.cs" />
     <Compile Include="Abstraction\TextDeployerFactory.cs" />
     <Compile Include="Hardware\TextCharDisplay.cs" />
     <Compile Include="Hardware\Led.cs" />

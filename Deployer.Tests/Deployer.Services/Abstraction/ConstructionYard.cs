@@ -1,7 +1,6 @@
 ﻿using Deployer.Services.Api;
 using Deployer.Services.Config;
 using Deployer.Services.Config.Interfaces;
-using Deployer.Services.Micro;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
 using Deployer.Services.WebResponders;
@@ -71,7 +70,7 @@ namespace Deployer.Services.Abstraction
 
         public WebServer SetupWebServer(int port = 80)
         {
-            var webServer = new WebServer(_logger as ILogger, _garbage as IGarbage, port);
+            var webServer = new WebServer(_logger, _garbage, port);
 
             var authApiService = new AuthApiService(_configService, _garbage);
             var authResponder = new ApiServiceResponder(authApiService);
