@@ -7,9 +7,9 @@ namespace Deployer.Services.Micro.Web
 {
 	public class WebUtility : IWebUtility
 	{
-		private readonly IGarbage _garbage;
+		private readonly IDeployerGarbage _garbage;
 
-		public WebUtility(IGarbage garbage)
+		public WebUtility(IDeployerGarbage garbage)
 		{
 			_garbage = garbage;
 		}

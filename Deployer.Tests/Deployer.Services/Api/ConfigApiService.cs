@@ -18,10 +18,10 @@ namespace Deployer.Services.Api
 	public class ConfigApiService : IApiService
 	{
 		private readonly IConfigurationService _configurationService;
-		private readonly IGarbage _garbage;
+		private readonly IDeployerGarbage _garbage;
 		private const int BufferSize = 1024;
 
-		public ConfigApiService(IConfigurationService configurationService, IGarbage garbage)
+		public ConfigApiService(IConfigurationService configurationService, IDeployerGarbage garbage)
 		{
 			_configurationService = configurationService;
 			_garbage = garbage;

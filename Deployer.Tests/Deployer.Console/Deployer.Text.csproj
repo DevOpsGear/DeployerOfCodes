@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstraction\TextDeployerFactory.cs" />
     <Compile Include="Hardware\CharDisplay.cs" />
     <Compile Include="Hardware\Led.cs" />
     <Compile Include="Hardware\NetworkWrapper.cs" />

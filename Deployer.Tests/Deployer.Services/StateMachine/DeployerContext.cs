@@ -18,14 +18,14 @@ namespace Deployer.Services.StateMachine
         private readonly IWebUtility _netio;
         private readonly INetwork _network;
         private readonly IWebRequestFactory _webFactory;
-        private readonly IGarbage _garbage;
+        private readonly IDeployerGarbage _garbage;
         private readonly IConfigurationService _configurationService;
         private IDeployerController _controller;
 
         public DeployerContext(ISimultaneousKeys keys, IProjectSelector projectSelect,
                                ICharDisplay lcd,
                                IIndicators indicatorRefresh, ISound sound, IWebUtility netio, INetwork network,
-                               IWebRequestFactory webFactory, IGarbage garbage,
+                               IWebRequestFactory webFactory, IDeployerGarbage garbage,
                                IConfigurationService configurationService)
         {
             _keys = keys;
@@ -80,7 +80,7 @@ namespace Deployer.Services.StateMachine
             get { return _webFactory; }
         }
 
-        public IGarbage Garbage
+        public IDeployerGarbage Garbage
         {
             get { return _garbage; }
         }

@@ -27,7 +27,7 @@ namespace Deployer.Tests.StateMachine
 		private ProjectSelector _projSel;
 		private SimultaneousKeys _simKeys;
 		private Mock<IWebRequestFactory> _webFactory;
-		private Mock<IGarbage> _garbage;
+		private Mock<IDeployerGarbage> _garbage;
 		private IWebUtility _netio;
 
 		private DeployerContext _context;
@@ -45,7 +45,7 @@ namespace Deployer.Tests.StateMachine
 			_projSel = new ProjectSelector(_display, _config.Object);
 			_simKeys = new SimultaneousKeys(false, false, _time);
 			_webFactory = new Mock<IWebRequestFactory>();
-			_garbage = new Mock<IGarbage>();
+			_garbage = new Mock<IDeployerGarbage>();
 			_netio = new WebUtility(_garbage.Object);
 
 			ConstructSut();

@@ -14,7 +14,7 @@ namespace Deployer.Tests.Builders
 	[TestFixture]
 	public class TeamCityBuildTests
 	{
-		private Mock<IGarbage> _garbage;
+		private Mock<IDeployerGarbage> _garbage;
 		private IWebUtility _webUtility;
 		private WebFactorySpy _webFactory;
 		private TeamCityBuildService _sut;
@@ -23,7 +23,7 @@ namespace Deployer.Tests.Builders
 		public void BeforeEachTest()
 		{
 			_webFactory = new WebFactorySpy();
-			_garbage = new Mock<IGarbage>();
+			_garbage = new Mock<IDeployerGarbage>();
 			_webUtility = new WebUtility(_garbage.Object);
 
 			_sut = new TeamCityBuildService(_webFactory, _webUtility);

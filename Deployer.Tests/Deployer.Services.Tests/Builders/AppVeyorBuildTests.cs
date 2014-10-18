@@ -15,7 +15,7 @@ namespace Deployer.Tests.Builders
 	public class AppVeyorBuildTests
 	{
 		private WebFactorySpy _webFactory;
-		private Mock<IGarbage> _garbage;
+		private Mock<IDeployerGarbage> _garbage;
 		private IWebUtility _netio;
 		private AppVeyorBuildService _sut;
 
@@ -23,7 +23,7 @@ namespace Deployer.Tests.Builders
 		public void BeforeEachTest()
 		{
 			_webFactory = new WebFactorySpy();
-			_garbage = new Mock<IGarbage>();
+			_garbage = new Mock<IDeployerGarbage>();
 			_netio = new WebUtility(_garbage.Object);
 
 			_sut = new AppVeyorBuildService(_webFactory, _netio);

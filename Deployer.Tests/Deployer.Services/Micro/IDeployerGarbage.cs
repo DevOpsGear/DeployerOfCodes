@@ -1,6 +1,6 @@
 ﻿namespace Deployer.Services.Micro
 {
-	public interface IGarbage
+	public interface IDeployerGarbage
 	{
 		void Collect();
 	}

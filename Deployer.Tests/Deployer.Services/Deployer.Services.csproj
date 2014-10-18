@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstraction\ConstructionYard.cs" />
+    <Compile Include="Abstraction\IDeployerFactory.cs" />
     <Compile Include="Api\ApiRequest.cs" />
     <Compile Include="Api\AuthApiService.cs" />
     <Compile Include="Api\ConfigApiService.cs" />
@@ -79,7 +81,7 @@
     <Compile Include="Input\KeySwitch.cs" />
     <Compile Include="Input\ProjectSelector.cs" />
     <Compile Include="Input\SimultaneousKeys.cs" />
-    <Compile Include="Micro\IGarbage.cs" />
+    <Compile Include="Micro\IDeployerGarbage.cs" />
     <Compile Include="Micro\Web\IHttpWebResponse.cs" />
     <Compile Include="Micro\Web\IWebRequest.cs" />
     <Compile Include="Micro\Web\IWebRequestFactory.cs" />

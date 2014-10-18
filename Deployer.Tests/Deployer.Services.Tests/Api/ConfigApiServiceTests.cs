@@ -21,7 +21,7 @@ namespace Deployer.Tests.Api
 		private FakeApiReadBody _readBody;
 		private Mock<IApiSocket> _socket;
 		private Mock<IConfigurationService> _config;
-		private Mock<IGarbage> _garbage;
+		private Mock<IDeployerGarbage> _garbage;
 		private ConfigApiService _sut;
 		private ApiRequest _req;
 		private ProjectModel _projectOne;
@@ -38,7 +38,7 @@ namespace Deployer.Tests.Api
 			_readBody = new FakeApiReadBody();
 			_socket = new Mock<IApiSocket>();
 			_config = new Mock<IConfigurationService>();
-			_garbage = new Mock<IGarbage>();
+			_garbage = new Mock<IDeployerGarbage>();
 
 			_req = new ApiRequest
 				{

@@ -175,7 +175,7 @@ namespace Deployer.Wpf
             var configResponder = new ApiServiceResponder(configApiService);
             _webServer.AddResponse(configResponder);
 
-            var updateClient = new FilePutResponder(_rootDir, _logger);
+            var updateClient = new FilePutResponder(_rootDir, "client", _logger);
             _webServer.AddResponse(updateClient);
 
             var fileServe = new FileGetResponder(_rootDir, "client", _logger);

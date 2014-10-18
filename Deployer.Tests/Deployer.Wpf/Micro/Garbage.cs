@@ -4,9 +4,9 @@ using NeonMika.Interfaces;
 
 namespace Deployer.Wpf.Micro
 {
-    public class Garbage : IGarbage, INeonGarbage
+    public class Garbage : IDeployerGarbage, INeonGarbage
     {
-        void IGarbage.Collect()
+        void IDeployerGarbage.Collect()
         {
             GC.Collect();
         }

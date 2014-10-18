@@ -13,7 +13,7 @@ namespace Deployer.Text.Micro
 
         void IDeployerLogger.Debug(string text)
         {
-			Console.WriteLine("Debug: {0}", text);
+            Console.WriteLine("Debug: {0}", text);
         }
     }
 }

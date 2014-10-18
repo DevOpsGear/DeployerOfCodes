@@ -11,9 +11,9 @@ namespace Deployer.Services.Api
 	public class AuthApiService : IApiService
 	{
 		private readonly IConfigurationService _configurationService;
-		private readonly IGarbage _garbage;
+		private readonly IDeployerGarbage _garbage;
 
-		public AuthApiService(IConfigurationService configurationService, IGarbage garbage)
+		public AuthApiService(IConfigurationService configurationService, IDeployerGarbage garbage)
 		{
 			_configurationService = configurationService;
 			_garbage = garbage;

@@ -9,7 +9,7 @@ namespace Deployer.Services.Builders
 		public static IBuildService Create(BuildServiceProvider which,
 		                                   IWebRequestFactory webFactory,
 		                                   IWebUtility netio,
-		                                   IGarbage garbage)
+		                                   IDeployerGarbage garbage)
 		{
 			switch (which)
 			{
