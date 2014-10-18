@@ -4,7 +4,7 @@ using Deployer.Services.Micro;
 using NeonMika.Requests;
 using NeonMika.Responses;
 
-namespace Deployer.App.WebResponders
+namespace Deployer.Services.WebResponders
 {
     public class FilePutResponder : Responder
     {

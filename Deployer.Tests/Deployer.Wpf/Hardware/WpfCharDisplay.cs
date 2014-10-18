@@ -5,13 +5,13 @@ using System.Windows.Controls;
 
 namespace Deployer.Wpf.Hardware
 {
-    public class CharDisplay : ICharDisplay
+    public class WpfCharDisplay : ICharDisplay
     {
         private readonly TextBlock _lineOne;
         private readonly TextBlock _lineTwo;
         private readonly Dispatcher _dispatcher;
 
-        public CharDisplay(TextBlock lineOne, TextBlock lineTwo, Dispatcher dispatcher)
+        public WpfCharDisplay(TextBlock lineOne, TextBlock lineTwo, Dispatcher dispatcher)
         {
             _lineOne = lineOne;
             _lineTwo = lineTwo;

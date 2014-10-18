@@ -1,10 +1,10 @@
-﻿using Deployer.App.WebResponders;
-using Deployer.Services.Api;
+﻿using Deployer.Services.Api;
 using Deployer.Services.Config;
 using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Micro;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
+using Deployer.Services.WebResponders;
 using NeonMika;
 using NeonMika.Interfaces;
 

@@ -2,7 +2,7 @@
 
 namespace Deployer.Wpf.Hardware
 {
-    public class Sound : ISound
+    public class WpfSound : ISound
     {
         public void SoundAlarm()
         {

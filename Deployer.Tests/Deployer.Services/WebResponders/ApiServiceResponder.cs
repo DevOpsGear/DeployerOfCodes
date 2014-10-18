@@ -3,7 +3,7 @@ using Deployer.Services.Api.Interfaces;
 using NeonMika.Requests;
 using NeonMika.Responses;
 
-namespace Deployer.App.WebResponders
+namespace Deployer.Services.WebResponders
 {
 	public class ApiServiceResponder : Responder
 	{

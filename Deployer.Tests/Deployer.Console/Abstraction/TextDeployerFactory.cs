@@ -1,127 +1,76 @@
 ﻿using Deployer.Services.Abstraction;
-using Deployer.Services.Config;
-using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Hardware;
-using Deployer.Services.Input;
 using Deployer.Services.Micro;
-using Deployer.Services.Micro.Web;
 using Deployer.Text.Hardware;
 using Deployer.Text.Micro;
 
 namespace Deployer.Text.Abstraction
 {
-    public class TextDeployerFactory : IDeployerFactory
+    public class TextDeployerFactory : CommonFactory
     {
-        public ILed CreateIndicatorKeyA()
+        public override ILed CreateIndicatorKeyA()
         {
             return new Led("A");
         }
 
-        public ILed CreateIndicatorKeyB()
+        public override ILed CreateIndicatorKeyB()
         {
             return new Led("B");
         }
 
-        public ILed CreateIndicatorSelect()
+        public override ILed CreateIndicatorSelect()
         {
             return new Led("Select");
         }
 
-        public ILed CreateIndicatorArm()
+        public override ILed CreateIndicatorArm()
         {
             return new Led("Arm");
         }
 
-        public ILed CreateIndicatorFire()
+        public override ILed CreateIndicatorFire()
         {
             return new Led("Fire");
         }
 
-        public ILed CreateIndicatorRunning()
+        public override ILed CreateIndicatorRunning()
         {
             return new Led("Running");
         }
 
-        public ILed CreateIndicatorSucceeded()
+        public override ILed CreateIndicatorSucceeded()
         {
             return new Led("Succeeded");
         }
 
-        public ILed CreateIndicatorFailed()
+        public override ILed CreateIndicatorFailed()
         {
             return new Led("Failed");
         }
 
-        public IDeployerGarbage CreateGarbage()
+        public override IDeployerGarbage CreateGarbage()
         {
             return new Garbage();
         }
 
-        public IDeployerLogger CreateLogger()
+        public override IDeployerLogger CreateLogger()
         {
             return new Logger();
         }
 
-        public ISmallTextFileIo CreateSmallTextIo()
+        public override ICharDisplay CreateCharacterDisplay()
         {
-            return new SmallTextFileIo();
+            return new TextCharDisplay();
         }
 
-        public IJsonPersistence CreateJsonPersistence(ISmallTextFileIo smallIo)
+        public override ISound CreateSound()
         {
-            return new JsonPersistence(smallIo);
+            return new TextSound();
         }
 
-        public ISlugCreator CreateSlugCreator()
+        public override INetwork CreateNetworkWrapper()
         {
-            return new SlugCreator();
-        }
-
-        public IConfigurationService CreateConfigurationService(string rootDir, IJsonPersistence jsonPersist,
-                                                                ISlugCreator slugCreator)
-        {
-            return new RealConfigurationService(rootDir, jsonPersist, slugCreator);
-        }
-
-        public ICharDisplay CreateCharacterDisplay()
-        {
-            return new CharDisplay();
-        }
-
-        public ITimeService CreateTimeService()
-        {
-            return new TimeService();
-        }
-
-        public ISimultaneousKeys CreateSimultaneousKeys(ITimeService timeService)
-        {
-            return new SimultaneousKeys(false, false, timeService);
-        }
-
-        public IWebRequestFactory CreateWebRequestFactory()
-        {
-            return new WebRequestFactory();
-        }
-
-        public IProjectSelector CreateProjectSelector(ICharDisplay charDisplay,
-                                                      IConfigurationService configurationService)
-        {
-            return new ProjectSelector(charDisplay, configurationService);
-        }
-
-        public ISound CreateSound()
-        {
-            return new Sound();
-        }
-
-        public IWebUtility CreateWebUtility(IDeployerGarbage garbage)
-        {
-            return new WebUtility(garbage);
-        }
-
-        public INetwork CreateNetworkWrapper()
-        {
-            return new NetworkWrapper();
+            return new TextNetworkWrapper();
         }
     }
 }

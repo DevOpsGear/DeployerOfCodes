@@ -2,7 +2,7 @@
 
 namespace Deployer.Wpf.Hardware
 {
-    public class NetworkWrapper : INetwork
+    public class WpfNetworkWrapper : INetwork
     {
         public bool IsNetworkUp
         {

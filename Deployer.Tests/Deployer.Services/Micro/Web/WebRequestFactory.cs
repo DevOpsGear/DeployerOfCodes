@@ -1,8 +1,7 @@
-﻿using Deployer.Services.Micro.Web;
-using System;
+﻿using System;
 using System.Net;
 
-namespace Deployer.Text.Micro
+namespace Deployer.Services.Micro.Web
 {
     public class WebRequestFactory : IWebRequestFactory
     {

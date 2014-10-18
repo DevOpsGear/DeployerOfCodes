@@ -4,7 +4,7 @@ using System;
 
 namespace Deployer.Wpf.Micro
 {
-    public class Logger : INeonLogger, IDeployerLogger
+    public class WpfLogger : INeonLogger, IDeployerLogger
     {
         void INeonLogger.Debug(string text)
         {

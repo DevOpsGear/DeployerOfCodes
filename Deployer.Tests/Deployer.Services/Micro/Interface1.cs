@@ -1,7 +1,7 @@
 ﻿using Deployer.Services.Hardware;
 using System;
 
-namespace Deployer.Text.Micro
+namespace Deployer.Services.Micro
 {
     public class TimeService : ITimeService
     {

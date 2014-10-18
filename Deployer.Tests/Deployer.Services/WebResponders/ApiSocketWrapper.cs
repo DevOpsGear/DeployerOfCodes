@@ -2,7 +2,7 @@ using System.Net.Sockets;
 using Deployer.Services.Api.Interfaces;
 using NeonMika.Requests;
 
-namespace Deployer.App.WebResponders
+namespace Deployer.Services.WebResponders
 {
 	public class ApiSocketWrapper : IApiSocket
 	{

@@ -4,9 +4,8 @@ using System.Net.Sockets;
 using Deployer.Services.Micro;
 using NeonMika.Requests;
 using NeonMika.Responses;
-using NeonMika.Util;
 
-namespace Deployer.App.WebResponders
+namespace Deployer.Services.WebResponders
 {
 	public class FileGetResponder : Responder
 	{

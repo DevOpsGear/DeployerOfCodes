@@ -2,7 +2,7 @@
 
 namespace Deployer.Text.Hardware
 {
-    public class CharDisplay : ICharDisplay
+    public class TextCharDisplay : ICharDisplay
     {
         private string _previousLine1;
         private string _previousLine2;

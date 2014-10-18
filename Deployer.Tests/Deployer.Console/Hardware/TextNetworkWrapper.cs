@@ -2,7 +2,7 @@
 
 namespace Deployer.Text.Hardware
 {
-    public class NetworkWrapper : INetwork
+    public class TextNetworkWrapper : INetwork
     {
         public bool IsNetworkUp
         {

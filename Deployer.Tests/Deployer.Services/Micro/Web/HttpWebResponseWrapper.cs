@@ -1,8 +1,11 @@
-﻿using Deployer.Services.Micro.Web;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Deployer.Text.Micro
+namespace Deployer.Services.Micro.Web
 {
     public class HttpWebResponseWrapper : IHttpWebResponse
     {

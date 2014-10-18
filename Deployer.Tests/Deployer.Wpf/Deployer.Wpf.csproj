@@ -57,27 +57,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Abstraction\WpfDeployerFactory.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Hardware\CharDisplay.cs" />
-    <Compile Include="Hardware\NetworkWrapper.cs" />
+    <Compile Include="Hardware\WpfCharDisplay.cs" />
+    <Compile Include="Hardware\WpfNetworkWrapper.cs" />
     <Compile Include="Hardware\Led.cs" />
     <Compile Include="Hardware\Persistence.cs" />
-    <Compile Include="Hardware\Sound.cs" />
+    <Compile Include="Hardware\WpfSound.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Micro\Logger.cs" />
+    <Compile Include="Micro\WpfLogger.cs" />
     <Compile Include="Micro\HttpWebResponseWrapper.cs" />
     <Compile Include="Micro\TimeService.cs" />
     <Compile Include="Micro\WebRequestFactory.cs" />
     <Compile Include="Micro\WebRequestWrapper.cs" />
-    <Compile Include="Micro\Garbage.cs" />
+    <Compile Include="Micro\WpfGarbage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

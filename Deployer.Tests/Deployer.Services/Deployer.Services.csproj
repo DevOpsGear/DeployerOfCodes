@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstraction\CommonFactory.cs" />
     <Compile Include="Abstraction\ConstructionYard.cs" />
     <Compile Include="Abstraction\IDeployerFactory.cs" />
     <Compile Include="Api\ApiRequest.cs" />
@@ -59,7 +60,11 @@
     <Compile Include="Config\SlugCreator.cs" />
     <Compile Include="Config\SmallTextFileIo.cs" />
     <Compile Include="Micro\IDeployerLogger.cs" />
+    <Compile Include="Micro\Interface1.cs" />
+    <Compile Include="Micro\Web\HttpWebResponseWrapper.cs" />
     <Compile Include="Micro\Web\IWebUtility.cs" />
+    <Compile Include="Micro\Web\WebRequestFactory.cs" />
+    <Compile Include="Micro\Web\WebRequestWrapper.cs" />
     <Compile Include="Micro\Web\WebUtility.cs" />
     <Compile Include="Builders\AppVeyorBuildService.cs" />
     <Compile Include="Builders\BuildServiceFactory.cs" />

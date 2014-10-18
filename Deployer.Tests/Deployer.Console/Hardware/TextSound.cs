@@ -2,7 +2,7 @@
 
 namespace Deployer.Text.Hardware
 {
-    public class Sound : ISound
+    public class TextSound : ISound
     {
         public void SoundAlarm()
         {

@@ -1,110 +1,32 @@
-﻿using System;
+﻿using Deployer.Services.Abstraction;
+using Deployer.Services.Input;
+using Deployer.Services.StateMachine;
+using Deployer.Wpf.Abstraction;
+using System;
 using System.IO;
 using System.Timers;
-using System.Windows.Threading;
-using Deployer.App.WebResponders;
-using Deployer.Services.Api;
-using Deployer.Services.Config;
-using Deployer.Services.Config.Interfaces;
-using Deployer.Services.Hardware;
-using Deployer.Services.Input;
-using Deployer.Services.Micro;
-using Deployer.Services.Micro.Web;
-using Deployer.Services.Output;
-using Deployer.Services.StateMachine;
-using Deployer.Wpf.Hardware;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using Deployer.Wpf.Micro;
-using NeonMika;
-using NeonMika.Interfaces;
 
 namespace Deployer.Wpf
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        private IDeployerController _controller;
-        private readonly Led _indictatorA;
-        private readonly Led _indictatorB;
-        private readonly Led _indictatorSelect;
-        private readonly Led _indictatorArm;
-        private readonly Led _indictatorFire;
-        private readonly Led _indictatorRunning;
-        private readonly Led _indictatorSucceeded;
-        private readonly Led _indictatorFailed;
-
-        private readonly INetwork _network;
-        //private WebServer _webServer;
-        private IPersistence _storage;
-        private readonly string _rootDir;
-        private readonly Garbage _garbage;
-        private readonly Logger _logger;
-        private readonly IConfigurationService _configService;
+        private readonly IDeployerController _controller;
         private readonly Timer _timer;
-        private WebServer _webServer;
 
         public MainWindow()
         {
             InitializeComponent();
 
             var appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            _rootDir = Path.Combine(appDataDir, "DeployerOfCodesWpf");
-            if (!Directory.Exists(_rootDir))
-                Directory.CreateDirectory(_rootDir);
+            var rootDir = Path.Combine(appDataDir, "DeployerOfCodesWpf");
+            if (!Directory.Exists(rootDir))
+                Directory.CreateDirectory(rootDir);
 
-
-            _garbage = new Garbage();
-            _logger = new Logger();
-            var smallIo = new SmallTextFileIo();
-            var jsonPersist = new JsonPersistence(smallIo);
-            var slugCreator = new SlugCreator();
-            _configService = new RealConfigurationService(_rootDir, jsonPersist, slugCreator);
-            var charDisp = new CharDisplay(LcdLineOne, LcdLineTwo, Dispatcher);
-            var keys = new SimultaneousKeys(false, false, new TimeService());
-            var webFactory = new WebRequestFactory();
-            var project = new ProjectSelector(charDisp, _configService);
-            var sound = new Sound();
-            var webu = new WebUtility(_garbage);
-            _network = new NetworkWrapper();
-
-            _indictatorA = new Led(IndicatorA, Dispatcher);
-            _indictatorB = new Led(IndicatorB, Dispatcher);
-            _indictatorSelect = new Led(IndicatorSelect, Dispatcher);
-            _indictatorArm = new Led(IndicatorArm, Dispatcher);
-            _indictatorFire = new Led(IndicatorFire, Dispatcher, Colors.Red);
-            _indictatorRunning = new Led(IndicatorRunning, Dispatcher, Colors.Yellow);
-            _indictatorSucceeded = new Led(IndicatorSucceeded, Dispatcher, Colors.SpringGreen);
-            _indictatorFailed = new Led(IndicatorFailed, Dispatcher, Colors.Red);
-
-            var indicators = new Indicators(_indictatorA,
-                                            _indictatorB,
-                                            _indictatorSelect,
-                                            _indictatorArm,
-                                            _indictatorFire,
-                                            _indictatorRunning,
-                                            _indictatorSucceeded,
-                                            _indictatorFailed);
-
-            var context = new DeployerContext(keys,
-                                              project,
-                                              charDisp,
-                                              indicators,
-                                              sound,
-                                              webu,
-                                              _network,
-                                              webFactory,
-                                              _garbage,
-                                              _configService);
-
-            _controller = new DeployerController(context);
-            context.SetController(_controller);
-            _controller.PreflightCheck();
-
-            SetupWebServer();
+            var factory = new WpfDeployerFactory(this);
+            var yard = new ConstructionYard(factory, rootDir);
+            _controller = yard.BuildRunMode();
 
             _timer = new Timer {Interval = 500.0};
             _timer.Elapsed += _timer_Elapsed;
@@ -163,6 +85,7 @@ namespace Deployer.Wpf
             }
         }
 
+        /*
         private void SetupWebServer()
         {
             _webServer = new WebServer(_logger, _garbage);
@@ -180,6 +103,6 @@ namespace Deployer.Wpf
 
             var fileServe = new FileGetResponder(_rootDir, "client", _logger);
             _webServer.AddResponse(fileServe);
-        }
+        } */
     }
 }

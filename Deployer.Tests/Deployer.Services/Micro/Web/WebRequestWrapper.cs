@@ -1,8 +1,7 @@
-﻿using Deployer.Services.Micro.Web;
-using System.IO;
+﻿using System.IO;
 using System.Net;
 
-namespace Deployer.Text.Micro
+namespace Deployer.Services.Micro.Web
 {
     public class WebRequestWrapper : IWebRequest
     {
