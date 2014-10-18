@@ -20,7 +20,7 @@ namespace Deployer.Wpf
             InitializeComponent();
 
             var appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var rootDir = Path.Combine(appDataDir, "DeployerOfCodesWpf");
+            var rootDir = Path.Combine(appDataDir, "DeployerOfCodes");
             if (!Directory.Exists(rootDir))
                 Directory.CreateDirectory(rootDir);
 

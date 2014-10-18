@@ -1,6 +1,5 @@
-﻿using Deployer.Services.Abstraction;
-using Deployer.Services.Input;
-using Deployer.Services.StateMachine;
+﻿using Deployer.Services.Input;
+using Deployer.Services.RunModes;
 using Deployer.Text.Abstraction;
 using System;
 using System.IO;
@@ -22,19 +21,20 @@ namespace Deployer.Text
     public class DeployerConsole
     {
         private readonly Timer _timer;
-        private readonly IDeployerController _controller;
+        private readonly IRunner _runner;
 
         public DeployerConsole()
         {
             var appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var rootDir = Path.Combine(appDataDir, "DeployerOfCodesWpf");
+            var rootDir = Path.Combine(appDataDir, "DeployerOfCodes");
             if (!Directory.Exists(rootDir))
                 Directory.CreateDirectory(rootDir);
-            var factory = new TextDeployerFactory();
-            var yard = new ConstructionYard(factory, rootDir);
-            _controller = yard.BuildRunMode();
 
-            _timer = new Timer {Interval = 500.0};
+            var factory = new TextDeployerFactory();
+            _runner = new ModeRunner(factory, rootDir);
+            _runner.Start();
+
+            _timer = new Timer {Interval = 1000.0};
             _timer.Elapsed += Tick;
             _timer.Start();
         }
@@ -52,29 +52,29 @@ namespace Deployer.Text
                 {
                     case ConsoleKey.A:
                         if (isShiftDown)
-                            _controller.KeyOnEvent(KeySwitch.KeyA);
+                            _runner.KeyOnEvent(KeySwitch.KeyA);
                         else
-                            _controller.KeyOffEvent(KeySwitch.KeyA);
+                            _runner.KeyOffEvent(KeySwitch.KeyA);
                         break;
                     case ConsoleKey.B:
                         if (isShiftDown)
-                            _controller.KeyOnEvent(KeySwitch.KeyB);
+                            _runner.KeyOnEvent(KeySwitch.KeyB);
                         else
-                            _controller.KeyOffEvent(KeySwitch.KeyB);
+                            _runner.KeyOffEvent(KeySwitch.KeyB);
                         break;
 
                     case ConsoleKey.UpArrow:
-                        _controller.UpPressedEvent();
+                        _runner.UpPressedEvent();
                         break;
                     case ConsoleKey.DownArrow:
-                        _controller.DownPressedEvent();
+                        _runner.DownPressedEvent();
                         break;
 
                     case ConsoleKey.Spacebar:
-                        _controller.ArmPressedEvent();
+                        _runner.ArmPressedEvent();
                         break;
                     case ConsoleKey.Enter:
-                        _controller.DeployPressedEvent();
+                        _runner.DeployPressedEvent();
                         break;
 
                     case ConsoleKey.Escape:
@@ -85,7 +85,7 @@ namespace Deployer.Text
 
         private void Tick(object sender, ElapsedEventArgs e)
         {
-            _controller.Tick();
+            _runner.Tick();
         }
 
         /* private void SetupWebServer()
