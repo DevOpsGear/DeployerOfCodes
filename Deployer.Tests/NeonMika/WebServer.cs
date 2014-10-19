@@ -17,6 +17,7 @@ namespace NeonMika
         private readonly ArrayList _responses;
         private readonly Socket _listeningSocket;
         private readonly Thread _requestThread;
+        private bool _stopSignal;
 
         public WebServer(ILogger logger, IGarbage garbage, int port = 80)
         {
@@ -40,6 +41,15 @@ namespace NeonMika
             _responses.Add(responder);
         }
 
+        // TODO: Handle multi-threading?
+        public bool Stop()
+        {
+            _stopSignal = true;
+            Thread.Sleep(250);
+            ShutDownListeningSocket();
+            return true;
+        }
+
         private Socket SetupListeningSocket()
         {
             var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -48,9 +58,19 @@ namespace NeonMika
             return sock;
         }
 
+        // http://stackoverflow.com/questions/1097977/net-stop-listening-socket
+        private void ShutDownListeningSocket()
+        {
+            // _listeningSocket.SetSocketOption( SocketOptionLevel.Socket, SocketOptionName.DontLinger, true);
+            _listeningSocket.LingerState = new LingerOption(false, 0);
+            _listeningSocket.Shutdown(SocketShutdown.Both);
+            // ? _listeningSocket.Disconnect(false);
+            _listeningSocket.Close();
+        }
+
         private void WaitForNetworkRequest()
         {
-            while (true)
+            while (Running)
             {
                 try
                 {
@@ -88,10 +108,13 @@ namespace NeonMika
                     _logger.Debug(ex.Message);
                 }
             }
-// ReSharper disable FunctionNeverReturns
         }
 
-// ReSharper restore FunctionNeverReturns
+        // TODO: Lock for multi-threading?
+        private bool Running
+        {
+            get { return !_stopSignal; }
+        }
 
         private static int AwaitAvailableBytes(Socket clientSocket, int maxToWaitFor)
         {

@@ -98,7 +98,6 @@
     <Compile Include="StateMachine\DeployerContext.cs" />
     <Compile Include="StateMachine\DeployerController.cs" />
     <Compile Include="StateMachine\IInputEvents.cs" />
-    <Compile Include="RunModes\IRunner.cs" />
     <Compile Include="StateMachine\States\AbortState.cs" />
     <Compile Include="StateMachine\States\DeployingState.cs" />
     <Compile Include="StateMachine\States\DeployerStateBase.cs" />

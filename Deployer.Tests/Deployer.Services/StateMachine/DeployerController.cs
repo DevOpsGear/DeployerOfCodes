@@ -55,6 +55,17 @@ namespace Deployer.Services.StateMachine
             State.Tick();
         }
 
+        public bool Stop()
+        {
+            // Only stop if it's idle
+            if (State is TurnBothKeysState)
+            {
+                State = null;
+                return true;
+            }
+            return false;
+        }
+
         public IDeployerState State { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Deployer.Text
     public class DeployerConsole
     {
         private readonly Timer _timer;
-        private readonly IRunner _runner;
+        private readonly ModeRunner _runner;
 
         public DeployerConsole()
         {
@@ -87,24 +87,5 @@ namespace Deployer.Text
         {
             _runner.Tick();
         }
-
-        /* private void SetupWebServer()
-        {
-            _webServer = new WebServer(_logger, _garbage, 8091);
-
-            var authApiService = new AuthApiService(_configService, _garbage);
-            var authResponder = new ApiServiceResponder(authApiService);
-            _webServer.AddResponse(authResponder);
-
-            var configApiService = new ConfigApiService(_configService, _garbage);
-            var configResponder = new ApiServiceResponder(configApiService);
-            _webServer.AddResponse(configResponder);
-
-            var updateClient = new FilePutResponder(_rootDir, _logger);
-            _webServer.AddResponse(updateClient);
-
-            var fileServe = new FileGetResponder(_rootDir, "client", _logger);
-            _webServer.AddResponse(fileServe);
-        } */
     }
 }

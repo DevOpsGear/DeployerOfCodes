@@ -30,7 +30,7 @@ namespace Deployer.Services.Abstraction
             _configService = new RealConfigurationService(_rootDir, jsonPersist, slugCreator);
         }
 
-        public IDeployerController BuildRunMode()
+        public IDeployerController BuildDeploymentMode()
         {
             var charDisp = _factory.CreateCharacterDisplay();
             var timeService = _factory.CreateTimeService();
@@ -68,7 +68,7 @@ namespace Deployer.Services.Abstraction
             return controller;
         }
 
-        public WebServer SetupWebServer(int port = 80)
+        public WebServer BuildConfigurationMode(int port = 80)
         {
             var webServer = new WebServer(_logger, _garbage, port);
 
