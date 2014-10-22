@@ -58,6 +58,7 @@ namespace Deployer.Services.Abstraction
         }
 
         public abstract INetwork CreateNetworkWrapper();
+        public abstract int WebServerPort { get; }
         public abstract ILed CreateIndicatorKeyA();
         public abstract ILed CreateIndicatorKeyB();
         public abstract ILed CreateIndicatorSelect();

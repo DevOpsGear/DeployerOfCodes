@@ -1,7 +1,6 @@
 ﻿using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Hardware;
 using Deployer.Services.Input;
-using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
 using NeonMika.Interfaces;
 
@@ -40,5 +39,6 @@ namespace Deployer.Services.Abstraction
         ISound CreateSound();
         IWebUtility CreateWebUtility(IGarbage garbage);
         INetwork CreateNetworkWrapper();
+        int WebServerPort { get; }
     }
 }

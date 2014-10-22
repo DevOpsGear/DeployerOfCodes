@@ -86,13 +86,17 @@ namespace Deployer.Services.RunModes
             {
                 Cleanup();
                 var yard = new ConstructionYard(_factory, _rootDir);
-                _webServer = yard.BuildConfigurationMode();
+                _webServer = yard.BuildConfigurationMode(_factory.WebServerPort);
             }
         }
 
         private void Cleanup()
         {
+            if (_webServer != null)
+                _webServer.Dispose();
             _webServer = null;
+            if (_controller != null)
+                _controller.Dispose();
             _controller = null;
             _factory.CreateGarbage().Collect();
         }

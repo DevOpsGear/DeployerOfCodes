@@ -5,7 +5,7 @@ namespace Deployer.Services.StateMachine
 {
     public class DeployerController : IDeployerController
     {
-        private readonly DeployerContext _context;
+        private DeployerContext _context;
 
         public DeployerController(DeployerContext context)
         {
@@ -67,5 +67,10 @@ namespace Deployer.Services.StateMachine
         }
 
         public IDeployerState State { get; set; }
+
+        public void Dispose()
+        {
+            _context = null;
+        }
     }
 }

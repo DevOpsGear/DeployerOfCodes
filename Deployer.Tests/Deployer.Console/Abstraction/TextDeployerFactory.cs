@@ -72,5 +72,10 @@ namespace Deployer.Text.Abstraction
         {
             return new TextNetworkWrapper();
         }
+
+        public override int WebServerPort
+        {
+            get { return 8090; }
+        }
     }
 }

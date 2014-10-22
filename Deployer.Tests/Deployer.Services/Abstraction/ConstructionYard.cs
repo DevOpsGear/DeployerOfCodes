@@ -68,7 +68,7 @@ namespace Deployer.Services.Abstraction
             return controller;
         }
 
-        public WebServer BuildConfigurationMode(int port = 80)
+        public WebServer BuildConfigurationMode(int port)
         {
             var webServer = new WebServer(_logger, _garbage, port);
 

@@ -9,14 +9,15 @@ using NeonMika.Interfaces;
 
 namespace NeonMika
 {
-    public class WebServer
+    public class WebServer : IDisposable
     {
-        private readonly ILogger _logger;
-        private readonly IGarbage _garbage;
+        private ILogger _logger;
+        private IGarbage _garbage;
         private readonly int _port;
-        private readonly ArrayList _responses;
-        private readonly Socket _listeningSocket;
-        private readonly Thread _requestThread;
+        private ArrayList _responses;
+        private Socket _listeningSocket;
+        private Thread _requestThread;
+        private bool _running;
         private bool _stopSignal;
 
         public WebServer(ILogger logger, IGarbage garbage, int port = 80)
@@ -33,7 +34,7 @@ namespace NeonMika
             _requestThread = new Thread(WaitForNetworkRequest);
             _requestThread.Start();
 
-            _logger.Debug("Webserver is running");
+            _logger.Debug("Web server is running");
         }
 
         public void AddResponse(Responder responder)
@@ -45,9 +46,19 @@ namespace NeonMika
         public bool Stop()
         {
             _stopSignal = true;
-            Thread.Sleep(250);
             ShutDownListeningSocket();
+            while (_running)
+                Thread.Sleep(250);
             return true;
+        }
+
+        public void Dispose()
+        {
+            _logger = null;
+            _garbage = null;
+            _responses = null;
+            _listeningSocket = null;
+            _requestThread = null;
         }
 
         private Socket SetupListeningSocket()
@@ -55,6 +66,7 @@ namespace NeonMika
             var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             sock.Bind(new IPEndPoint(IPAddress.Any, _port));
             sock.Listen(5);
+            sock.LingerState = new LingerOption(false, 0);
             return sock;
         }
 
@@ -62,16 +74,16 @@ namespace NeonMika
         private void ShutDownListeningSocket()
         {
             // _listeningSocket.SetSocketOption( SocketOptionLevel.Socket, SocketOptionName.DontLinger, true);
-            _listeningSocket.LingerState = new LingerOption(false, 0);
-            _listeningSocket.Shutdown(SocketShutdown.Both);
-            // ? _listeningSocket.Disconnect(false);
+            //_listeningSocket.Shutdown(SocketShutdown.Both);
+            //_listeningSocket.Disconnect(false);
             _listeningSocket.Close();
         }
 
         private void WaitForNetworkRequest()
         {
-            while (Running)
+            while (ServerShouldBeUp)
             {
+                _running = true;
                 try
                 {
                     using (var clientSocket = _listeningSocket.Accept())
@@ -103,15 +115,22 @@ namespace NeonMika
                         _garbage.Collect();
                     }
                 }
+                catch (SocketException ex)
+                {
+                    if (ServerShouldBeUp)
+                        _logger.Debug(ex.Message);
+                }
                 catch (Exception ex)
                 {
                     _logger.Debug(ex.Message);
                 }
             }
+            _logger.Debug("Web server has exited");
+            _running = false;
         }
 
         // TODO: Lock for multi-threading?
-        private bool Running
+        private bool ServerShouldBeUp
         {
             get { return !_stopSignal; }
         }
