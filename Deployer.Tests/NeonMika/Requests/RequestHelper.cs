@@ -36,6 +36,7 @@ namespace NeonMika.Requests
         public static void Send200_OK(Socket client, string mimeType)
         {
             var header = "HTTP/1.0 200 OK\r\n"
+                         + "Access-Control-Allow-Origin: *\r\n"
                          + "Content-Type: " + mimeType + "; charset=utf-8\r\n"
                          + "Connection: close\r\n\r\n";
 
@@ -56,6 +57,7 @@ namespace NeonMika.Requests
             if (contentLength > 0)
             {
                 header = "HTTP/1.0 200 OK\r\n"
+                         + "Access-Control-Allow-Origin: *\r\n"
                          + "Content-Type: " + mimeType + "; charset=utf-8\r\n"
                          + "Content-Length: " + contentLength + "\r\n"
                          + "Connection: close\r\n\r\n";
@@ -63,6 +65,7 @@ namespace NeonMika.Requests
             else
             {
                 header = "HTTP/1.0 204 No Content\r\n"
+                         + "Access-Control-Allow-Origin: *\r\n"
                          + "Content-Type: " + mimeType + "; charset=utf-8\r\n"
                          + "Connection: close\r\n\r\n";
             }
@@ -81,6 +84,7 @@ namespace NeonMika.Requests
         public static void Send400_BadRequest(Socket client)
         {
             const string header = "HTTP/1.1 400 Bad Request\r\n"
+                                  + "Access-Control-Allow-Origin: *\r\n"
                                   + "Content-Length: 0\r\nConnection: close\r\n\r\n";
             var buffer = Encoding.UTF8.GetBytes(header);
             if (client != null)
@@ -91,6 +95,7 @@ namespace NeonMika.Requests
         public static void Send405_MethodNotAllowed(Socket client)
         {
             const string header = "HTTP/1.1 405 Method Not Allowed\r\n"
+                                  + "Access-Control-Allow-Origin: *\r\n"
                                   + "Content-Length: 0\r\nConnection: close\r\n\r\n";
             var buffer = Encoding.UTF8.GetBytes(header);
             if (client != null)
@@ -101,6 +106,7 @@ namespace NeonMika.Requests
         public static void Send404_NotFound(Socket client)
         {
             const string header = "HTTP/1.1 404 Not Found\r\n"
+                                  + "Access-Control-Allow-Origin: *\r\n"
                                   + "Content-Length: 0\r\nConnection: close\r\n\r\n";
             var buffer = Encoding.UTF8.GetBytes(header);
             if (client != null)
@@ -111,6 +117,7 @@ namespace NeonMika.Requests
         public static void Send500_Failure(Socket client, string message = "")
         {
             var header = "HTTP/1.1 500 Internal Server Error\r\n"
+                         + "Access-Control-Allow-Origin: *\r\n"
                          + "Content-Length: " + message.Length + "\r\n"
                          + "Connection: close\r\n\r\n"
                          + message;
