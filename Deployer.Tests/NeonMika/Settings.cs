@@ -2,7 +2,7 @@
 namespace NeonMika
 {
     /// <summary>
-    /// Static settings for the webserver
+    /// Static settings for the webserver - TODO: Improve this
     /// </summary>
     static class Settings
     {

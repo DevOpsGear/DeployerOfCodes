@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Text;
-using Deployer.Services.Api.Interfaces;
+﻿using Deployer.Services.Api.Interfaces;
 using Deployer.Services.Builders;
 using Deployer.Services.Config;
 using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Models;
 using Json.NETMF;
 using NeonMika.Interfaces;
-using NeonMika.Util;
+using System;
+using System.Collections;
+using System.Text;
 
 namespace Deployer.Services.Api
 {

@@ -1,8 +1,7 @@
-using System;
-using Deployer.Services.Config;
 using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Hardware;
 using Deployer.Services.Models;
+using System;
 
 namespace Deployer.Services.Input
 {

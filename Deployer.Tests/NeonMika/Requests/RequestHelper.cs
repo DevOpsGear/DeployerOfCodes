@@ -127,6 +127,19 @@ namespace NeonMika.Requests
             _logger.Debug("Sent 500 Internal Server Error");
         }
 
+        public static void Send503_ServiceUnavailable(Socket client, string message = "")
+        {
+            var header = "HTTP/1.1 503 Service Unavailable\r\n"
+                         + "Access-Control-Allow-Origin: *\r\n"
+                         + "Content-Length: " + message.Length + "\r\n"
+                         + "Connection: close\r\n\r\n"
+                         + message;
+            var buffer = Encoding.UTF8.GetBytes(header);
+            if (client != null)
+                client.Send(buffer, buffer.Length, SocketFlags.None);
+            _logger.Debug("Sent 503 Service Unavailable Error");
+        }
+        
         public static int SendData(Socket client, byte[] data)
         {
             var ret = 0;

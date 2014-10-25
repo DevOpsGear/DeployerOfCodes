@@ -9,7 +9,7 @@ using NeonMika.Interfaces;
 
 namespace NeonMika
 {
-    public class WebServer : IDisposable
+    public class WebServer : IWebServer
     {
         private ILogger _logger;
         private IGarbage _garbage;
@@ -57,7 +57,10 @@ namespace NeonMika
             _logger = null;
             _garbage = null;
             _responses = null;
+            _listeningSocket.Dispose();
             _listeningSocket = null;
+            if (_requestThread.IsAlive)
+                _requestThread.Abort();
             _requestThread = null;
         }
 

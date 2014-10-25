@@ -59,7 +59,7 @@
     <Compile Include="Config\Interfaces\IJsonPersistence.cs" />
     <Compile Include="Config\SlugCreator.cs" />
     <Compile Include="Config\SmallTextFileIo.cs" />
-    <Compile Include="Micro\Interface1.cs" />
+    <Compile Include="Micro\TimeService.cs" />
     <Compile Include="Micro\Web\HttpWebResponseWrapper.cs" />
     <Compile Include="Micro\Web\IWebUtility.cs" />
     <Compile Include="Micro\Web\WebRequestFactory.cs" />

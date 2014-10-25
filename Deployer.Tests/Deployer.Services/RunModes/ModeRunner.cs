@@ -10,7 +10,7 @@ namespace Deployer.Services.RunModes
         private readonly IDeployerFactory _factory;
         private readonly string _rootDir;
         private IDeployerController _controller;
-        private WebServer _webServer;
+        private IWebServer _webServer;
 
         public ModeRunner(IDeployerFactory factory, string rootDir)
         {
@@ -68,37 +68,35 @@ namespace Deployer.Services.RunModes
             _controller.Tick();
         }
 
+        private void StopEverything()
+        {
+            if (_controller != null)
+            {
+                _controller.Stop();
+                _controller.Dispose();
+                _controller = null;
+            }
+            if (_webServer != null)
+            {
+                _webServer.Stop();
+                _webServer.Dispose();
+                _webServer = null;
+            }
+            _factory.CreateGarbage().Collect();
+        }
+
         private void PossiblySwitchToDeploymentMode()
         {
-            if (_webServer == null) return;
-            if (_webServer.Stop())
-            {
-                Cleanup();
-                var yard = new ConstructionYard(_factory, _rootDir);
-                _controller = yard.BuildDeploymentMode();
-            }
+            StopEverything();
+            var yard = new ConstructionYard(_factory, _rootDir);
+            _controller = yard.BuildDeploymentMode();
         }
 
         private void PossiblySwitchToConfigurationMode()
         {
-            if (_controller == null) return;
-            if (_controller.Stop())
-            {
-                Cleanup();
-                var yard = new ConstructionYard(_factory, _rootDir);
-                _webServer = yard.BuildConfigurationMode(_factory.WebServerPort);
-            }
-        }
-
-        private void Cleanup()
-        {
-            if (_webServer != null)
-                _webServer.Dispose();
-            _webServer = null;
-            if (_controller != null)
-                _controller.Dispose();
-            _controller = null;
-            _factory.CreateGarbage().Collect();
+            StopEverything();
+            var yard = new ConstructionYard(_factory, _rootDir);
+            _webServer = yard.BuildConfigurationMode(_factory.WebServerPort);
         }
     }
 }

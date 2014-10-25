@@ -6,6 +6,7 @@ using Deployer.Services.StateMachine;
 using Deployer.Services.WebResponders;
 using NeonMika;
 using NeonMika.Interfaces;
+using NeonMika.Requests;
 
 namespace Deployer.Services.Abstraction
 {
@@ -68,8 +69,15 @@ namespace Deployer.Services.Abstraction
             return controller;
         }
 
-        public WebServer BuildConfigurationMode(int port)
+       /*  public IWebServer BuildConfigurationNotAvailable(int port)
         {
+            RequestHelper.SetLogger(_logger);
+            return new WebServerNotAvailable(_logger, port);
+        } */
+
+        public IWebServer BuildConfigurationMode(int port)
+        {
+            RequestHelper.SetLogger(_logger);
             var webServer = new WebServer(_logger, _garbage, port);
 
             var authApiService = new AuthApiService(_configService, _garbage);

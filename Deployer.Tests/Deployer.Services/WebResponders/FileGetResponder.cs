@@ -1,10 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Net.Sockets;
-using NeonMika.Interfaces;
+﻿using NeonMika.Interfaces;
 using NeonMika.Requests;
 using NeonMika.Responses;
-using NeonMika.Util;
+using System;
+using System.IO;
+using System.Net.Sockets;
 
 namespace Deployer.Services.WebResponders
 {

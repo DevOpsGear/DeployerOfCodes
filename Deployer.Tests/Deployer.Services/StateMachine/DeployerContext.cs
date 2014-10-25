@@ -1,7 +1,6 @@
 ﻿using Deployer.Services.Config.Interfaces;
 using Deployer.Services.Hardware;
 using Deployer.Services.Input;
-using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine.States;

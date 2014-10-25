@@ -1,7 +1,6 @@
-using System;
-using Deployer.Services.Micro;
 using Deployer.Services.Micro.Web;
 using NeonMika.Interfaces;
+using System;
 
 namespace Deployer.Services.Builders
 {
