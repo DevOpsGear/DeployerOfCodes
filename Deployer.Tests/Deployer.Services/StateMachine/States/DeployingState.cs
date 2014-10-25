@@ -25,7 +25,6 @@ namespace Deployer.Services.StateMachine.States
                 var config = Context.ConfigurationService.GetBuildParams(proj.Slug);
                 var state = _currentBuild.StartBuild(config);
                 ProcessBuildState(state, proj.Title);
-                Context.Indicator.LightRunning();
             }
         }
 
@@ -46,10 +45,12 @@ namespace Deployer.Services.StateMachine.States
             {
                 case BuildStatus.Queued:
                     Context.CharDisplay.Write("*** Queued", proj);
+                    Context.Indicator.LightRunning();
                     break;
 
                 case BuildStatus.Running:
                     Context.CharDisplay.Write("*** Building", proj);
+                    Context.Indicator.LightRunning();
                     break;
 
                 case BuildStatus.Succeeded:

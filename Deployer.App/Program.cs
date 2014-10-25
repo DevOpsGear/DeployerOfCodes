@@ -1,6 +1,6 @@
 ﻿using Deployer.App.Abstraction;
-using Deployer.Services.Abstraction;
 using Deployer.Services.Input;
+using Deployer.Services.RunModes;
 using Deployer.Services.StateMachine;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
@@ -18,11 +18,10 @@ namespace Deployer.App
         private InterruptPort _buttonArm;
         private InterruptPort _buttonDeploy;
 
-        //private WebServer _webServer;
         private string _rootDir;
         private Gadgeteer.Timer _timerBlink;
 
-        private IDeployerController _controller;
+        private ModeRunner _modeRunner;
 
         private void ProgramStarted()
         {
@@ -32,38 +31,16 @@ namespace Deployer.App
             SetupPersistence();
             SetupInputs();
 
-            var factory = new RealDeployerFactory(Mainboard, breakoutTB10, characterDisplay, tunes);
-            var yard = new ConstructionYard(factory, _rootDir);
-            _controller = yard.BuildRunMode();
-
-            //SetupWebServer();
+            var factory = new RealDeployerFactory(Mainboard.Ethernet, breakoutTB10, characterDisplay, tunes);
+            factory.Initialize();
+            _modeRunner = new ModeRunner(factory, _rootDir);
+            _modeRunner.Start();
 
             SetupInterrupts();
             SetupTimers();
         }
 
         #region Setup methods
-
-        /*
-        private void SetupWebServer()
-        {
-            _webServer = new WebServer(_logger, _garbage);
-
-            var authApiService = new AuthApiService(_configService, _garbage);
-            var authResponder = new ApiServiceResponder(authApiService);
-            _webServer.AddResponse(authResponder);
-
-            var configApiService = new ConfigApiService(_configService, _garbage);
-            var configResponder = new ApiServiceResponder(configApiService);
-            _webServer.AddResponse(configResponder);
-
-            var updateClient = new FilePutResponder(_rootDir, "client", _logger);
-            _webServer.AddResponse(updateClient);
-
-            var fileServe = new FileGetResponder(_rootDir, "client", _logger);
-            _webServer.AddResponse(fileServe);
-        }
-         * */
 
         private void SetupInputs()
         {
@@ -137,17 +114,17 @@ namespace Deployer.App
         private void KeySwitchAOnInterrupt(uint data1, uint data2, DateTime time)
         {
             if (ReversedSwitchA)
-                _controller.KeyOnEvent(KeySwitch.KeyA);
+                _modeRunner.KeyOnEvent(KeySwitch.KeyA);
             else
-                _controller.KeyOffEvent(KeySwitch.KeyA);
+                _modeRunner.KeyOffEvent(KeySwitch.KeyA);
         }
 
         private void KeySwitchBOnInterrupt(uint data1, uint data2, DateTime time)
         {
             if (ReversedSwitchB)
-                _controller.KeyOnEvent(KeySwitch.KeyB);
+                _modeRunner.KeyOnEvent(KeySwitch.KeyB);
             else
-                _controller.KeyOffEvent(KeySwitch.KeyB);
+                _modeRunner.KeyOffEvent(KeySwitch.KeyB);
         }
 
         #endregion
@@ -156,23 +133,23 @@ namespace Deployer.App
 
         private void ButtonUpOnInterrupt(uint data1, uint data2, DateTime time)
         {
-            _controller.UpPressedEvent();
+            _modeRunner.UpPressedEvent();
         }
 
         private void ButtonDownOnInterrupt(uint data1, uint data2, DateTime time)
         {
-            _controller.DownPressedEvent();
+            _modeRunner.DownPressedEvent();
         }
 
 
         private void ButtonArmOnInterrupt(uint data1, uint data2, DateTime time)
         {
-            _controller.ArmPressedEvent();
+            _modeRunner.ArmPressedEvent();
         }
 
         private void ButtonDeployOnInterrupt(uint data1, uint data2, DateTime time)
         {
-            _controller.DeployPressedEvent();
+            _modeRunner.DeployPressedEvent();
         }
 
         #endregion
@@ -199,7 +176,10 @@ namespace Deployer.App
 
         private void BlinkTick(Gadgeteer.Timer timer)
         {
-            _controller.Tick();
+            var memory = Debug.GC(false);
+            Debug.Print("Tick! Memory = " + memory);
+
+            _modeRunner.Tick();
         }
 
         #endregion

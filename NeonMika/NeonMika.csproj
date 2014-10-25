@@ -36,6 +36,9 @@
     <Compile Include="..\Deployer.Tests\NeonMika\Interfaces\ILogger.cs">
       <Link>Interfaces\ILogger.cs</Link>
     </Compile>
+    <Compile Include="..\Deployer.Tests\NeonMika\IWebServer.cs">
+      <Link>IWebServer.cs</Link>
+    </Compile>
     <Compile Include="..\Deployer.Tests\NeonMika\Requests\ClientRequestBody.cs">
       <Link>Requests\ClientRequestBody.cs</Link>
     </Compile>
@@ -65,6 +68,9 @@
     </Compile>
     <Compile Include="..\Deployer.Tests\NeonMika\WebServer.cs">
       <Link>WebServer.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\NeonMika\WebServerNotAvailable.cs">
+      <Link>WebServerNotAvailable.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

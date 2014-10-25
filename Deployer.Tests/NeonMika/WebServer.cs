@@ -57,7 +57,7 @@ namespace NeonMika
             _logger = null;
             _garbage = null;
             _responses = null;
-            _listeningSocket.Dispose();
+            //_listeningSocket.Dispose();
             _listeningSocket = null;
             if (_requestThread.IsAlive)
                 _requestThread.Abort();
@@ -69,7 +69,7 @@ namespace NeonMika
             var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             sock.Bind(new IPEndPoint(IPAddress.Any, _port));
             sock.Listen(5);
-            sock.LingerState = new LingerOption(false, 0);
+            //sock.LingerState = new LingerOption(false, 0);
             return sock;
         }
 

@@ -69,7 +69,7 @@ namespace Deployer.Services.Abstraction
             return controller;
         }
 
-       /*  public IWebServer BuildConfigurationNotAvailable(int port)
+        /*  public IWebServer BuildConfigurationNotAvailable(int port)
         {
             RequestHelper.SetLogger(_logger);
             return new WebServerNotAvailable(_logger, port);
@@ -77,6 +77,10 @@ namespace Deployer.Services.Abstraction
 
         public IWebServer BuildConfigurationMode(int port)
         {
+            var charDisp = _factory.CreateCharacterDisplay();
+            var network = _factory.CreateNetworkWrapper();
+            charDisp.Write("Config mode", network.IpAddress + ":" + port);
+
             RequestHelper.SetLogger(_logger);
             var webServer = new WebServer(_logger, _garbage, port);
 

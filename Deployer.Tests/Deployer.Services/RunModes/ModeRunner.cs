@@ -1,6 +1,7 @@
 ﻿using Deployer.Services.Abstraction;
 using Deployer.Services.Input;
 using Deployer.Services.StateMachine;
+using Deployer.Services.StateMachine.States;
 using NeonMika;
 
 namespace Deployer.Services.RunModes
@@ -38,14 +39,16 @@ namespace Deployer.Services.RunModes
 
         public void UpPressedEvent()
         {
-            PossiblySwitchToDeploymentMode();
+            if (InConfigurationMode)
+                SwitchToDeploymentMode();
             if (_controller == null) return;
             _controller.UpPressedEvent();
         }
 
         public void DownPressedEvent()
         {
-            PossiblySwitchToConfigurationMode();
+            if (InDeploymentIdleState)
+                SwitchToConfigurationMode();
             if (_controller == null) return;
             _controller.DownPressedEvent();
         }
@@ -85,14 +88,32 @@ namespace Deployer.Services.RunModes
             _factory.CreateGarbage().Collect();
         }
 
-        private void PossiblySwitchToDeploymentMode()
+        private bool InDeploymentIdleState
+        {
+            get
+            {
+                if (_controller != null)
+                {
+                    if (_controller.State is TurnBothKeysState)
+                        return true;
+                }
+                return false;
+            }
+        }
+
+        private bool InConfigurationMode
+        {
+            get { return _webServer != null; }
+        }
+
+        private void SwitchToDeploymentMode()
         {
             StopEverything();
             var yard = new ConstructionYard(_factory, _rootDir);
             _controller = yard.BuildDeploymentMode();
         }
 
-        private void PossiblySwitchToConfigurationMode()
+        private void SwitchToConfigurationMode()
         {
             StopEverything();
             var yard = new ConstructionYard(_factory, _rootDir);

@@ -91,8 +91,8 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Config\SmallTextFileIo.cs">
       <Link>Config\SmallTextFileIo.cs</Link>
     </Compile>
-    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Interface1.cs">
-      <Link>Micro\Interface1.cs</Link>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\TimeService.cs">
+      <Link>Micro\TimeService.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\Micro\Web\HttpWebResponseWrapper.cs">
       <Link>Micro\Web\HttpWebResponseWrapper.cs</Link>
@@ -193,11 +193,17 @@
     <Compile Include="..\Deployer.Tests\Deployer.Services\Output\Indicators.cs">
       <Link>Output\Indicators.cs</Link>
     </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\RunModes\ModeRunner.cs">
+      <Link>RunModes\ModeRunner.cs</Link>
+    </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerContext.cs">
       <Link>StateMachine\DeployerContext.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\DeployerController.cs">
       <Link>StateMachine\DeployerController.cs</Link>
+    </Compile>
+    <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\IInputEvents.cs">
+      <Link>StateMachine\IInputEvents.cs</Link>
     </Compile>
     <Compile Include="..\Deployer.Tests\Deployer.Services\StateMachine\States\AbortState.cs">
       <Link>StateMachine\States\AbortState.cs</Link>

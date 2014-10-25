@@ -57,6 +57,7 @@ namespace Deployer.Services.Abstraction
             return new WebUtility(garbage);
         }
 
+        public abstract void Initialize();
         public abstract INetwork CreateNetworkWrapper();
         public abstract int WebServerPort { get; }
         public abstract ILed CreateIndicatorKeyA();
