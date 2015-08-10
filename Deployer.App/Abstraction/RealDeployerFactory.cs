@@ -16,6 +16,7 @@ namespace Deployer.App.Abstraction
     public class RealDeployerFactory : CommonFactory
     {
         private readonly EthernetENC28J60 _ethernet;
+        private readonly StorageDevice _storageDevice;
         private readonly BreakoutTB10 _breakout;
         private readonly CharacterDisplay _characterDisplay;
         private readonly Tunes _tunes;
@@ -29,10 +30,12 @@ namespace Deployer.App.Abstraction
         private LedDigital _indicatorSucceeded;
         private LedDigital _indicatorFailed;
 
-        public RealDeployerFactory(EthernetENC28J60 ethernet, BreakoutTB10 breakout, CharacterDisplay characterDisplay,
+        public RealDeployerFactory(EthernetENC28J60 ethernet, StorageDevice storageDevice, BreakoutTB10 breakout,
+                                   CharacterDisplay characterDisplay,
                                    Tunes tunes)
         {
             _ethernet = ethernet;
+            _storageDevice = storageDevice;
             _breakout = breakout;
             _characterDisplay = characterDisplay;
             _tunes = tunes;
@@ -99,6 +102,11 @@ namespace Deployer.App.Abstraction
         public override ILogger CreateLogger()
         {
             return new Logger();
+        }
+
+        public override IPersistence CreatePersistence()
+        {
+            return new Persistence(_storageDevice);
         }
 
         public override ICharDisplay CreateCharacterDisplay()

@@ -15,9 +15,9 @@ namespace Deployer.Services.Abstraction
             return new TimeService();
         }
 
-        public ISmallTextFileIo CreateSmallTextIo()
+        public ISmallTextFileIo CreateSmallTextIo(IPersistence persistence)
         {
-            return new SmallTextFileIo();
+            return new SmallTextFileIo(persistence);
         }
 
         public IJsonPersistence CreateJsonPersistence(ISmallTextFileIo io)
@@ -70,6 +70,7 @@ namespace Deployer.Services.Abstraction
         public abstract ILed CreateIndicatorFailed();
         public abstract IGarbage CreateGarbage();
         public abstract ILogger CreateLogger();
+        public abstract IPersistence CreatePersistence();
         public abstract ICharDisplay CreateCharacterDisplay();
         public abstract ISound CreateSound();
     }

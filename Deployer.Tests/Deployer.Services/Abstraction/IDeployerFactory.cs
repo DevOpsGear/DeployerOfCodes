@@ -18,7 +18,8 @@ namespace Deployer.Services.Abstraction
         ILed CreateIndicatorFailed();
         IGarbage CreateGarbage();
         ILogger CreateLogger();
-        ISmallTextFileIo CreateSmallTextIo();
+        IPersistence CreatePersistence();
+        ISmallTextFileIo CreateSmallTextIo(IPersistence persistence);
         IJsonPersistence CreateJsonPersistence(ISmallTextFileIo io);
         ISlugCreator CreateSlugCreator();
 

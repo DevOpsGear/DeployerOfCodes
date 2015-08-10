@@ -1,13 +1,10 @@
-
 namespace Deployer.Services.Hardware
 {
-	public interface IPersistence
-	{
-		bool DoesRootDirectoryExist(string directoryPath);
-		//void CreateDirectory(string directoryPath);
-		//void Delete(string filePath);
-		//string[] ListRootDirectorySubdirectories();
-		//FileStream OpenRead(string filePath);
-		//FileStream OpenWrite(string filePath);
-	}
+    public interface IPersistence
+    {
+        bool DoesDirectoryExist(string directoryName);
+        void CreateDirectory(string directoryPath);
+        byte[] ReadFile(string filePath);
+        void WriteFile(string filePath, byte[] data);
+    }
 }

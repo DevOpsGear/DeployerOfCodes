@@ -31,7 +31,11 @@ namespace Deployer.App
             SetupPersistence();
             SetupInputs();
 
-            var factory = new RealDeployerFactory(Mainboard.Ethernet, breakoutTB10, characterDisplay, tunes);
+            var factory = new RealDeployerFactory(Mainboard.Ethernet,
+                                                  Mainboard.SDCardStorageDevice,
+                                                  breakoutTB10,
+                                                  characterDisplay,
+                                                  tunes);
             factory.Initialize();
             _modeRunner = new ModeRunner(factory, _rootDir);
             _modeRunner.Start();

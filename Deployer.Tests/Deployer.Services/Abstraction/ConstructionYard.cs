@@ -1,6 +1,7 @@
 ﻿using Deployer.Services.Api;
 using Deployer.Services.Config;
 using Deployer.Services.Config.Interfaces;
+using Deployer.Services.Hardware;
 using Deployer.Services.Output;
 using Deployer.Services.StateMachine;
 using Deployer.Services.WebResponders;
@@ -17,6 +18,7 @@ namespace Deployer.Services.Abstraction
         private readonly string _rootDir;
         private readonly IGarbage _garbage;
         private readonly ILogger _logger;
+        private readonly IPersistence _persist;
         private readonly IConfigurationService _configService;
 
         public ConstructionYard(IDeployerFactory factory, string rootDir)
@@ -25,7 +27,9 @@ namespace Deployer.Services.Abstraction
             _rootDir = rootDir;
             _garbage = _factory.CreateGarbage();
             _logger = _factory.CreateLogger();
-            var smallIo = new SmallTextFileIo();
+            _persist = _factory.CreatePersistence();
+
+            var smallIo = _factory.CreateSmallTextIo(_persist);
             var jsonPersist = new JsonPersistence(smallIo);
             var slugCreator = new SlugCreator();
             _configService = new RealConfigurationService(_rootDir, jsonPersist, slugCreator);
